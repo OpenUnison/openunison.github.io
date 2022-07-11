@@ -1,0 +1,2452 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.8">
+    
+    
+      
+        <title>Custom sso - Kubernetes Authentication and SSO - OpenUnison</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#custom-sso" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Kubernetes Authentication and SSO - OpenUnison" class="md-header__button md-logo" aria-label="Kubernetes Authentication and SSO - OpenUnison" data-md-component="logo">
+      
+  <img src="../../assets/ts-logo-white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kubernetes Authentication and SSO - OpenUnison
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Custom sso
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Kubernetes Authentication and SSO - OpenUnison" class="md-nav__button md-logo" aria-label="Kubernetes Authentication and SSO - OpenUnison" data-md-component="logo">
+      
+  <img src="../../assets/ts-logo-white.png" alt="logo">
+
+    </a>
+    Kubernetes Authentication and SSO - OpenUnison
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Kubernetes Authentication and SSO
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployauth/" class="md-nav__link">
+        Deploying The Authentication Portal
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-help/" class="md-nav__link">
+        Getting Help
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kubectlplugin/" class="md-nav__link">
+        Kubectl Plugin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../multi_cluster_sso/" class="md-nav__link">
+        Multi cluster sso
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../namespace_as_a_service/" class="md-nav__link">
+        Namespace as a Service
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../upgrading/" class="md-nav__link">
+        Upgrading from 1.0.23 and Earlier
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Applications
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Applications" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Applications
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../applications/" class="md-nav__link">
+        Well Known Applications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../applications/kiali/" class="md-nav__link">
+        Kiali
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Customization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Customization" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Customization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../customization/custom_jit_workflow/" class="md-nav__link">
+        Customized Just-In-Time Login Workflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../customization/custom_logos/" class="md-nav__link">
+        Custom Logos
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../customization/custom_provisioning_tasks/" class="md-nav__link">
+        Custom Provisioning Tasks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          Documentation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Documentation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Custom sso
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Custom sso
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#extending-the-kubernetes-trust" class="md-nav__link">
+    Extending the Kubernetes Trust
+  </a>
+  
+    <nav class="md-nav" aria-label="Extending the Kubernetes Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-openunison" class="md-nav__link">
+    Configuring OpenUnison
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-your-application" class="md-nav__link">
+    Configuring Your Application
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-openid-connect-identity-provider" class="md-nav__link">
+    Creating an OpenID Connect Identity Provider
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-saml2-identity-provider" class="md-nav__link">
+    Creating a SAML2 Identity Provider
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-reverse-proxy-application" class="md-nav__link">
+    Using a Reverse Proxy Application
+  </a>
+  
+    <nav class="md-nav" aria-label="Using a Reverse Proxy Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-openunisons-host" class="md-nav__link">
+    Using OpenUnison's Host
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-a-new-host" class="md-nav__link">
+    Using a New Host
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-badge-to-the-portal" class="md-nav__link">
+    Adding a "Badge" to the Portal
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../login-portal/" class="md-nav__link">
+        Login Portal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../naas/" class="md-nav__link">
+        Namespace as a Service Portal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operator/" class="md-nav__link">
+        Operator Helm Chart Customization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5">
+          Apis
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Apis" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          Apis
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apis/apis/" class="md-nav__link">
+        OpenUnison's APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apis/restful/" class="md-nav__link">
+        OpenUnison RESTful APIs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5_3" type="checkbox" id="__nav_10_5_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5_3">
+          Callworkflow
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Callworkflow" data-md-level="3">
+        <label class="md-nav__title" for="__nav_10_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          Callworkflow
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apis/callworkflow/callworkflow/" class="md-nav__link">
+        CallWorkflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5_4" type="checkbox" id="__nav_10_5_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5_4">
+          Scalejs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Scalejs" data-md-level="3">
+        <label class="md-nav__title" for="__nav_10_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          Scalejs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5_4_1" type="checkbox" id="__nav_10_5_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10_5_4_1">
+          Register
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Register" data-md-level="4">
+        <label class="md-nav__title" for="__nav_10_5_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Register
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apis/scalejs/register/scalejs-register/" class="md-nav__link">
+        ScaleJS Register
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_11">
+          Identity providers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Identity providers" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Identity providers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../identity%20providers/" class="md-nav__link">
+        List of Documented Identity Providers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../identity%20providers/azuread/" class="md-nav__link">
+        AzureAD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../identity%20providers/keycloak/" class="md-nav__link">
+        Keycloak
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../identity%20providers/okta/" class="md-nav__link">
+        Okta
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_12">
+          Ingresses
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Ingresses" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Ingresses
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ingresses/" class="md-nav__link">
+        List of Documented Ingress Controllers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ingresses/istio/" class="md-nav__link">
+        Istio Integration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ingresses/nginx/" class="md-nav__link">
+        NGINX Integration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_13" type="checkbox" id="__nav_13" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_13">
+          Knowledgebase
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Knowledgebase" data-md-level="1">
+        <label class="md-nav__title" for="__nav_13">
+          <span class="md-nav__icon md-icon"></span>
+          Knowledgebase
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/airgap/" class="md-nav__link">
+        Air-Gap Implementation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/broken_dashboard/" class="md-nav__link">
+        Broken Dashboard Login
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/certificates/" class="md-nav__link">
+        Certificate Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/customizingmyvd/" class="md-nav__link">
+        Customizing MyVirtualDirectory
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/orchestra_deployment_failed/" class="md-nav__link">
+        Orchestra deployment failed
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/prometheus/" class="md-nav__link">
+        Monitoring OpenUnison with Prometheus
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#extending-the-kubernetes-trust" class="md-nav__link">
+    Extending the Kubernetes Trust
+  </a>
+  
+    <nav class="md-nav" aria-label="Extending the Kubernetes Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-openunison" class="md-nav__link">
+    Configuring OpenUnison
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-your-application" class="md-nav__link">
+    Configuring Your Application
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-openid-connect-identity-provider" class="md-nav__link">
+    Creating an OpenID Connect Identity Provider
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-saml2-identity-provider" class="md-nav__link">
+    Creating a SAML2 Identity Provider
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-reverse-proxy-application" class="md-nav__link">
+    Using a Reverse Proxy Application
+  </a>
+  
+    <nav class="md-nav" aria-label="Using a Reverse Proxy Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-openunisons-host" class="md-nav__link">
+    Using OpenUnison's Host
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-a-new-host" class="md-nav__link">
+    Using a New Host
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-badge-to-the-portal" class="md-nav__link">
+    Adding a "Badge" to the Portal
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="custom-sso">Custom SSO</h1>
+<p>OpenUnison is configured to provide SSO for your API server, the Kubernetes Dashboard, and potentially an API server proxy.  There are more components to your cluster then your API server and dashboard though.  Git repos, other dashboards like for Kiali for Istio and Traefik, monitoring systems, and gitops platforms all have their own GUIs with their own identity systems.  OpenUnison can provide you a single source for authentication that you control.  Once OpenUnison has been onboarded to your central identity provider, it can be an identity broker for any and all of these applications.  This section describes how to integrate applications that:</p>
+<ul>
+<li>Use the same group data and trust as your Kubernetes cluster (such as <a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/openunison/">ArgoCD</a>)</li>
+<li>Use OpenID Connect, but need their own identity information</li>
+<li>Use SAML2</li>
+<li>Need a reverse proxy to send identity data and perform authentication for them, such as the Kubernetes Dashboard</li>
+</ul>
+<h2 id="extending-the-kubernetes-trust">Extending the Kubernetes Trust</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Qpak99xMMvs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>In this simplest example, you can extend the existing Kubernetes OpenID Connect identity provider for your cluster.  This is useful when:</p>
+<ol>
+<li>Your application will re-use your token to communicate with the API server.  Many dashboards do this so that they don't need to know your credentials.</li>
+<li>Your application needs the same groups as is used by your cluster</li>
+<li>Your application needs the same attributes, or <strong>claims</strong> as your cluster</li>
+</ol>
+<p>Setting this up is very straight forward.  There are two configuration points:</p>
+<ol>
+<li>OpenUnison - Create a <code>Trust</code> custom resource describing the application you wish to allow to authenticate via OpenUnison</li>
+<li>Your Application - Give your application the configuration it needs to trust OpenUnison.</li>
+</ol>
+<p>The <code>id_token</code> generated by the Kubernetes identity provider will look like:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;iss&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://k8sou.apps.domain.com/auth/idp/k8sIdp&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&quot;aud&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kubernetes&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">&quot;exp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1645623659</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">&quot;jti&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HDJaev3WKncv6Y4da21XNQ&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="nt">&quot;iat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1645623599</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">&quot;nbf&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1645623479</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nt">&quot;sub&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mlbadmin1&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot; Boorshtein&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">&quot;groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="s2">&quot;users&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="s2">&quot;admins&quot;</span><span class="w"></span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="p">],</span><span class="w"></span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="nt">&quot;preferred_username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mlbadminx-49-x&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mlbadmin1@nodomain.io&quot;</span><span class="w"></span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>The main claims that you'll be concerned with are:</p>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sub</td>
+<td>The user's unique id, this will map to the attribute cnfigured in your helm chart and will depend on your upstream identity provider.</td>
+</tr>
+<tr>
+<td>name</td>
+<td>This is generally the user's full name</td>
+</tr>
+<tr>
+<td>groups</td>
+<td>This is a list of groups the user is a member of</td>
+</tr>
+<tr>
+<td>preferred_username</td>
+<td>This is the name of the <code>User</code> object in the <code>openunison</code> namespace that is used to represent this user.  This can also be used to delete the user's session, forcing them to re-authenticate</td>
+</tr>
+<tr>
+<td>email</td>
+<td>The user's email address</td>
+</tr>
+</tbody>
+</table>
+<p>Next, we'll cover both of these configuration points.</p>
+<h3 id="configuring-openunison">Configuring OpenUnison</h3>
+<p>Before configuring a <code>Trust</code> for OpenUnison for an application, you'll need to know:</p>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application redirect</td>
+<td>This is a URL that OpenUnison will redirect the user's browser to after authentication.  There can be multiple URLs specified.  This is common when an application has both a web component and a CLI component, like ArgoCD.  See your application's documentation.</td>
+<td>https://app.domain.com/redirect/</td>
+</tr>
+<tr>
+<td>Client Secret</td>
+<td>If the application is a web application, there's generally a client secret that you'll need to generate.  This secret should be long, random, and can't be easily guessed.  <strong><em>NOTE</em></strong> for applications with a cli component, like ArgoCD, you'll generally skip the client secret</td>
+<td></td>
+</tr>
+<tr>
+<td>Will <code>user_info</code> be signed?</td>
+<td>Some applications require that the data returned from the user_info endpoing be a signed JWT.  Others just want JSON.  Plain JSON is more common</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Once you gather this information, the next step is create a <code>Secret</code> for your <code>client_secret</code>, if needed.  The easiest way to do this is in the <code>orchestra-secrets-source</code> <code>Secret</code> you created when deploying OpenUnison.  Once you created this <code>Secret</code>, you can create the <code>Trust</code>.  The below is an example for GitLab :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v1</span><span class="w"></span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Trust</span><span class="w"></span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nt">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nt">app.kubernetes.io/instance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison-orchestra</span><span class="w"></span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nt">app.kubernetes.io/component</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gitlab-sso</span><span class="w"></span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="nt">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gitlab</span><span class="w"></span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">  </span><span class="nt">accessTokenSkewMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120000</span><span class="w"></span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">  </span><span class="nt">accessTokenTimeToLive</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60000</span><span class="w"></span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">  </span><span class="nt">authChainName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">login-service</span><span class="w"></span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">  </span><span class="nt">clientId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gitlab</span><span class="w"></span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">  </span><span class="nt">clientSecret</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="nt">keyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gitlab</span><span class="w"></span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">orchestra-secrets-source</span><span class="w"></span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">  </span><span class="nt">codeLastMileKeyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lastmile-oidc</span><span class="w"></span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">  </span><span class="nt">codeTokenSkewMilis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60000</span><span class="w"></span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">  </span><span class="nt">publicEndpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">  </span><span class="nt">redirectURI</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://gitlab.mydomain.com/users/auth/openid_connect/callback</span><span class="w"></span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">  </span><span class="nt">signedUserInfo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">  </span><span class="nt">verifyRedirect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+</code></pre></div>
+<p>The above YAML can be added to the <code>openunison</code> namespace and OpenUnison will pick up the changes automatically.  If no secret is needed, skip <code>spec.clientSecret</code>.  Below are the details for each configuration option. </p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Desription</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>accessTokenSkewMillis</td>
+<td>Milliseconds milliseconds added to account for clock skew</td>
+</tr>
+<tr>
+<td>accessTokenTimeToLive</td>
+<td>Time an access token should live in milliseconds</td>
+</tr>
+<tr>
+<td>authChainName</td>
+<td>The authentication chain to use for login, do not change</td>
+</tr>
+<tr>
+<td>clientId</td>
+<td>The client id shared by your application</td>
+</tr>
+<tr>
+<td>clientSecret.scretName</td>
+<td>If using a client secret, the name of the <code>Secret</code> storing the client secret</td>
+</tr>
+<tr>
+<td>clientSecret.keyName</td>
+<td>The key in the <code>data</code> section of the <code>Secret</code> storing the client secret</td>
+</tr>
+<tr>
+<td>codeLastMileKeyName</td>
+<td>The name of the key used to encrypt the code token, do not change</td>
+</tr>
+<tr>
+<td>codeTokenSkewMilis</td>
+<td>Milliseconds to add to code token lifetime to account for clock skew</td>
+</tr>
+<tr>
+<td>publicEndpoint</td>
+<td>If <code>true</code>, a client secret is required.  If <code>false</code>, no client secret is needed</td>
+</tr>
+<tr>
+<td>redirectURI</td>
+<td>List of URLs that are authorized for callback.  If a URL is provided by your application that isn't in this list SSO will fail</td>
+</tr>
+<tr>
+<td>signedUserInfo</td>
+<td>if <code>true</code>, the userinfo endpoint will return a signed JSON Web Token.  If <code>false</code> it will return plain JSON</td>
+</tr>
+<tr>
+<td>verifyRedirect</td>
+<td>If <code>true</code>, the redirect URL provided by the client <strong>MUST</strong> be listed in the <code>redirectURI</code> section.  Should <strong>ALLWAYS</strong> be <code>true</code> if not in a development environment</td>
+</tr>
+</tbody>
+</table>
+<p>Once the <code>Trust</code> has been created, the next step is to configure your application.  </p>
+<h3 id="configuring-your-application">Configuring Your Application</h3>
+<p>Once OpenUnison has been configured, the next step is to configure your application.  If your application is able to just accept an issuer, use the URL of your identity provider : <code>https://host.domain.com/auth/idp/k8sIdp</code> where <code>host.domain.com</code> is the host name for your OpenUnison instance.  You'll also suplly your <code>Trust</code>'s <code>clientId</code>, and if applicable the client secret you created.</p>
+<p>If your application can't lookup this information from the OpenID Connect discovry URL provided by OpenUnison, here are the URLs you can supply:</p>
+<table>
+<thead>
+<tr>
+<th>URL Type</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>issuer</td>
+<td>https://host.domain.com/auth/idp/k8sIdp</td>
+</tr>
+<tr>
+<td>authorization endpoint</td>
+<td>https://host.domain.com/auth/idp/k8sIdp/auth</td>
+</tr>
+<tr>
+<td>token endpoint</td>
+<td>https://host.domain.com/auth/idp/k8sIdp/token</td>
+</tr>
+<tr>
+<td>user info endpoint</td>
+<td>https://host.domain.com/auth/idp/k8sIdp/userinfo</td>
+</tr>
+</tbody>
+</table>
+<p>Again, replace <code>host.domain.com</code> with the host of your OpenUnison deployment.</p>
+<p>Finally you can also <a href="#adding-a-badge-to-the-portal">add a badge to the front page of your OpenUnison portal as well</a>.</p>
+<h2 id="creating-an-openid-connect-identity-provider">Creating an OpenID Connect Identity Provider</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4Vjz7OL5SHI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>There are multiple scenarios where you can't build a trust off of the trust built for your cluster:</p>
+<ul>
+<li>You need different groups or want to limit groups</li>
+<li>You need specific claims</li>
+<li>You need the existing claims to have different names</li>
+<li>You need to perform a just-in-time provisioning action to a trusted application</li>
+</ul>
+<p>In these situations, instead of creating a <code>Trust</code> object, you'll create an <code>Application</code> object that defines a brand new identity provider.  In this example, we'll create an identity provider for ArgoCD that will limit the groups sent to ArgoCD to only groups that start with <code>argocd-</code>.  Also, ArgoCD doesn't like groups from LDAP in distinguished name form, so we'll take just the common name element from the group.  Once we're done, a user with the groups:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cn=k8s-cluster-admins,ou=Groups,DC=domain,DC=com
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>cn=group2,ou=Groups,DC=domain,DC=com
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>cn=argocd-users,ou=Groups,DC=domain,DC=com
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>cn=argocd-admins,ou=Groups,DC=domain,DC=com
+</code></pre></div>
+<p>will only send</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>argocd-user
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>argocd-admins
+</code></pre></div>
+<p>to ArgoCD.  The first step is to create a custom <code>JavaScriptMapping</code> object.  Nearly every configuration in OpenUnison can be customized using some JavaScript.  Here's the mapping for our groups:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span>
+<span class="normal"><a href="#__codelineno-4-32">32</a></span>
+<span class="normal"><a href="#__codelineno-4-33">33</a></span>
+<span class="normal"><a href="#__codelineno-4-34">34</a></span>
+<span class="normal"><a href="#__codelineno-4-35">35</a></span>
+<span class="normal"><a href="#__codelineno-4-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nn">---</span><span class="w"></span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v1</span><span class="w"></span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">JavaScriptMapping</span><span class="w"></span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">argocd-groups</span><span class="w"></span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">  </span><span class="nt">javascript</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span><span class="w"></span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">    </span><span class="no">function doMapping(user,name) {</span><span class="w"></span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">      </span><span class="no">Attribute = Java.type(&quot;com.tremolosecurity.saml.Attribute&quot;);</span><span class="w"></span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">      </span><span class="no">// get the current groups from the user</span><span class="w"></span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">      </span><span class="no">var groups = user.getAttribs().get(&quot;groups&quot;).getValues()</span><span class="w"></span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">      </span><span class="no">// list of simple group names</span><span class="w"></span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">      </span><span class="no">simpleGroups = new Attribute(name);</span><span class="w"></span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">      </span><span class="no">// convert groups from LDAP DNs from Active Directory to standard group names</span><span class="w"></span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="w">      </span><span class="no">for (var i=0;i&lt;groups.length;i++) {</span><span class="w"></span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">        </span><span class="no">var group = groups.get(i);</span><span class="w"></span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">        </span><span class="no">// remove everything before the first &#39;=&#39; and after the first comma &#39;,&#39;</span><span class="w"></span>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">        </span><span class="no">// ex cn=my-group,dc=domain,dc=com --&gt; my-group</span><span class="w"></span>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="w">        </span><span class="no">var simpleGroupName = group.substring(group.indexOf(&#39;=&#39;) + 1, group.indexOf(&#39;,&#39;));</span><span class="w"></span>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a>
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a><span class="w">        </span><span class="no">// we only want to send argocd groups</span><span class="w"></span>
+<a id="__codelineno-4-28" name="__codelineno-4-28"></a><span class="w">        </span><span class="no">if (simpleGroupName.startsWith(&#39;argocd-&#39;)) {</span><span class="w"></span>
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a><span class="w">          </span><span class="no">simpleGroups.getValues().add(simpleGroupName);</span><span class="w"></span>
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a><span class="w">        </span><span class="no">}</span><span class="w"></span>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a><span class="w">      </span><span class="no">}</span><span class="w"></span>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a><span class="w">      </span><span class="no">return simpleGroups;</span><span class="w"></span>
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a><span class="w">    </span><span class="no">}</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Line Numbers</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 - 8</td>
+<td>The YAML used to define this mapping</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Function definition, every mapping must have a single function that takes two parameters: the user (<code>com.tremolosecurity.provisioning.core.User</code>) and the name of the attribute to create (<code>java.lang.String</code>).  This function must resturn an object of <code>com.tremolosecurity.saml.Attribute</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Make the type <code>com.tremolosecurity.saml.Attribute</code> accessible as <code>Attribute</code> in the javascript.  This can be done for any Java class</td>
+</tr>
+<tr>
+<td>13 - 31</td>
+<td>Perform our business logic</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Returns our new attribute</td>
+</tr>
+</tbody>
+</table>
+<p>Once the mapping is created, the next step is to define the <code>Application</code> object:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span>
+<span class="normal"><a href="#__codelineno-5-28">28</a></span>
+<span class="normal"><a href="#__codelineno-5-29">29</a></span>
+<span class="normal"><a href="#__codelineno-5-30">30</a></span>
+<span class="normal"><a href="#__codelineno-5-31">31</a></span>
+<span class="normal"><a href="#__codelineno-5-32">32</a></span>
+<span class="normal"><a href="#__codelineno-5-33">33</a></span>
+<span class="normal"><a href="#__codelineno-5-34">34</a></span>
+<span class="normal"><a href="#__codelineno-5-35">35</a></span>
+<span class="normal"><a href="#__codelineno-5-36">36</a></span>
+<span class="normal"><a href="#__codelineno-5-37">37</a></span>
+<span class="normal"><a href="#__codelineno-5-38">38</a></span>
+<span class="normal"><a href="#__codelineno-5-39">39</a></span>
+<span class="normal"><a href="#__codelineno-5-40">40</a></span>
+<span class="normal"><a href="#__codelineno-5-41">41</a></span>
+<span class="normal"><a href="#__codelineno-5-42">42</a></span>
+<span class="normal"><a href="#__codelineno-5-43">43</a></span>
+<span class="normal"><a href="#__codelineno-5-44">44</a></span>
+<span class="normal"><a href="#__codelineno-5-45">45</a></span>
+<span class="normal"><a href="#__codelineno-5-46">46</a></span>
+<span class="normal"><a href="#__codelineno-5-47">47</a></span>
+<span class="normal"><a href="#__codelineno-5-48">48</a></span>
+<span class="normal"><a href="#__codelineno-5-49">49</a></span>
+<span class="normal"><a href="#__codelineno-5-50">50</a></span>
+<span class="normal"><a href="#__codelineno-5-51">51</a></span>
+<span class="normal"><a href="#__codelineno-5-52">52</a></span>
+<span class="normal"><a href="#__codelineno-5-53">53</a></span>
+<span class="normal"><a href="#__codelineno-5-54">54</a></span>
+<span class="normal"><a href="#__codelineno-5-55">55</a></span>
+<span class="normal"><a href="#__codelineno-5-56">56</a></span>
+<span class="normal"><a href="#__codelineno-5-57">57</a></span>
+<span class="normal"><a href="#__codelineno-5-58">58</a></span>
+<span class="normal"><a href="#__codelineno-5-59">59</a></span>
+<span class="normal"><a href="#__codelineno-5-60">60</a></span>
+<span class="normal"><a href="#__codelineno-5-61">61</a></span>
+<span class="normal"><a href="#__codelineno-5-62">62</a></span>
+<span class="normal"><a href="#__codelineno-5-63">63</a></span>
+<span class="normal"><a href="#__codelineno-5-64">64</a></span>
+<span class="normal"><a href="#__codelineno-5-65">65</a></span>
+<span class="normal"><a href="#__codelineno-5-66">66</a></span>
+<span class="normal"><a href="#__codelineno-5-67">67</a></span>
+<span class="normal"><a href="#__codelineno-5-68">68</a></span>
+<span class="normal"><a href="#__codelineno-5-69">69</a></span>
+<span class="normal"><a href="#__codelineno-5-70">70</a></span>
+<span class="normal"><a href="#__codelineno-5-71">71</a></span>
+<span class="normal"><a href="#__codelineno-5-72">72</a></span>
+<span class="normal"><a href="#__codelineno-5-73">73</a></span>
+<span class="normal"><a href="#__codelineno-5-74">74</a></span>
+<span class="normal"><a href="#__codelineno-5-75">75</a></span>
+<span class="normal"><a href="#__codelineno-5-76">76</a></span>
+<span class="normal"><a href="#__codelineno-5-77">77</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nn">---</span><span class="w"></span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v2</span><span class="w"></span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Application</span><span class="w"></span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">    </span><span class="nt">app.kubernetes.io/component</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison-applications</span><span class="w"></span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">    </span><span class="nt">app.kubernetes.io/instance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison-orchestra-login-portal</span><span class="w"></span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">    </span><span class="nt">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">    </span><span class="nt">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">argocd</span><span class="w"></span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">  </span><span class="nt">azTimeoutMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span><span class="w"></span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">  </span><span class="nt">cookieConfig</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">    </span><span class="nt">cookiesEnabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">    </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#[OU_HOST]&#39;</span><span class="w"></span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="w">    </span><span class="nt">httpOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="w">    </span><span class="nt">keyAlias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">session-unison</span><span class="w"></span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="w">    </span><span class="nt">logoutURI</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/logout</span><span class="w"></span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="w">    </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1</span><span class="w"></span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a><span class="w">    </span><span class="nt">secure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a><span class="w">    </span><span class="nt">sessionCookieName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tremolosession</span><span class="w"></span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">900</span><span class="w"></span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="w">  </span><span class="nt">isApp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="w">  </span><span class="nt">urls</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">azRules</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">constraint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">o=Tremolo</span><span class="w"></span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a><span class="w">      </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dn</span><span class="w"></span>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a><span class="w">    </span><span class="nt">filterChain</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;#[OU_HOST]&#39;</span><span class="w"></span>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="w">    </span><span class="nt">idp</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a><span class="w">      </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">com.tremolosecurity.idp.providers.OpenIDConnectIdP</span><span class="w"></span>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a><span class="w">      </span><span class="nt">mappings</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a><span class="w">        </span><span class="nt">map</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-36" name="__codelineno-5-36"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sourceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user</span><span class="w"></span>
+<a id="__codelineno-5-37" name="__codelineno-5-37"></a><span class="w">          </span><span class="nt">targetAttributeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sub</span><span class="w"></span>
+<a id="__codelineno-5-38" name="__codelineno-5-38"></a><span class="w">          </span><span class="nt">targetAttributeSource</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sub</span><span class="w"></span>
+<a id="__codelineno-5-39" name="__codelineno-5-39"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sourceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">composite</span><span class="w"></span>
+<a id="__codelineno-5-40" name="__codelineno-5-40"></a><span class="w">          </span><span class="nt">targetAttributeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name</span><span class="w"></span>
+<a id="__codelineno-5-41" name="__codelineno-5-41"></a><span class="w">          </span><span class="nt">targetAttributeSource</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${givename} ${sn}</span><span class="w"></span>
+<a id="__codelineno-5-42" name="__codelineno-5-42"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sourceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user</span><span class="w"></span>
+<a id="__codelineno-5-43" name="__codelineno-5-43"></a><span class="w">          </span><span class="nt">targetAttributeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">preferred_username</span><span class="w"></span>
+<a id="__codelineno-5-44" name="__codelineno-5-44"></a><span class="w">          </span><span class="nt">targetAttributeSource</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uid</span><span class="w"></span>
+<a id="__codelineno-5-45" name="__codelineno-5-45"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sourceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user</span><span class="w"></span>
+<a id="__codelineno-5-46" name="__codelineno-5-46"></a><span class="w">          </span><span class="nt">targetAttributeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">email</span><span class="w"></span>
+<a id="__codelineno-5-47" name="__codelineno-5-47"></a><span class="w">          </span><span class="nt">targetAttributeSource</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mail</span><span class="w"></span>
+<a id="__codelineno-5-48" name="__codelineno-5-48"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sourceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom</span><span class="w"></span>
+<a id="__codelineno-5-49" name="__codelineno-5-49"></a><span class="w">          </span><span class="nt">targetAttributeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">groups</span><span class="w"></span>
+<a id="__codelineno-5-50" name="__codelineno-5-50"></a><span class="w">          </span><span class="nt">targetAttributeSource</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">com.tremolosecurity.mapping.JavaScriptMapping|k8s,openunison,argocd-groups</span><span class="w"></span>
+<a id="__codelineno-5-51" name="__codelineno-5-51"></a><span class="w">        </span><span class="nt">strict</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-5-52" name="__codelineno-5-52"></a><span class="w">      </span><span class="nt">params</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-53" name="__codelineno-5-53"></a><span class="w">        </span><span class="nt">jwtSigningKey</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unison-saml2-rp-sig</span><span class="w"></span>
+<a id="__codelineno-5-54" name="__codelineno-5-54"></a><span class="w">        </span><span class="nt">k8sNameSpace</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;openunison&#39;</span><span class="w"></span>
+<a id="__codelineno-5-55" name="__codelineno-5-55"></a><span class="w">        </span><span class="nt">k8sTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s</span><span class="w"></span>
+<a id="__codelineno-5-56" name="__codelineno-5-56"></a><span class="w">        </span><span class="nt">sessionStoreClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">com.tremolosecurity.oidc.k8s.K8sSessionStore</span><span class="w"></span>
+<a id="__codelineno-5-57" name="__codelineno-5-57"></a><span class="w">      </span><span class="nt">trusts</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-58" name="__codelineno-5-58"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://argocd.apps.192-168-2-104.nip.io/&#39;</span><span class="w"></span>
+<a id="__codelineno-5-59" name="__codelineno-5-59"></a><span class="w">        </span><span class="nt">params</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-60" name="__codelineno-5-60"></a><span class="w">          </span><span class="nt">accessTokenSkewMillis</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;120000&quot;</span><span class="w"></span>
+<a id="__codelineno-5-61" name="__codelineno-5-61"></a><span class="w">          </span><span class="nt">accessTokenTimeToLive</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;60000&#39;</span><span class="w"></span>
+<a id="__codelineno-5-62" name="__codelineno-5-62"></a><span class="w">          </span><span class="nt">authChainName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">login-service</span><span class="w"></span>
+<a id="__codelineno-5-63" name="__codelineno-5-63"></a><span class="w">          </span><span class="nt">clientID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">argocd-argocdweb</span><span class="w"></span>
+<a id="__codelineno-5-64" name="__codelineno-5-64"></a><span class="w">          </span><span class="nt">codeLastMileKeyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lastmile-oidc</span><span class="w"></span>
+<a id="__codelineno-5-65" name="__codelineno-5-65"></a><span class="w">          </span><span class="nt">codeTokenSkewMilis</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;60000&#39;</span><span class="w"></span>
+<a id="__codelineno-5-66" name="__codelineno-5-66"></a><span class="w">          </span><span class="nt">publicEndpoint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"></span>
+<a id="__codelineno-5-67" name="__codelineno-5-67"></a><span class="w">          </span><span class="nt">redirectURI</span><span class="p">:</span><span class="w"> </span>
+<a id="__codelineno-5-68" name="__codelineno-5-68"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://argocd.apps.192-168-2-104.nip.io/auth/callback</span><span class="w"></span>
+<a id="__codelineno-5-69" name="__codelineno-5-69"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:8085/auth/callback</span><span class="w"></span>
+<a id="__codelineno-5-70" name="__codelineno-5-70"></a><span class="w">        </span><span class="nt">secretParams</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-71" name="__codelineno-5-71"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clientSecret</span><span class="w"></span>
+<a id="__codelineno-5-72" name="__codelineno-5-72"></a><span class="w">          </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">orchestra-secrets-source</span><span class="w"></span>
+<a id="__codelineno-5-73" name="__codelineno-5-73"></a><span class="w">          </span><span class="nt">secretKey</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">K8S_DB_SECRET</span><span class="w"></span>
+<a id="__codelineno-5-74" name="__codelineno-5-74"></a><span class="w">    </span><span class="nt">results</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-5-75" name="__codelineno-5-75"></a><span class="w">      </span><span class="nt">auFail</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default-login-failure</span><span class="w"></span>
+<a id="__codelineno-5-76" name="__codelineno-5-76"></a><span class="w">      </span><span class="nt">azFail</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default-login-failure</span><span class="w"></span>
+<a id="__codelineno-5-77" name="__codelineno-5-77"></a><span class="w">    </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/auth/idp/argocd</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+<p>Here's the explination of each part of this configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Lines</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 - 12</td>
+<td>Standard kubernetes metadata</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Determines how long authorization decisions should be cached.  Should generally not be changes and should only be as long as it typically takes a single action (such as an API or page load) to complete</td>
+</tr>
+<tr>
+<td>14 - 23</td>
+<td>Determines how the user's session cookie should be configured.  This section should generally be left unchanged when working with Kubernetes</td>
+</tr>
+<tr>
+<td>24</td>
+<td>This tells OpenUnison this applications is an identity provider, not a reverse proxy</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Every <code>Application</code> in OpenUnison is made of multiple <code>url</code> entries.  Identity providers, like this one, only have one URL definition.</td>
+</tr>
+<tr>
+<td>26 - 28</td>
+<td>Each URL can have its own authorization rules (<code>azRules</code>).  An authorization rule is made of a <code>scope</code> (one of <code>dn</code>,<code>group</code>,<code>filter</code>,<code>custom</code>) and a <code>constraint</code>, which defines what the rule is.  The combination of <code>dn</code> and <code>o=Tremolo</code> tells OpenUnison to authorize any user in the internal LDAP virtual directory.  If you wanted to only allow users in the group <code>cn=argocd-users,ou=Groups,DC=domain,DC=com</code> you would use <code>filter</code> as the <code>scope</code> and <code>(groups=cn=argocd-users,ou=Groups,DC=domain,DC=com)</code> as the <code>constraint</code> because OpenUnison internally represents groups in the Kubernetes integration as attributes instead of seperate objects. Multipls rules may be listed.  If <strong><em>ANY</em></strong> rule passes, the url is authorized</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Customizations can be done here to impect the request and response.  For identity providers, this is generally not needed</td>
+</tr>
+<tr>
+<td>30 - 31</td>
+<td>URLs need specific hosts to be associated with.  This is generally left unchanged</td>
+</tr>
+<tr>
+<td>32 - 77</td>
+<td>The <code>idp</code> section is where you define the details for your identity provider</td>
+</tr>
+<tr>
+<td>33</td>
+<td>The <code>className</code> should not change</td>
+</tr>
+<tr>
+<td>34 - 51</td>
+<td>The <code>mappings</code> section defines which claims, or attributes, will be included in the <code>id_token</code> provided to your application.  These same claims are provided by the <code>user_info</code> endpoint.  OpenUnison makes no distinction between the attributes in the <code>id_token</code> vs <code>user_info</code> endpoint.  Each claim has three attributes.  The <code>sourceType</code> can be a <code>user</code>, <code>composite</code>, <code>static</code>, or <code>custom</code>.  When <code>user</code>, the claim is pulled straight for the user's object based on the <code>targetAttributeSource</code> attribute.  If <code>static</code>, the <code>targetAttributeSource</code> is taken as is.  If <code>composite</code>, the <code>targetAttributeSource</code> provides attributes and text from the user.  Finally, <code>custom</code> lets you define a custom implmenetation.  For <code>groups</code>, the <code>targetAttributeSource</code> is <code>com.tremolosecurity.mapping.JavaScriptMapping|k8s,openunison,argocd-groups</code>.  The <code>com.tremolosecurity.mapping.JavaScriptMapping|</code> generally won't change.  The <code>k8s</code> tells OpenUnison which cluster to pull the mapping from.  <code>openunison</code> is the namespace and finally <code>argocd-groups</code> is the <code>JavaScriptMapping</code> defined earlier. Finally, <code>strict</code> tells OpenUnison to only include the attributes specifically defined here.  In general this should be <code>true</code></td>
+</tr>
+<tr>
+<td>52 - 56</td>
+<td>This section defines parameters for the identity provider and should generally be left unchanged.</td>
+</tr>
+<tr>
+<td>57 -73</td>
+<td>The <code>trusts</code> section is where you define which applications will trust this identity provdier.  This has the same options as a <code>Trust</code> object.</td>
+</tr>
+<tr>
+<td>70 - 73</td>
+<td>Each trust can provide a list of <code>secretParams</code> that references external <code>Secret</code> objects instead of local configuration.</td>
+</tr>
+<tr>
+<td>74 - 76</td>
+<td>The <code>results</code> section defines what happens in response to certain events.  Here, in response to the <code>auFail</code> and <code>azFail</code> events, the user is redirected to an invalid credentials page</td>
+</tr>
+<tr>
+<td>77</td>
+<td>The <code>uri</code> tells OpenUnison how to access this identity provider.  It will always follow the pattern <code>/auth/idp/appname</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Once your <code>Application</code> is deployed, you can test it without any kind of container restart.  Once you're tested, you can also <a href="#adding-a-badge-to-the-portal">add a badge to the front page of your OpenUnison portal as well</a>.</p>
+<h2 id="creating-a-saml2-identity-provider">Creating a SAML2 Identity Provider</h2>
+<h2 id="using-a-reverse-proxy-application">Using a Reverse Proxy Application</h2>
+<p>In addition to acting as an identity provider for applications that know how to authenticate via OpenID Connect and SAML2, OpenUnison can replace your oauth2 proxy for applications and integrate directly.  When integrating an application using OpenUnison's reverse proxy, the first step is to determine if your application can use your existing OpenUnison host name, or if it needs its own.  As an example, Prometheus can either run off the root of your host (<code>/</code>), or you can configure it to have a prefix URL such as <code>/prometheus</code>.  This section will walk through both scenarios.</p>
+<h3 id="using-openunisons-host">Using OpenUnison's Host</h3>
+<p>This is the easier of the two scenarios.  Similar to identity providers, Prometheus will be integrated using an <code>Application</code> object.  First, configure your Prometheus to use the correct external URL and prefix.  For instance, if your OpenUnison is configured to run on <code>openunison.domain.com</code> make sure your Promtheus <code>StatefulSet</code> has the following configureation parameters:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;--web.external-url=https://openunison.domain.com/prometheus&#39;</span><span class="w"></span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;--web.route-prefix=/prometheus/&#39;</span><span class="w"></span>
+</code></pre></div>
+<p>Next, create the below object in your cluster:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span>
+<span class="normal"><a href="#__codelineno-7-26">26</a></span>
+<span class="normal"><a href="#__codelineno-7-27">27</a></span>
+<span class="normal"><a href="#__codelineno-7-28">28</a></span>
+<span class="normal"><a href="#__codelineno-7-29">29</a></span>
+<span class="normal"><a href="#__codelineno-7-30">30</a></span>
+<span class="normal"><a href="#__codelineno-7-31">31</a></span>
+<span class="normal"><a href="#__codelineno-7-32">32</a></span>
+<span class="normal"><a href="#__codelineno-7-33">33</a></span>
+<span class="normal"><a href="#__codelineno-7-34">34</a></span>
+<span class="normal"><a href="#__codelineno-7-35">35</a></span>
+<span class="normal"><a href="#__codelineno-7-36">36</a></span>
+<span class="normal"><a href="#__codelineno-7-37">37</a></span>
+<span class="normal"><a href="#__codelineno-7-38">38</a></span>
+<span class="normal"><a href="#__codelineno-7-39">39</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nn">---</span><span class="w"></span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v2</span><span class="w"></span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Application</span><span class="w"></span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus</span><span class="w"></span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">  </span><span class="nt">azTimeoutMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span><span class="w"></span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w">  </span><span class="nt">isApp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="w">  </span><span class="nt">urls</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;#[OU_HOST]&quot;</span><span class="w"></span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">    </span><span class="nt">filterChain</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">com.tremolosecurity.proxy.filters.XForward</span><span class="w"></span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">      </span><span class="nt">params</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="w">        </span><span class="nt">createHeaders</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"></span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">com.tremolosecurity.proxy.filters.HideCookie</span><span class="w"></span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="w">      </span><span class="nt">params</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="w">    </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/prometheus&quot;</span><span class="w"></span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a><span class="w">    </span><span class="nt">proxyTo</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://prom-stack-kube-prometheus-prometheus.monitoring.svc:9090${fullURI}&quot;</span><span class="w"></span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="w">    </span><span class="nt">authChain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">login-service</span><span class="w"></span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="w">    </span><span class="nt">azRules</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dn</span><span class="w"></span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="w">      </span><span class="nt">constraint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">o=Tremolo</span><span class="w"></span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a><span class="w">    </span><span class="nt">results</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a><span class="w">      </span><span class="nt">azFail</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default-login-failure</span><span class="w"></span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a><span class="w">    </span><span class="nt">overrideHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a><span class="w">    </span><span class="nt">overrideReferer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a><span class="w">    </span><span class="nt">proxyConfiguration</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-30" name="__codelineno-7-30"></a><span class="w">      </span><span class="nt">connectionTimeoutMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span><span class="w"></span>
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a><span class="w">      </span><span class="nt">requestTimeoutMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span><span class="w"></span>
+<a id="__codelineno-7-32" name="__codelineno-7-32"></a><span class="w">      </span><span class="nt">socketTimeoutMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span><span class="w"></span>
+<a id="__codelineno-7-33" name="__codelineno-7-33"></a><span class="w">  </span><span class="nt">cookieConfig</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-7-34" name="__codelineno-7-34"></a><span class="w">    </span><span class="nt">sessionCookieName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tremolosession</span><span class="w"></span>
+<a id="__codelineno-7-35" name="__codelineno-7-35"></a><span class="w">    </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#[OU_HOST]&quot;</span><span class="w"></span>
+<a id="__codelineno-7-36" name="__codelineno-7-36"></a><span class="w">    </span><span class="nt">secure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-7-37" name="__codelineno-7-37"></a><span class="w">    </span><span class="nt">httpOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-7-38" name="__codelineno-7-38"></a><span class="w">    </span><span class="nt">logoutURI</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/logout&quot;</span><span class="w"></span>
+<a id="__codelineno-7-39" name="__codelineno-7-39"></a><span class="w">    </span><span class="nt">keyAlias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">session-unison</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+<p>Here is the details of this configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Lines</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 - 7</td>
+<td>Standard kubernetes metadata</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Determines how long authorization decisions should be cached.  Should generally not be changes and should only be as long as it typically takes a single action (such as an API or page load) to complete</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Every <code>Application</code> in OpenUnison is made of multiple <code>url</code> entries.  Prometheus only requires a single url but this could be used for different urls in your application if needed</td>
+</tr>
+<tr>
+<td>11 - 12</td>
+<td>URLs need specific hosts to be associated with.  This is left unchanged in this use case</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Applications can have a chain of filters that an act on headers and requested cookies as well as influence which cookies and headers are returned</td>
+</tr>
+<tr>
+<td>14</td>
+<td>The <code>XForward</code> filter injects the original host name as the <code>X-FORWARDED-FOR</code> header.  It will also set <code>X-FORWARDED-PROTO</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td>The 'HideCookies' filter will keep an application's own cookies in OpenUnison's internal session without ever sending them to the browser.</td>
+</tr>
+<tr>
+<td>19</td>
+<td>The <code>uri</code> tells OpenUnison how to access this application.  In this instance, any URLs that start with <code>/prometheus</code> will be forewarded to this <code>Application</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>This line tells OpenUnison where to forward requests to.  Add <code>${fullURI}</code> to get the originaly requested URI</td>
+</tr>
+<tr>
+<td>21</td>
+<td>The <code>auth-chain</code> is the name of an <code>AuthChain</code> object the URL will require for authentication.  In this use-case, do not change</td>
+</tr>
+<tr>
+<td>22 - 24</td>
+<td>Each URL can have its own authorization rules (<code>azRules</code>).  An authorization rule is made of a <code>scope</code> (one of <code>dn</code>,<code>group</code>,<code>filter</code>,<code>custom</code>) and a <code>constraint</code>, which defines what the rule is.  The combination of <code>dn</code> and <code>o=Tremolo</code> tells OpenUnison to authorize any user in the internal LDAP virtual directory.  If you wanted to only allow users in the group <code>cn=argocd-users,ou=Groups,DC=domain,DC=com</code> you would use <code>filter</code> as the <code>scope</code> and <code>(groups=cn=argocd-users,ou=Groups,DC=domain,DC=com)</code> as the <code>constraint</code> because OpenUnison internally represents groups in the Kubernetes integration as attributes instead of seperate objects. Multipls rules may be listed.  If <strong><em>ANY</em></strong> rule passes, the url is authorized</td>
+</tr>
+<tr>
+<td>25 - 26</td>
+<td>The <code>results</code> section defines what happens in response to certain events.  Here, in response to the <code>auFail</code> and <code>azFail</code> events, the user is redirected to an invalid credentials page</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Tells OpenUnison to send the host defined in the requested URL in the <code>HOST</code> header, usually set to <code>true</code></td>
+</tr>
+<tr>
+<td>28</td>
+<td>Tells OpenUnison to update the host in redirects to what is the requested URL, usually set to <code>true</code></td>
+</tr>
+<tr>
+<td>29 - 32</td>
+<td>Provide OpenUnison with custom timeouts for your application.  Setting these timeouts will help if applications take too long to respond</td>
+</tr>
+<tr>
+<td>33 - 39</td>
+<td>Determines how the user's session cookie should be configured.  This section should generally be left unchanged when working with Kubernetes</td>
+</tr>
+</tbody>
+</table>
+<p>Once the <code>Application</code> object has been added to the <code>openunison</code> namespace, you can access Prometheus by going to <code>https://openunison.domain.com/prometheus</code>.  There's no need to create any new <code>Ingress</code> objects because you're re-using OpenUnison's own existing <code>Ingress</code>.  </p>
+<p>Finallly, you'll want to <a href="#adding-a-badge-to-the-portal">add a badge to your portal</a> so users can access Prometheus without having to memorize the URL.</p>
+<h3 id="using-a-new-host">Using a New Host</h3>
+<p>If your application can't use OpenUnison's current host name, you can still configure OpenUnison to provide authentication and authorization for your application.  There are a couple of additional steps:</p>
+<ol>
+<li>Define an <code>AuthChain</code> that trusts OpenUnison's kubernetes identity provider</li>
+<li>Create an <code>Application</code> that references this new <code>AuthenticaionChain</code></li>
+<li>Create a <code>Trust</code> object that binds the <code>AuthChain</code> and the Kubernetes identity provider</li>
+<li>Create an <code>Ingress</code> object</li>
+</ol>
+<p>As an example, we'll configure a Prometheus instance that's running on its own host name - <code>prometheus.domain.com</code>.  The Promtheus <code>StatefulSet</code> has the following configureation parameters:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;--web.external-url=https://prometheus.domain.com/&#39;</span><span class="w"></span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;--web.route-prefix=/&#39;</span><span class="w"></span>
+</code></pre></div>
+<p>First, we'll define an <code>AuthChain</code>.  OpenUnison uses an <code>AuthChain</code> to create a sequence of <code>AuthMechs</code> to authenticate a user.  You generally won't need to worry aobut defining your own <code>AuthMech</code> objects.  Create this object in the <code>openunison</code> namespace:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span>
+<span class="normal"><a href="#__codelineno-9-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v1</span><span class="w"></span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AuthenticationChain</span><span class="w"></span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus-oidc</span><span class="w"></span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">  </span><span class="nt">authMechs</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oidc</span><span class="w"></span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="w">    </span><span class="nt">params</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="w">      </span><span class="nt">bearerTokenName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus-ou</span><span class="w"></span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="w">      </span><span class="nt">clientid</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus</span><span class="w"></span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="w">      </span><span class="nt">defaultObjectClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inetOrgPerson</span><span class="w"></span>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="w">      </span><span class="nt">hd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="w">      </span><span class="nt">idpURL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://#[OU_HOST]/auth/idp/k8sIdp/auth</span><span class="w"></span>
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="w">      </span><span class="nt">jwtTokenAttributeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">id_token</span><span class="w"></span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="w">      </span><span class="nt">linkToDirectory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"></span>
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="w">      </span><span class="nt">loadTokenURL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://#[OU_HOST]/auth/idp/k8sIdp/token</span><span class="w"></span>
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="w">      </span><span class="nt">lookupFilter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">(sub=${sub})</span><span class="w"></span>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="w">      </span><span class="nt">noMatchOU</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oidc</span><span class="w"></span>
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a><span class="w">      </span><span class="nt">responseType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">code</span><span class="w"></span>
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="w">      </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openid name offline</span><span class="w"></span>
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="w">      </span><span class="nt">uidAttr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sub</span><span class="w"></span>
+<a id="__codelineno-9-23" name="__codelineno-9-23"></a><span class="w">      </span><span class="nt">userLookupClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">com.tremolosecurity.unison.proxy.auth.openidconnect.loadUser.LoadJWTFromAccessToken</span><span class="w"></span>
+<a id="__codelineno-9-24" name="__codelineno-9-24"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">required</span><span class="w"></span>
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a><span class="w">    </span><span class="nt">secretParams</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">secretid</span><span class="w"></span>
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a><span class="w">      </span><span class="nt">secretKey</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">K8S_DB_SECRET</span><span class="w"></span>
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a><span class="w">      </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">orchestra-secrets-source</span><span class="w"></span>
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a><span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span><span class="w"></span>
+<a id="__codelineno-9-30" name="__codelineno-9-30"></a><span class="w">  </span><span class="nt">root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">o=Tremolo</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+<p>Here are the details of the configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Lines</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 - 5</td>
+<td>Standard kubernetes metadata</td>
+</tr>
+<tr>
+<td>7 - 28</td>
+<td>Defines each step in the chain referencing an <code>AuthMech</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>The name of the <code>AuthMech</code> to use, in this case <code>oidc</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>The name of the resulting <code>id_token</code> in a filter's request object</td>
+</tr>
+<tr>
+<td>11</td>
+<td>The <code>clientid</code> that will be defined in our <code>Trust</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>If a user can't be found, the default objectClass, should not be changed</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Only used with Google as an identity provider</td>
+</tr>
+<tr>
+<td>14</td>
+<td>The idp authorization URL</td>
+</tr>
+<tr>
+<td>15</td>
+<td>The attribute with the id_token in the response, do not change</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Determines if OpenUnison should link the account with an internal directory object, keep <code>true</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td>The IdP's token URL, do not change</td>
+</tr>
+<tr>
+<td>18 - 23</td>
+<td>How OpenUnison should find the user, do not change</td>
+</tr>
+<tr>
+<td>24</td>
+<td>If the <code>AuthMech</code> is optional, do not change</td>
+</tr>
+<tr>
+<td>25 - 28</td>
+<td>List of parameters that will be pulled from a <code>Secret</code>.  Our configuration pulls the same <code>Secret</code> that was created for the dashboard trust</td>
+</tr>
+<tr>
+<td>29</td>
+<td>The authentication level, useful when you have multiple forms of authentication.  Do not change</td>
+</tr>
+<tr>
+<td>30</td>
+<td>The search root inside of OpenUnison's internal LDAP virtual directory, do not change</td>
+</tr>
+</tbody>
+</table>
+<p>Next, create the <code>Application</code> object:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span>
+<span class="normal"><a href="#__codelineno-10-21">21</a></span>
+<span class="normal"><a href="#__codelineno-10-22">22</a></span>
+<span class="normal"><a href="#__codelineno-10-23">23</a></span>
+<span class="normal"><a href="#__codelineno-10-24">24</a></span>
+<span class="normal"><a href="#__codelineno-10-25">25</a></span>
+<span class="normal"><a href="#__codelineno-10-26">26</a></span>
+<span class="normal"><a href="#__codelineno-10-27">27</a></span>
+<span class="normal"><a href="#__codelineno-10-28">28</a></span>
+<span class="normal"><a href="#__codelineno-10-29">29</a></span>
+<span class="normal"><a href="#__codelineno-10-30">30</a></span>
+<span class="normal"><a href="#__codelineno-10-31">31</a></span>
+<span class="normal"><a href="#__codelineno-10-32">32</a></span>
+<span class="normal"><a href="#__codelineno-10-33">33</a></span>
+<span class="normal"><a href="#__codelineno-10-34">34</a></span>
+<span class="normal"><a href="#__codelineno-10-35">35</a></span>
+<span class="normal"><a href="#__codelineno-10-36">36</a></span>
+<span class="normal"><a href="#__codelineno-10-37">37</a></span>
+<span class="normal"><a href="#__codelineno-10-38">38</a></span>
+<span class="normal"><a href="#__codelineno-10-39">39</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nn">---</span><span class="w"></span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v2</span><span class="w"></span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Application</span><span class="w"></span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus</span><span class="w"></span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="w">  </span><span class="nt">azTimeoutMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span><span class="w"></span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="w">  </span><span class="nt">isApp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="w">  </span><span class="nt">urls</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus.domain.com</span><span class="w"></span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="w">    </span><span class="nt">filterChain</span><span class="p">:</span><span class="w">  </span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">com.tremolosecurity.proxy.filters.XForward</span><span class="w"></span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="w">      </span><span class="nt">params</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a><span class="w">        </span><span class="nt">createHeaders</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"></span>
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">com.tremolosecurity.proxy.filters.HideCookie</span><span class="w"></span>
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="w">      </span><span class="nt">params</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a><span class="w">    </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="w"></span>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a><span class="w">    </span><span class="nt">proxyTo</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://prom-stack-kube-prometheus-prometheus.monitoring.svc:9090${fullURI}&quot;</span><span class="w"></span>
+<a id="__codelineno-10-21" name="__codelineno-10-21"></a><span class="w">    </span><span class="nt">authChain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus-oidc</span><span class="w"></span>
+<a id="__codelineno-10-22" name="__codelineno-10-22"></a><span class="w">    </span><span class="nt">azRules</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-10-23" name="__codelineno-10-23"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dn</span><span class="w"></span>
+<a id="__codelineno-10-24" name="__codelineno-10-24"></a><span class="w">      </span><span class="nt">constraint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">o=Tremolo</span><span class="w"></span>
+<a id="__codelineno-10-25" name="__codelineno-10-25"></a><span class="w">    </span><span class="nt">results</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-10-26" name="__codelineno-10-26"></a><span class="w">      </span><span class="nt">azFail</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default-login-failure</span><span class="w"></span>
+<a id="__codelineno-10-27" name="__codelineno-10-27"></a><span class="w">    </span><span class="nt">overrideHost</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-10-28" name="__codelineno-10-28"></a><span class="w">    </span><span class="nt">overrideReferer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-10-29" name="__codelineno-10-29"></a><span class="w">    </span><span class="nt">proxyConfiguration</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-10-30" name="__codelineno-10-30"></a><span class="w">      </span><span class="nt">connectionTimeoutMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span><span class="w"></span>
+<a id="__codelineno-10-31" name="__codelineno-10-31"></a><span class="w">      </span><span class="nt">requestTimeoutMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span><span class="w"></span>
+<a id="__codelineno-10-32" name="__codelineno-10-32"></a><span class="w">      </span><span class="nt">socketTimeoutMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span><span class="w"></span>
+<a id="__codelineno-10-33" name="__codelineno-10-33"></a><span class="w">  </span><span class="nt">cookieConfig</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-10-34" name="__codelineno-10-34"></a><span class="w">    </span><span class="nt">sessionCookieName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tremolosession</span><span class="w"></span>
+<a id="__codelineno-10-35" name="__codelineno-10-35"></a><span class="w">    </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;prometheus.domain.com&quot;</span><span class="w"></span>
+<a id="__codelineno-10-36" name="__codelineno-10-36"></a><span class="w">    </span><span class="nt">secure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-10-37" name="__codelineno-10-37"></a><span class="w">    </span><span class="nt">httpOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-10-38" name="__codelineno-10-38"></a><span class="w">    </span><span class="nt">logoutURI</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/logout&quot;</span><span class="w"></span>
+<a id="__codelineno-10-39" name="__codelineno-10-39"></a><span class="w">    </span><span class="nt">keyAlias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">session-unison</span><span class="w"></span>
+</code></pre></div></td></tr></table></div>
+<p>Here is the details of this configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Lines</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 - 7</td>
+<td>Standard kubernetes metadata</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Determines how long authorization decisions should be cached.  Should generally not be changes and should only be as long as it typically takes a single action (such as an API or page load) to complete</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Every <code>Application</code> in OpenUnison is made of multiple <code>url</code> entries.  Prometheus only requires a single url but this could be used for different urls in your application if needed</td>
+</tr>
+<tr>
+<td>11 - 12</td>
+<td>URLs need specific hosts to be associated with.  This needs to be the host name you want to use to access your application</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Applications can have a chain of filters that an act on headers and requested cookies as well as influence which cookies and headers are returned</td>
+</tr>
+<tr>
+<td>14</td>
+<td>The <code>XForward</code> filter injects the original host name as the <code>X-FORWARDED-FOR</code> header.  It will also set <code>X-FORWARDED-PROTO</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td>The 'HideCookies' filter will keep an application's own cookies in OpenUnison's internal session without ever sending them to the browser.</td>
+</tr>
+<tr>
+<td>19</td>
+<td>The <code>uri</code> tells OpenUnison how to access this application.  In this instance, any URLs that start with <code>/</code> will be forewarded to this <code>Application</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>This line tells OpenUnison where to forward requests to.  Add <code>${fullURI}</code> to get the originaly requested URI</td>
+</tr>
+<tr>
+<td>21</td>
+<td>The <code>auth-chain</code> is the name of an <code>AuthChain</code> object the URL will require for authentication.  In this use-case, use <code>prometheus-oidc</code> to reference the chain created above</td>
+</tr>
+<tr>
+<td>22 - 24</td>
+<td>Each URL can have its own authorization rules (<code>azRules</code>).  An authorization rule is made of a <code>scope</code> (one of <code>dn</code>,<code>group</code>,<code>filter</code>,<code>custom</code>) and a <code>constraint</code>, which defines what the rule is.  The combination of <code>dn</code> and <code>o=Tremolo</code> tells OpenUnison to authorize any user in the internal LDAP virtual directory.  If you wanted to only allow users in the group <code>cn=argocd-users,ou=Groups,DC=domain,DC=com</code> you would use <code>filter</code> as the <code>scope</code> and <code>(groups=cn=argocd-users,ou=Groups,DC=domain,DC=com)</code> as the <code>constraint</code> because OpenUnison internally represents groups in the Kubernetes integration as attributes instead of seperate objects. Multipls rules may be listed.  If <strong><em>ANY</em></strong> rule passes, the url is authorized</td>
+</tr>
+<tr>
+<td>25 - 26</td>
+<td>The <code>results</code> section defines what happens in response to certain events.  Here, in response to the <code>auFail</code> and <code>azFail</code> events, the user is redirected to an invalid credentials page</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Tells OpenUnison to send the host defined in the requested URL in the <code>HOST</code> header, usually set to <code>true</code></td>
+</tr>
+<tr>
+<td>28</td>
+<td>Tells OpenUnison to update the host in redirects to what is the requested URL, usually set to <code>true</code></td>
+</tr>
+<tr>
+<td>29 - 32</td>
+<td>Provide OpenUnison with custom timeouts for your application.  Setting these timeouts will help if applications take too long to respond</td>
+</tr>
+<tr>
+<td>33 - 39</td>
+<td>Determines how the user's session cookie should be configured.  This section should generally be left unchanged when working with Kubernetes</td>
+</tr>
+</tbody>
+</table>
+<p>Next, create a <code>Trust</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v1</span><span class="w"></span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Trust</span><span class="w"></span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="nt">app.kubernetes.io/name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="nt">app.kubernetes.io/instance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison-orchestra</span><span class="w"></span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span><span class="nt">app.kubernetes.io/component</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus</span><span class="w"></span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="nt">app.kubernetes.io/part-of</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus</span><span class="w"></span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">  </span><span class="nt">accessTokenSkewMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120000</span><span class="w"></span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">  </span><span class="nt">accessTokenTimeToLive</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60000</span><span class="w"></span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">  </span><span class="nt">authChainName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">login-service</span><span class="w"></span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">  </span><span class="nt">clientId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus</span><span class="w"></span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">  </span><span class="nt">clientSecret</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">    </span><span class="nt">keyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">K8S_DB_SECRET</span><span class="w"></span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">    </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">orchestra-secrets-source</span><span class="w"></span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">  </span><span class="nt">codeLastMileKeyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lastmile-oidc</span><span class="w"></span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">  </span><span class="nt">codeTokenSkewMilis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60000</span><span class="w"></span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">  </span><span class="nt">publicEndpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">  </span><span class="nt">redirectURI</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://prometheus.domain.com/auth/oidc</span><span class="w"></span>
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">  </span><span class="nt">signedUserInfo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">  </span><span class="nt">verifyRedirect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+</code></pre></div>
+<p>Here are the details:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Desription</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>accessTokenSkewMillis</td>
+<td>Milliseconds milliseconds added to account for clock skew</td>
+</tr>
+<tr>
+<td>accessTokenTimeToLive</td>
+<td>Time an access token should live in milliseconds</td>
+</tr>
+<tr>
+<td>authChainName</td>
+<td>The authentication chain to use for login, do not change</td>
+</tr>
+<tr>
+<td>clientId</td>
+<td>The client id shared by your application</td>
+</tr>
+<tr>
+<td>clientSecret.scretName</td>
+<td>If using a client secret, the name of the <code>Secret</code> storing the client secret</td>
+</tr>
+<tr>
+<td>clientSecret.keyName</td>
+<td>The key in the <code>data</code> section of the <code>Secret</code> storing the client secret</td>
+</tr>
+<tr>
+<td>codeLastMileKeyName</td>
+<td>The name of the key used to encrypt the code token, do not change</td>
+</tr>
+<tr>
+<td>codeTokenSkewMilis</td>
+<td>Milliseconds to add to code token lifetime to account for clock skew</td>
+</tr>
+<tr>
+<td>publicEndpoint</td>
+<td>If <code>true</code>, a client secret is required.  If <code>false</code>, no client secret is needed</td>
+</tr>
+<tr>
+<td>redirectURI</td>
+<td>List of URLs that are authorized for callback.  If a URL is provided by your application that isn't in this list SSO will fail</td>
+</tr>
+<tr>
+<td>signedUserInfo</td>
+<td>if <code>true</code>, the userinfo endpoint will return a signed JSON Web Token.  If <code>false</code> it will return plain JSON</td>
+</tr>
+<tr>
+<td>verifyRedirect</td>
+<td>If <code>true</code>, the redirect URL provided by the client <strong>MUST</strong> be listed in the <code>redirectURI</code> section.  Should <strong>ALLWAYS</strong> be <code>true</code> if not in a development environment</td>
+</tr>
+</tbody>
+</table>
+<p>Finally, create an <code>Ingress</code> object for your new application that reference's OpenUnison's <code>Service</code>.  The best option is to get the source for the <code>openunison-orchestra</code> object and customize it for your new application in a new <code>Ingress</code> object.  For instance, with an NGINX Ingress Controller:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span><span class="w"></span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span><span class="w"></span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nt">kubernetes.io/ingress.class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span><span class="w"></span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span><span class="nt">nginx.ingress.kubernetes.io/affinity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cookie</span><span class="w"></span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="nt">nginx.ingress.kubernetes.io/backend-protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https</span><span class="w"></span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="nt">nginx.ingress.kubernetes.io/secure-backends</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"></span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="nt">nginx.ingress.kubernetes.io/session-cookie-hash</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sha1</span><span class="w"></span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">    </span><span class="nt">nginx.ingress.kubernetes.io/session-cookie-name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison-orchestra</span><span class="w"></span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">    </span><span class="nt">nginx.org/ssl-services</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison-orchestra</span><span class="w"></span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus</span><span class="w"></span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">  </span><span class="nt">rules</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus.domain.com</span><span class="w"></span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">    </span><span class="nt">http</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">      </span><span class="nt">paths</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">backend</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="w">          </span><span class="nt">service</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison-orchestra</span><span class="w"></span>
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="w">            </span><span class="nt">port</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="w">              </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span><span class="w"></span>
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/</span><span class="w"></span>
+<a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="w">        </span><span class="nt">pathType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prefix</span><span class="w"></span>
+<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="w">  </span><span class="nt">tls</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prometheus.domain.com</span><span class="w"></span>
+<a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a><span class="w">    </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ou-tls-certificate</span><span class="w"></span>
+</code></pre></div>
+<p>Once the <code>Ingress</code> object has been added to the <code>openunison</code> namespace, you can access Prometheus by going to <code>https://prometheus.domain.com/</code>. </p>
+<p>Finallly, you'll want to <a href="#adding-a-badge-to-the-portal">add a badge to your portal</a> so users can access Prometheus without having to memorize the URL.</p>
+<h2 id="adding-a-badge-to-the-portal">Adding a "Badge" to the Portal</h2>
+<p>When you login to the Orchestra portal, there are badges for your tokens and for the dashboard.  You can dynamically add a badge for your application too.  Here's an example <code>PortalUrl</code> object for ArgoCD:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v1</span><span class="w"></span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PortalUrl</span><span class="w"></span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">argocd</span><span class="w"></span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span><span class="w"></span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">  </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ArgoCD</span><span class="w"></span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">  </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">B158BD40-0C1B-11E3-8FFD-0800200C9A66</span><span class="w"></span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://argocd.apps.192-168-2-140.nip.io</span><span class="w"></span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">  </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iVBORw0KGgoAAAANSUhEUgAAANIAAADwCAYAAAB1/Tp/AAAfQ3pUWHRSYXcgcHJvZ...</span><span class="w"></span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">  </span><span class="nt">azRules</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">constraint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">o=Tremolo</span><span class="w"></span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">    </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dn</span><span class="w"></span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Descriptoin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>label</td>
+<td>The label shown on badge in the portal</td>
+</tr>
+<tr>
+<td>org</td>
+<td>If using orgnaizations to organize badges, the uuid of the org.  If not using organizations, leave as is</td>
+</tr>
+<tr>
+<td>url</td>
+<td>The URL the badge should send the user to</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>A base64 encoded PNG with a width of 210 pixels and a height of 240 pixels</td>
+</tr>
+<tr>
+<td>azRules</td>
+<td>Who is authorized to see this badge?  See https://portal.apps.tremolo.io/docs/tremolosecurity-docs/1.0.19/openunison/openunison-manual.html#_applications_applications for an explination of the authorization rules</td>
+</tr>
+</tbody>
+</table>
+<p>Once created, the badge will appear in the Orchestra portal!  No need to restart the containers.</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../../customization/custom_provisioning_tasks/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Custom Provisioning Tasks" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Custom Provisioning Tasks
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../login-portal/" class="md-footer__link md-footer__link--next" aria-label="Next: Login Portal" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Login Portal
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.0238f547.min.js"></script>
+      
+    
+  </body>
+</html>
