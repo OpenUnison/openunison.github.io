@@ -26,6 +26,8 @@ $ kubectl get nodes
 
 Since these two tools are working off of their own kubectl configuration, they can't interfere with eachother.
 
+If you're not able to use the *oulogin* plugin, then you can refresh the token screen for a new kubectl configuration.  
+
 ## Refresh Token Grace Period
 
 OpenUnison supports a grace period for refresh tokens.  This allows a refresh token to be used for a short time after it's already been used once.  A short grace period, such as 5-10 seconds, is usually enough to account for the issues the client-go SDK has with refresh tokens.  ***BEWARE: THIS FEATURE WILL OPEN YOU TO POTENTIAL REPLAY ATTACKS!!! BE VERY CAREFUL WITH THIS FUNCTION!*** If this feature is dangerous, why did we build it?  Because while it can open your cluster to a replay attack, it's less risky then a longer lived token.  To help mitigate this risk, we added additional logging when an expired refresh token is used within the grace period:
