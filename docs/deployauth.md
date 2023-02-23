@@ -39,7 +39,7 @@ Once your `Ingress` controller is deployed, the next step is to deploy the dashb
 The [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) is a powerful and simple way to work with your cluster without having access to a command line.  It is accessed securely by using the user's own permissions, with the dashboard its self having no permissions in your cluster.  OpenUnison manages the login process for you, so there's no need to upload a kubectl configuration to the dashboard to make it work.  The dashboard can be deployed with:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.0/aio/deploy/recommended.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 ```
 
 ***DO NOT SETUP AN INGRESS FOR YOUR DASHBOARD*** - OpenUnison takes care of that for you.
@@ -52,7 +52,7 @@ Having deployed the dashboard, next we'll deploy the base configuration for Open
 
 This section is where you'll do the work of configuring OpenUnison for your cluster and spend the most time.  The deployment steps are here, with links to detailed configuration options to guide you through the process.
 
-First, get the latest [default values.yaml](/assets/yaml/openunison-default.yaml) and customize it.  There are three minimum configuration sections you need to address:
+First, get the latest [default values.yaml](/assets/yaml/openunison-default.yaml) or [ArgoCD `Application`](/assets/yaml/argocd-application.yaml) configuration and customize it.  There are three minimum configuration sections you need to address:
 
 | Values Section | Decision Points | Notes |
 | -------------- | --------------- | ----- |
@@ -66,7 +66,11 @@ Once you've chosen an identity source, return here to finish the installation.
 
 ### Deploy the Portal
 
-OpenUnison is deployed using a series of Helm Charts that cover different aspects of the deployment between configuration, integration with the API server, and the operator that manages certificates for you.  You can [deploy these charts manually](#manual-deployment), but the `ouctl` command makes this much easier.  First, download `ouctl` for the correct platform:
+OpenUnison is deployed using a series of Helm Charts that cover different aspects of the deployment between configuration, integration with the API server, and the operator that manages certificates for you.  You can [deploy these charts manually](#manual-deployment), but either the `ouctl` command or using ArgoCD makes this much easier.  
+
+#### Deploy with ouctl
+
+First, download `ouctl` for the correct platform:
 
 * [Linux](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.8-linux)
 * [Windows](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.8-win.exe)
@@ -89,7 +93,7 @@ You shouldn't use the `echo` command to create this file for two important reaso
 1. It adds an extra `\n` at the end
 2. It will store your secret information in your shell's history file
 
-Best to create this file manually and add the secret to it. ***NOTE***: Do not base64 encode the data before putting it in this file.  The `ouctl` command will handle that for you.
+It's best to create this file manually and add the secret to it. ***NOTE***: Do not base64 encode the data before putting it in this file.  The `ouctl` command will handle that for you.
 
 ---
 
@@ -100,6 +104,34 @@ ouctl install-auth-portal -s /path/to/secret/file /path/to/yaml
 ```
 
 Assuming there are no issues, OpenUnison will be deployed and ready for access.  The `ouctl` command is safe to re-run.  If you want to update the secret, you can provide the `-s` again.  If you just want to upgrade the charts, you can run `ouctl` without `-s` and it will just update the charts.
+
+
+#### Deploying with ArgoCD
+
+The OpenUnison charts include the `argocd.argoproj.io/sync-wave` annotation on all manifests to deploy them in the correct sequence, with the ***orchestra-login-portal-argocd*** chart combining the three charts for OpenUnison into one for easier deployment from ArgoCD.  Additionally, the [default ArgoCD Application](/assets/yaml/argocd-application.yaml) configuration tells ArgoCD not to overwrite the validating webhooks that the operator configures with certificates.  This let's use continue to update OpenUnison directly from ArgoCD instead of using the ouctl command without having to first generate YAML manifests.
+
+The first step is to generate your `orchestra-secrets-source` `Secret`.  These instructions are the same as the mannual instructions.  OpenUnison separates secret information out of it's configurations.  No secret data should ever be stored in a Helm chart.  A `Secret` object needs to be created to store OpenUnison's secret data (such as passwords, keys, and tokens).  The operator will pull this `Secret` in when generating OpenUnison's configuration.
+
+The below example uses random data.  Do **NOT** use this exact `Secret`, create your own random data for the values
+that don't contain an `&`.  A password generator is a great way to generate this data.
+
+Additionally, each authentication method will require its own secret data so this `Secret` will need to be updated.
+
+```
+apiVersion: v1
+type: Opaque
+metadata:
+  name: orchestra-secrets-source
+  namespace: openunison
+data:
+  K8S_DB_SECRET: UTJhQzVNNjBMbWljc3Y0UEphYVhsWlRRbw==
+  unisonKeystorePassword: SGRVSEg1c1Z0ZUdaTjFxdjJEUHlnYk1wZQ==
+kind: Secret
+```
+
+Once your ArgoCD Application is deployed and synced, you're ready to integrate your cluster.
+
+### Finishing Your Deployment
 
 If you're going to integrate your cluster with OpenID Connect (most on-prem clusters will be integrated this way), the final step is to enable SSO with your Kubernetes cluster. If you configured enable_impersonation to true, skip this step.
 
