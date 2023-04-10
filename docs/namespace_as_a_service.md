@@ -147,6 +147,8 @@ database:
 
 ##### SQL Server
 
+You can also [use kerberos](/documentation/kerberos) to connect to SQL Server
+
 ```
 database:
   hibernate_dialect: org.hibernate.dialect.SQLServer2008Dialect
