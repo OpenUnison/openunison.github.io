@@ -70,13 +70,7 @@ OpenUnison is deployed using a series of Helm Charts that cover different aspect
 
 #### Deploy with ouctl
 
-First, download `ouctl` for the correct platform:
-
-* [Linux](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.8-linux)
-* [Windows](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.8-win.exe)
-* [MacOS](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.8-macos)
-
-Rename the downloaded file to `ouctl` (or `ouctl.exe` on windows).  Next, download the OpenUnison helm repo:
+First, [download `ouctl` for the correct platform](/documentation/ouctl).  Next, download the OpenUnison helm repo:
 
 ```
 helm repo add tremolo https://nexus.tremolo.io/repository/helm/
