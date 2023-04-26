@@ -30,6 +30,7 @@ In order to use OpenUnison, you'll need to first have an `Ingress` controller de
 | ------------------ | 
 | [NGINX](../ingresses/nginx) |
 | [Istio](../ingresses/istio) |
+| [Traefik](../ingresses/traefik) |
 
 Once your `Ingress` controller is deployed, the next step is to deploy the dashboard.
 

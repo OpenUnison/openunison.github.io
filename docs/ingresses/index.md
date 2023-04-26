@@ -4,3 +4,4 @@ This list is for the `Ingress` controllers OpenUnison has been documented to wor
 
 * [NGINX](nginx)
 * [Istio](istio)
+* [Traefik](traefik)
