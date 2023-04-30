@@ -45,6 +45,17 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/a
 
 ***DO NOT SETUP AN INGRESS FOR YOUR DASHBOARD*** - OpenUnison takes care of that for you.
 
+***Disabling Kubernetes Dashboard Support***
+
+If you wish to deploy without the Kubernetes Dashboard, add
+
+```yaml
+dashboard:
+  enabled: false
+```
+
+to your values.yaml.
+
 Having deployed the dashboard, next we'll deploy the base configuration for OpenUnison.
 
 
@@ -53,7 +64,15 @@ Having deployed the dashboard, next we'll deploy the base configuration for Open
 
 This section is where you'll do the work of configuring OpenUnison for your cluster and spend the most time.  The deployment steps are here, with links to detailed configuration options to guide you through the process.
 
-First, get the latest [default values.yaml](/assets/yaml/openunison-default.yaml) or [ArgoCD `Application`](/assets/yaml/argocd-application.yaml) configuration and customize it.  There are three minimum configuration sections you need to address:
+There are three supported ways to deploy OpenUnison:
+
+| Method | Benefits | Artifacts Required |
+| ------ | -------- | ------------------ |
+| Using `ouctl` | The `ouctl` utility automated the creation of `Secret` objects and deploys the helm charts for you.  This utility will automatically remove corrupted installs and re-apply charts.  It will also wait for deployments to become healthy before moving to the next chart.  Finally, it can automate the installation of additional charts to aid in fleet deployments of customizations. | [[Download the `ouctl` utility](/documentation/ouctl)] [[Download Default values.yaml](/assets/yaml/openunison-default.yaml)] |
+| ArgoCD `Application` | ArgoCD is a powerful GitOps controller that can deploy and manage OpenUnison for you.  Instead of deploying multiple `Application` objects for each chart, we have combined all of the charts with *wave* annotations so ArgoCD will deploy them in the correct order.  Prior to deploying the `Application`, you'll need to create the `orchestra-secrets-source` `Secret` | [[Download the ArgoCD `Application` object](/assets/yaml/argocd-application.yaml)]
+| Manual Deployment | If you already have a workflow for deploying multiple Helm charts, you can use the manual deployment method to deploy the charts | [[Download Default values.yaml](/assets/yaml/openunison-default.yaml)] |
+
+Once you have chosen how to deploy OpenUnison, the minimum configuration points are:
 
 | Values Section | Decision Points | Notes |
 | -------------- | --------------- | ----- |
@@ -78,7 +97,7 @@ helm repo add tremolo https://nexus.tremolo.io/repository/helm/
 helm repo update
 ```
 
-The next step is to create a file with your secret in it for AD/LDAP, OIDC, or GitHub login.  
+The next step is to create a file with your secret in it for AD/LDAP, OIDC, or GitHub login.  This file is ***NOT*** a `Secret`, just the value of your password/client secret/etc in the file.  The `ouctl` utility will base64 encode the file and generate the `Secret` for you.
 
 ---
 **SECURITY NOTE**

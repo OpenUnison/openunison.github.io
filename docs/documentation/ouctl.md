@@ -28,4 +28,4 @@ kubectl krew install --manifest=/tmp/ouctl.yaml
 ```
 
 
-[Return to deployment](../../deployauth#deploy-the-portal)
+[Return to deployment](../../deployauth#site-specific-configuration)
