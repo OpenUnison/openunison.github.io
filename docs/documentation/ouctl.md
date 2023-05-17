@@ -4,9 +4,9 @@ The `ouctl` utility simplifies the deployment of OpenUnison's helm charts. It al
 
 ## Downloads
 
-* [Linux](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.8-linux)
-* [Windows](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.8-win.exe)
-* [MacOS](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.8-macos)
+* [Linux](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.11-linux)
+* [Windows](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.11-win.exe)
+* [MacOS](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.11-macos)
 
 Rename the downloaded file to `ouctl` (or `ouctl.exe` on windows).
 
