@@ -4,9 +4,8 @@ To deploy OpenUnison in an air-gap environment you need to import for the follow
 
 | Image | Function | Chart | Value Name |
 | ----- | -------- | ----- | ---------- |
-|docker.io/tremolosecurity/openunison-k8s-operator|OpenUnison Operator|tremolo/openunison-operator|`image`|
-|docker.io/tremolosecurity/activemq-docker:latest|ActiveMQ Image Maintained by Tremolo Security|tremolo/openunison-*|`amq_image`|
-|docker.io/tremolosecurity/kubernetes-artifact-deployment:1.1.0|Check certificates, update them as needed|tremolo/openunison-*|`cert_update_image`|
-|docker.io/tremolosecurity/openunison-k8s|Orchestra Image|tremolo/orchestra|`image`|
-|docker.io/tremolosecurity/python3|Helm Test Image|`openunison.precheck.image`|
-|docker.io/tremolosecurity/openunison-k8s-html|NGINX Image for static HTML & JavaScript|`openunison.html.image`|
+|ghcr.io/openunison/openunison-kubernetes-operator|OpenUnison Operator|tremolo/openunison-operator|`image`|
+|ghcr.io/tremolosecurity/activemq-docker|ActiveMQ Image Maintained by Tremolo Security|tremolo/openunison-*|`amq_image`|
+|ghcr.io/openunison/openunison-k8s:1.0.37|Orchestra Image|tremolo/orchestra|`image`|
+|ghcr.io/tremolosecurity/python3|Helm Test Image|`openunison.precheck.image`|
+|ghcr.io/openunison/openunison-k8s-html|NGINX Image for static HTML & JavaScript|`openunison.html.image`|
