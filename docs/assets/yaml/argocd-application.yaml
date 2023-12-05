@@ -19,7 +19,7 @@ spec:
     - RespectIgnoreDifferences=true
   source:
     repoURL: 'https://nexus.tremolo.io/repository/helm'
-    targetRevision: 2.3.29
+    targetRevision: 2.3.37
     helm:
       values: |-
         network:
