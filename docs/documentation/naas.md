@@ -111,7 +111,7 @@ Click on **Open Approvals** and the list of approvals that are assigned to you a
 
 ![Open Approvals](/assets/images/manual/naas/approvals-review.png)
 
-Click on **Review** on an approval, and the review screen will appear:
+Click on **Act On Request** on an approval, and the review screen will appear:
 
 ![Review Approval](/assets/images/manual/naas/approval-review.png)
 

@@ -97,6 +97,11 @@ As an example, the below will work with the testing database and SMTP server:
 
 ```
 openunison:
+  non_secret_data:
+    SHOW_PORTAL_ORGS: "true"
+  role_attribute: portalGroups
+  groups:
+    areJson: "true"
   enable_provisioning: true
   use_standard_jit_workflow: false
 
@@ -105,7 +110,7 @@ database:
   hibernate_dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
   driver: com.mysql.jdbc.Driver
-  url: jdbc:mysql://mariadb.mariadb.svc:3306/unison
+  url: jdbc:mysql://mariadb.mariadb.svc.cluster.local:3306/unison
   user: unison
   validation: SELECT 1
 
@@ -117,11 +122,11 @@ smtp:
   tls: false
 ```
 
-The above is for MySQL or MariaDB.  For other databases:
+The above is for MariaDB.  For other databases:
 
 #### Databases
 
-##### MariaDB & MySQL
+##### MySQL
 
 ```
 database:
@@ -129,6 +134,18 @@ database:
   quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
   driver: com.mysql.jdbc.Driver
   url: jdbc:mysql://mariadb.mariadb.svc:3306/unison
+  user: unison
+  validation: SELECT 1
+```
+
+##### MariaDB
+
+```
+database:
+  hibernate_dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://mariadb.mariadb.svc.cluster.local:3306/unison
   user: unison
   validation: SELECT 1
 ```
@@ -166,11 +183,11 @@ With your configuration updated, the next step is to choose which management mod
 
 OpenUnison provides three models out-of-the-box for managing and provisioning namespaces:
 
-* **Internal Groups with Self Service** - This model uses groups managed by OpenUnison to provide access to your namespaces.  Use this model if you want to provide a self service model for accessing namespaces.  Using local management, once a namespace is created a user can "request access" to it and the owner of the namespace can approve the access.  There's no need for your cluster management staff to get involved.  You can also enable existing namespaces to have this functionality by adding an anotation.
-* **External Groups** - Using external groups, you specify which groups from your identity provider manage access to your namespaces on creation.  This is useful when you want to drive access management from a central location.  This will work with any of the authentication methods supported by OpenUnison.  For Active Directory and Okta, you're able to select which groups to use wrather then having to type the names.
+* **Internal Groups with Self Service** - This model uses groups managed by OpenUnison to provide access to your namespaces.  Use this model if you want to provide a self service model for accessing namespaces.  Using local management, once a namespace is created a user can "request access" to it and the owner of the namespace can approve the access.  There's no need for your cluster management staff to get involved.  You can also enable existing namespaces to have this functionality by adding an annotation.
+* **External Groups** - Using external groups, you specify which groups from your identity provider manage access to your namespaces on creation.  This is useful when you want to drive access management from a central location.  This will work with any of the authentication methods supported by OpenUnison.  For Active Directory and Okta, you're able to select which groups to use rather then having to type the names.
 * **Hybrid Management** - You can enable both internal and external group management at the same time.  This is useful when you want to drive most authorization decisions via centralized groups from your identity provider but want the flexibility to explicitly enable access when needed.
 
-You don't need to settle on one model initially.  You can start for instnce with external groups and later add internal groups with self service.  Next, we'll cover how to deploy each model.
+You don't need to settle on one model initially.  You can start for instance with external groups and later add internal groups with self service.  Next, we'll cover how to deploy each model.
 
 #### Internal Groups with Self Service
 
