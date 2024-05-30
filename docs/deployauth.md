@@ -80,9 +80,23 @@ Once you have chosen how to deploy OpenUnison, the minimum configuration points 
 | `network`      | This section describes how you will access OpenUnison and how OpenUnison will interact with your cluster | [Host Names and Networking](#host-names-and-networking) |
 | Authentication (***One*** of `activedirectory`, `oidc`, `github`, or `saml`) | How will OpenUnison authenticate users?  This is covered in detail next.  At least one option is required. | [Choosing an Identity Source](#choosing-an-identity-source) |
 
+#### API Server Certificates
+
+If you're using impersonation, you can skip this section.  If you're connecting directly via OpenID Connect, then you'll need the CA certificate for either your API Server ***OR*** the load balancer for your API servers.  Once you have this certificate, in PEM format, base64 encoded it and add it to the `trusted_certs` section of your values.yaml with the name `k8s_master`.  This will tell OpenUnison which certificate to include in your kubectl configuration files.  As an example:
+
+```yaml
+trusted_certs:
+- name: k8s_master
+  pem_b64: AERR...
+```
+
+#### Final Configuration steps
+
+
 ***NOTE***: While not required, you should update the `k8s_cluster_name` value in your values.yaml to have a descriptive label for your cluster.
 
 Once you've chosen an identity source, return here to finish the installation.
+
 
 ### Deploy the Portal
 
