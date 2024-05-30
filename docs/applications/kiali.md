@@ -43,7 +43,7 @@ openunison:
 Next, you can run a simple helm update because we're not making any changes that require a restart, so there's no need for running `ouctl` again:
 
 ```
-helm ugprade orchestra-login-portal tremolo/orchestra-login-portal -n openunison -f /path/to/values.yaml
+helm upgrade orchestra-login-portal tremolo/orchestra-login-portal -n openunison -f /path/to/values.yaml
 ```
 
 Once the helm upgrade is complete, you can log into OpenUnison:
