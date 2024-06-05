@@ -105,6 +105,11 @@ openunison:
   secrets: []
   enable_provisioning: false
   use_standard_jit_workflow: true
+  # enable_activemq: true
+  # activemq_use_pvc: true
+  # role_attribute: portalGroups
+  # groups:
+  #   areJson: "true"
   #az_groups:
   #- CN=k8s-users,CN=Users,DC=ent2k12,DC=domain,DC=com
 
@@ -112,13 +117,13 @@ openunison:
 
 # For Namespace as a Service
 
-#database:
-#  hibernate_dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-#  quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-#  driver: com.mysql.jdbc.Driver
-#  url: jdbc:mysql://mariadb.mariadb.svc.cluster.local:3306/unison
-#  user: unison
-#  validation: SELECT 1
+# database:
+#   hibernate_dialect: org.hibernate.dialect.MariaDBDialect
+#   quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#   driver: org.mariadb.jdbc.Driver
+#   url: jdbc:mariadb://mariadb.mariadb.svc.cluster.local:3306/unison
+#   user: unison
+#   validation: SELECT 1
 
 #smtp:
 #  host: blackhole.blackhole.svc.cluster.local

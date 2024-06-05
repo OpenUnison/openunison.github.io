@@ -107,10 +107,10 @@ openunison:
 
 
 database:
-  hibernate_dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  hibernate_dialect: org.hibernate.dialect.MariaDBDialect
   quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-  driver: com.mysql.jdbc.Driver
-  url: jdbc:mysql://mariadb.mariadb.svc.cluster.local:3306/unison
+  driver: org.mariadb.jdbc.Driver
+  url: jdbc:mariadb://mariadb.mariadb.svc.cluster.local:3306/unison
   user: unison
   validation: SELECT 1
 
@@ -130,10 +130,10 @@ The above is for MariaDB.  For other databases:
 
 ```
 database:
-  hibernate_dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  hibernate_dialect: org.hibernate.dialect.MySQLDialect
   quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
   driver: com.mysql.jdbc.Driver
-  url: jdbc:mysql://mariadb.mariadb.svc:3306/unison
+  url: jdbc:mysql://mysql.mysql.svc:3306/unison
   user: unison
   validation: SELECT 1
 ```
@@ -142,10 +142,10 @@ database:
 
 ```
 database:
-  hibernate_dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  hibernate_dialect: org.hibernate.dialect.MariaDBDialect
   quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-  driver: com.mysql.jdbc.Driver
-  url: jdbc:mysql://mariadb.mariadb.svc.cluster.local:3306/unison
+  driver: org.mariadb.jdbc.Driver
+  url: jdbc:mariadb://mariadb.mariadb.svc.cluster.local:3306/unison
   user: unison
   validation: SELECT 1
 ```
@@ -168,7 +168,7 @@ You can also [use kerberos](/documentation/kerberos) to connect to SQL Server
 
 ```
 database:
-  hibernate_dialect: org.hibernate.dialect.SQLServer2008Dialect
+  hibernate_dialect: org.hibernate.dialect.SQLServerDialect
   quartz_dialect: org.quartz.impl.jdbcjobstore.MSSQLDelegate
   driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
   url: jdbc:sqlserver://192.168.2.102:1433;databaseName=unison
