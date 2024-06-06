@@ -346,7 +346,7 @@ You see these badges because the first user to login is provisioned as an admini
 
 ## Next Steps
 
-With the Namespace as a Portal deployed, you can go to the [user's manual](/documentation/naas/) to see how users can login to begin requesting new namespaces and managing access!
+With the Namespace as a Portal deployed, you can go to the [user's manual](/documentation/naas/) to see how users can login to begin requesting new namespaces and managing access, or how to [customize the new namespace workflow](/documentation/customize-naas-onboarding)  for your needs.
 
 ## Alternate Deployment Steps
 
