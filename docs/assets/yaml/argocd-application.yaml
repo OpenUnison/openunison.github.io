@@ -19,7 +19,7 @@ spec:
     - RespectIgnoreDifferences=true
   source:
     repoURL: 'https://nexus.tremolo.io/repository/helm'
-    targetRevision: 2.3.38
+    targetRevision: 2.3.58
     helm:
       values: |-
         network:
@@ -57,6 +57,7 @@ spec:
           label: "k8s-app=kubernetes-dashboard"
           service_name: kubernetes-dashboard
           require_session: true
+          new: true
 
         certs:
           use_k8s_cm: false

@@ -32,6 +32,7 @@ dashboard:
   label: "k8s-app=kubernetes-dashboard"
   service_name: kubernetes-dashboard
   require_session: true
+  new: true
 
 certs:
   use_k8s_cm: false
