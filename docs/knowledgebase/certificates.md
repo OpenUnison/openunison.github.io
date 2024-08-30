@@ -34,3 +34,25 @@ Finally, update both your `orchestra` and `orchestra-login-portal` helm deployme
 helm upgrade orchestra tremolo/orchestra --namespace openunison -f /path/to/values.yaml
 helm install orchestra-login-portal tremolo/orchestra-login-portal --namespace openunison -f /path/to/values.yaml
 ```
+
+## How do I trust my API Server's Certificate? 
+
+When integrating your cluster via OIDC, your API Server often has certificate that needs to be trusted.  If no certificate is specified, then the certificate is loaded from the direct connection to the API server.  Since most production deployments use a load balancer, you may need to specify a different certificate.  To specify a specific certificate for your API Server, add the correct certificate to your values.yaml's `trusted_certs` section with the name `k8s-master`.  For instance:
+
+```yaml
+trusted_certs:
+- name: k8s-master
+  pem_b64: ...
+```
+
+If your API server is protected with a commercial certificate, or the certificate is installed on all clients, you can change your values.yaml to tell OpenUnison to look at a non-existent certificate by adding `K8S_API_SERVER_CERT` to `openunison.non_secret_data` in your values.yaml:
+
+```yaml
+openunison:
+  replicas: 1
+  non_secret_data:
+    K8S_DB_SSO: oidc
+    K8S_API_SERVER_CERT: api-server-none
+```
+
+This will tell OpenUnison to use a certificate that doesn't exist (`api-server-none`) when generating a token, so your kubectl configuration won't contain any API Server certificate relying on your workstation's own trusted certificate store.
