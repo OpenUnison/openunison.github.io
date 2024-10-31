@@ -289,6 +289,32 @@ oidc:
 
 When you attempt to create a new `Namespace` you'll be presented with a list of up to ten groups from your Okta deployment.  As you type the first letters of the group you want the list will update.  You can click the name of the group you want to use.
 
+<!-- # Choosing EntraID / AzureAD Groups
+
+If you're using EntraID (aka AzureAD) as your identity provider and have integrated groups via the additional helm chart, you can enable a group picker that lets you search for groups instead of typing them in manually.
+
+Next, in the `oidc` section of your values, add `type: okta`:
+
+```
+oidc:
+  client_id: XXXX_YYYY
+  issuer: https://XXXX.okta.com/
+  user_in_idtoken: false
+  domain: ""
+  scopes: openid email profile groups
+  claims:
+    sub: sub
+    email: email
+    given_name: given_name
+    family_name: family_name
+    display_name: name
+    groups: groups
+  type: entraid
+```
+
+
+When you attempt to create a new `Namespace` you'll be presented with a list of up to ten groups from your EntraID deployment.  As you type the first letters of the group you want the list will update.  You can click the name of the group you want to use. -->
+
 ##### Limiting AD/LDAP Groups
 
 If you want to limit which groups can be chosen for managing access while using either Active Directory or LDAP, add `active_directory.group_search_base` to your values.yaml with the distinguished name of where you want groups to be searched for ***without your value of `active_directory.base`***.  For instnace if I want to limit groups to `cn=AWS,cn=users,dc=ent2k12,dc=domain,dc=com`, and my `active_directory.base`
@@ -324,6 +350,8 @@ You can run both models at the same time.  This is useful when you want to use c
 
 ### Deployment
 
+#### Using ouctl
+
 The `ouctl` command you used when deploying the authentication portal will detect the changes to your configuration and update the deployment accordingly.  Once you have your secret files and updated yaml, run:
 
 ```
@@ -332,21 +360,69 @@ ouctl install-auth-portal -b /path/to/db/secret -t /path/to/smtp/secret /path/to
 
 This run will take longer then the authentication portal deployment takes because it's also deploying an ActiveMQ service to manage workflow tasks.  Once completed, you can move on to your first login.
 
+#### Using ArgoCD
+
+Before making any updates to your ArgoCD `Application`, update your `orchestra-secrets-source` `Secret` with your database's password and SMTP server's password:
+
+```bash
+kubectl patch secret orchestra-secrets-source -n openunison --patch '{"data":{"OU_JDBC_PASSWORD":"c3RhcnR0MTIz","SMTP_PASSWORD":"ZG9lc25vdG1hdHRlcg=="}}'
+```
+
+Next, added the cluster-management chart to your `Application` in `spec.sources` **BEFORE** the last two entries:
+
+```yaml
+spec:
+  sources:
+  .
+  .
+  .
+  - chart: openunison-k8s-cluster-management
+    helm:
+      releaseName: cluster-management
+      valueFiles:
+      - $values/naas/values.yaml
+    repoURL: https://nexus.tremolo.io/repository/helm
+    targetRevision: 3.0.41
+```
+
 ### Your First Login
 
-Next, login to your portal.  You'll see two "badges":
+Next, login to your portal.  You'll see a "badge" to create a new namespace:
 
 ![NaaS Portal Login](../assets/images/ou-login-naas.png)
-
-*ActiveMQ Console* - How you can view messages in queues, move messages from the dead letter queue.
-
-*Operator's Console* - Search for users and apply workflows directly
 
 You see these badges because the first user to login is provisioned as an administrator.  The dashboard and tokens are not there because you haven't yet been authorized for access to the cluster.  Your second, third, fourth, user, etc that logs in will not see any badges.
 
 ## Next Steps
 
 With the Namespace as a Portal deployed, you can go to the [user's manual](/documentation/naas/) to see how users can login to begin requesting new namespaces and managing access, or how to [customize the new namespace workflow](/documentation/customize-naas-onboarding)  for your needs.
+
+## Production ActiveMQ
+
+The ActiveMQ that ships with OpenUnison NaaS is not designed to be HA or to be used in production.  It uses the database as the backend for your message bus, but because of the way that the database locks it can generate extremely large transactions logs that fill up disk space.  If you want to use the embedded ActiveMQ, instead of your own message bus, you will need a `StorageClass` that supports `ReadWriteMany` file systems.  Once you have this, you can enable an HA ActiveMQ in your cluster by updating your values.yaml:
+
+```yaml
+openunison:
+  amq:
+    enabled: true
+    ha: true
+    pvc:
+      enabled: true
+      accessmode: ReadWriteMany
+      storageclass: mystorageclass
+```
+
+Before redeploying, clear out the AMQ and OpenUnison generated `Secret` objects to make sure the certificates get rebuilt properly:
+
+```bash
+kubectl delete secret amq-secrets-orchestra -n openunison
+kubectl delete secret amq-env-secrets-orchestra -n openunison
+kubectl delete secret orchestra-amq-client -n openunison
+kubectl delete secret orchestra-amq-server -n openunison
+kubectl delete secret orchestra -n openunison
+```
+
+Once you re-deploy OpenUnison, you'll have two ActiveMQ `Deployments`.  Once is called `amq-orchestra` and another called `amq-backup-orchestra`.  Only one will receive requests from OpenUnison at a time, and if the currently available `Deployment` isn't available OpenUnison will switch to the other one.  
 
 ## Alternate Deployment Steps
 

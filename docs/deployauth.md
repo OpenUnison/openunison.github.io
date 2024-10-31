@@ -50,6 +50,13 @@ You can further customize the dashboard deployment, then install:
 helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard -f /path/to/kubernetes-dashboard-values.yaml
 ```
 
+or if you want to just deploy directly from our default values:
+
+```
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard -f https://openunison.github.io/assets/yaml/kubernetes-dashboard-values.yaml
+```
+
+
 ***DO NOT SETUP AN INGRESS FOR YOUR DASHBOARD*** - OpenUnison takes care of that for you.
 
 ##### Upgrading an Existing Dashboard Deployment
@@ -87,7 +94,7 @@ There are three supported ways to deploy OpenUnison:
 | Method | Benefits | Artifacts Required |
 | ------ | -------- | ------------------ |
 | Using `ouctl` | The `ouctl` utility automated the creation of `Secret` objects and deploys the helm charts for you.  This utility will automatically remove corrupted installs and re-apply charts.  It will also wait for deployments to become healthy before moving to the next chart.  Finally, it can automate the installation of additional charts to aid in fleet deployments of customizations. | [[Download the `ouctl` utility](/documentation/ouctl)] [[Download Default values.yaml](/assets/yaml/openunison-default.yaml)] |
-| ArgoCD `Application` | ArgoCD is a powerful GitOps controller that can deploy and manage OpenUnison for you.  Instead of deploying multiple `Application` objects for each chart, we have combined all of the charts with *wave* annotations so ArgoCD will deploy them in the correct order.  Prior to deploying the `Application`, you'll need to create the `orchestra-secrets-source` `Secret` | [[Download the ArgoCD `Application` object](/assets/yaml/argocd-application.yaml)]
+| ArgoCD `Application` | ArgoCD is a powerful GitOps controller that can deploy and manage OpenUnison for you.  Instead of deploying multiple `Application` objects for each chart, you can use a multi repo `Application`.  see the [Deploying with ArgoCD](#deploying-with-argocd) section for detailed instructions, you'll need to create the `orchestra-secrets-source` `Secret` | [[Download the ArgoCD `Application` object](/assets/yaml/argocd-application.yaml)]
 | Manual Deployment | If you already have a workflow for deploying multiple Helm charts, you can use the manual deployment method to deploy the charts | [[Download Default values.yaml](/assets/yaml/openunison-default.yaml)] |
 
 Once you have chosen how to deploy OpenUnison, the minimum configuration points are:
@@ -154,9 +161,11 @@ Assuming there are no issues, OpenUnison will be deployed and ready for access. 
 
 #### Deploying with ArgoCD
 
-The OpenUnison charts include the `argocd.argoproj.io/sync-wave` annotation on all manifests to deploy them in the correct sequence, with the ***orchestra-login-portal-argocd*** chart combining the three charts for OpenUnison into one for easier deployment from ArgoCD.  Additionally, the [default ArgoCD Application](/assets/yaml/argocd-application.yaml) configuration tells ArgoCD not to overwrite the validating webhooks that the operator configures with certificates.  This let's use continue to update OpenUnison directly from ArgoCD instead of using the ouctl command without having to first generate YAML manifests.
+The OpenUnison charts include the `argocd.argoproj.io/sync-wave` annotation on all manifests to deploy them in the correct sequence.  To simplify deployment, ArgoCD supports multiple repos in a single `Application`, allowing for each helm chart to be deployed.  This allows you to easily add additional charts too, such as the [EntraID](/identity%20providers/azuread/) chart or the cluster management chart for [Namespace as a Service](/namespace_as_a_service).  Additionally, the [default ArgoCD Application](/assets/yaml/argocd-application.yaml) configuration tells ArgoCD not to overwrite the validating webhooks that the operator configures with certificates.  This let's us continue to update OpenUnison directly from ArgoCD instead of using the ouctl command without having to first generate YAML manifests.
 
-The first step is to generate your `orchestra-secrets-source` `Secret`.  These instructions are the same as the mannual instructions.  OpenUnison separates secret information out of it's configurations.  No secret data should ever be stored in a Helm chart.  A `Secret` object needs to be created to store OpenUnison's secret data (such as passwords, keys, and tokens).  The operator will pull this `Secret` in when generating OpenUnison's configuration.
+First, you'll need a git repository to store your values.yaml file in.  You can't embed your values into your `Application` object because of how the CRD is constructed.
+
+Once you have a git repository that will store your values.yaml, the next step is to generate your `orchestra-secrets-source` `Secret`.  These instructions are the same as the [manual instructions](#manual-deployment).  OpenUnison separates secret information out of it's configurations.  No secret data should ever be stored in a Helm chart.  A `Secret` object needs to be created to store OpenUnison's secret data (such as passwords, keys, and tokens).  The operator will pull this `Secret` in when generating OpenUnison's configuration.
 
 The below example uses random data.  Do **NOT** use this exact `Secret`, create your own random data for the values
 that don't contain an `&`.  A password generator is a great way to generate this data.
@@ -175,7 +184,24 @@ data:
 kind: Secret
 ```
 
-Once your ArgoCD Application is deployed and synced, you're ready to integrate your cluster.
+Once your `Secret` is deployed and your values.yaml is stored in a git repository, the last step is to customize the OpenUnison `Application` object.  You can get the [latest chart versions](https://artifacthub.io/packages/search?ts_query_web=openunison&sort=relevance&page=1) from Artifact Hub.  Next, you'll need to update the last two entries in `spec.sources`. For both entries `repoURL` must point to your git repo storing the values yaml:
+
+```yaml
+  - repoURL: https://github.com/TremoloSecurityDemos/openunison-argocd.git
+    path: userauth
+  - ref: values
+    repoURL: https://github.com/TremoloSecurityDemos/openunison-argocd.git
+```
+
+For the second to last listing, `path` is the relative path in the repository where you want ArgoCD to look for files.  In this instance, our values file is in the repository's `/userauth` directory.  
+
+Finally, for the other entries in `spec.sources` update the `valuesFile` to `$values/full/path/to/values.yaml`.  In this example the values.yaml file is in `/userauth`, so each chart's `valuesFiles` goes to `$values/userauth/values.yaml`.  
+
+If you want to add additional charts, insert them before the second to last in the `spec.sources` list.
+
+Once your `Application` is updated it can be deployed.  If there's a synchronization error because webhooks haven't yet been deployed, it usually means there's a delay between the `app=openunison-openunison` `Pods` being ready and being able to process connections.  A re-sync generally clears this issue.
+
+With OpenUnison being deployed, you can move on to finishing the deployment.
 
 ### Finishing Your Deployment
 
