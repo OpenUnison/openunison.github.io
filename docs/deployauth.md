@@ -47,12 +47,16 @@ OpenUnison will be the reverse proxy that ties the web and api containers togeth
 You can further customize the dashboard deployment, then install:
 
 ```
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+helm repo update
 helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard -f /path/to/kubernetes-dashboard-values.yaml
 ```
 
 or if you want to just deploy directly from our default values:
 
 ```
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+helm repo update
 helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard -f https://openunison.github.io/assets/yaml/kubernetes-dashboard-values.yaml
 ```
 
