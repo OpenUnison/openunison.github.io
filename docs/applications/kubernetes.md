@@ -171,3 +171,20 @@ spec:
     - name: namespace
       value: openunison
 ```
+
+### CleanLabels
+
+Cleans request attributes that are meant to become labels on Kubernetes objects. Labels must be compliant with DNS host names. This task will replace invalid characters and inject an "x" before or after the label if the leading or trailing characters don't properly match.
+
+```yaml
+- taskType: customTask
+  className: com.tremolosecurity.provisioning.tasks.CleanLabels
+  params:
+    # Character that will replace invalid characters in the named attributes
+    replacementCharacter: "-"
+    # The suffix to use on the new request attribute. For instance, if cleaning "rawlabel," and setting this to "_clean," you would reference "rawlabel_clean" in the tasks for creating objects.
+    newAttributeSuffix: "_clean"
+    # Request attributes to be cleaned, may be listed multiple times
+    attributes: "raw label"
+  secretParams: []
+```

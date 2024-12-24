@@ -779,7 +779,7 @@ helm repo update
 
 **Install the operator**
 
-Next, install the operator.  The operator is responsible for generating OpenUnison's configuration and consolidating certificates and keys into a central keystore used by OpenUnison.  You can [customize the operator's chart](../documentation/operator) for your environment, but most deployments can use the defaults.
+Next, install the operator.  The operator is responsible for generating OpenUnison's configuration and consolidating certificates and keys into a central keystore used by OpenUnison.  You can [customize the operator's chart](../documentation/reference/operator) for your environment, but most deployments can use the defaults.
 
 ```
 helm install openunison tremolo/openunison-operator --namespace openunison

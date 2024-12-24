@@ -16,14 +16,14 @@ An `Application` is built on a set of `url`s.  Each `url` specifies:
 
 * ***Hosts -*** Each URL can be associated with multiple host names, or all host names with `*`
 * ***Authentication Chain -*** How to authenticate this URL
-* ***Filters -*** A list of plugins that can manipulate both request and response headers.  This is useful for injecting identity information or adding data to responses.  [OpenUnison is bundled with several pre-built filters](/documentation/filters).
+* ***Filters -*** A list of plugins that can manipulate both request and response headers.  This is useful for injecting identity information or adding data to responses.  [OpenUnison is bundled with several pre-built filters](/documentation/reference/filters).
 * ***Authorization Rules -*** A list of rules that defines who is able to access this URL
 * ***Results -*** A set of authorization results, such as setting a cookie or adding a header
 * ***Cookie Configuration -*** If a web application requires a session, this is how you configure how cookies are encrypted.  This allows you to isolate applications with separate keys, even if the cookie space covers the same scope.
 
 If you're `Application` is meant to be an identity provider (IdP), the URL will have a special configuration as well.
 
-For detailed configuration information for each configuration option, see the [Application CRD](/documentation/openunison-crds/#application) documentation.
+For detailed configuration information for each configuration option, see the [Application CRD](/documentation/reference/openunison-crds/#application) documentation.
 
 With a general idea of how to configure an application in OpenUnison, the next concept we'll work on is how authentication is built in OpenUnison.
 
@@ -49,7 +49,7 @@ The following mechanisms are pre-configure with OpenUnison:
 | js | Write custom authentication mechanisms in JavaScript | 
 | include | Includes another authentication chain in the current chain |
 
-Additional [Authentication Mechanisms](/documentation/authentication-mechanisms) can be configured by creating the appropriate [Kubernetes AuthenticationMechanism CRD](/documentation/openunison-crds/#authenticationmechanism).
+Additional [Authentication Mechanisms](/documentation/reference/authentication-mechanisms) can be configured by creating the appropriate [Kubernetes AuthenticationMechanism CRD](/documentation/reference/openunison-crds/#authenticationmechanism).
 
 Once authentication has been configured for an `Application`, the next question to answer is how to authorize each request.
 
@@ -67,7 +67,7 @@ OpenUnison's built in authorization system is common across multiple processes. 
 
 Since authorization rules can incur a significant performance impact, each `Application` has an option called `azTimeoutMillis` that caches authorization decisions for a user for a very limited time.  Usually a few seconds.
 
-OpenUnison comes with several [Custom Authorizations](/documentation/authentication-mechanisms) that you can leverage in your configurations.  You can also write your own using JavaScript.
+OpenUnison comes with several [Custom Authorizations](/documentation/reference/authentication-mechanisms) that you can leverage in your configurations.  You can also write your own using JavaScript.
 
 Once your authorizations are configured, the last choice is to decide if there will be any actions performed as a result of an authentication or an authorization decision.
 
@@ -82,7 +82,7 @@ Every URL can trigger an event as the result of one of four possible events:
 | azSuccess | When a URL access is authorized, triggers on each request |
 | azFail | When a URL access is denied, triggers on each request |
 
-Each event can be configured with a [ResultGroup](/documentation/openunison-crds/#resultgroup), which can in turn be configured with multiple results.  Results can be a cookie, a request header, or a redirect.  The value of a result can come from a static value, and attribute value, or from a [custom result](/documentation/custom-results)
+Each event can be configured with a [ResultGroup](/documentation/reference/openunison-crds/#resultgroup), which can in turn be configured with multiple results.  Results can be a cookie, a request header, or a redirect.  The value of a result can come from a static value, and attribute value, or from a [custom result](/documentation/reference/custom-results)
 
 ## Deployment and Customization
 
