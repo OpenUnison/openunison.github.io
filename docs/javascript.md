@@ -48,9 +48,39 @@ var decoded = JSUtils.base64Decode(secret.data.key);
 
 ### String <-> UTF-8 Bytes
 
-If you need to encoded or decode a string, these methods make it easier to do so:
+If you need to encoded or decode a string, these methods make it easier to do so.
 
-*TODO: example*
+### string2bytes
+
+Generates an array of UTF-8 bytes useful with Java Base64 classes:
+
+```javascript
+// generate a string from json
+strIncidentInfo = JSON.stringify(incidentInfo);
+// encrypt the string
+var ecnryptedIncidentInfo = GlobalEntries.getGlobalEntries().getConfigManager().getProvisioningEngine().encryptObject(strIncidentInfo);
+gson = new Gson();
+// generate a string from the JSON encrypted object
+var encIncInfoStr = gson.toJson(ecnryptedIncidentInfo);
+// generate an array of UTF-8 encoded bytes
+var incBytes = JSUtils.string2bytes(encIncInfoStr);
+// Base64 encode the array
+var b64Inc = Base64.getEncoder().encodeToString(incBytes);
+```
+
+### bytes2string
+
+Similar to `string2bytes`, but in reverse.  This method will generate a `String` from an array of UTF-8 bytes:
+
+```javascript
+// load data from a request
+userData = (request.getSession().getAttribute(ProxyConstants.AUTH_CTL)).getAuthInfo();
+// get raw binary array, decode to a string
+var payload = JSUtils.bytes2string(request.getAttribute(ProxySys.MSG_BODY));
+// parse JSON
+var payloadJson = JSON.parse(payload);
+var incident = payloadJson.attributes.incident;
+```
 
 ## Working with Kubernetes
 
@@ -112,6 +142,34 @@ googlewsSecret = K8sUtils.loadSecret("k8s","openunison","googlews");
 pem = googlewsSecret.get("pem");
 ```
 
+## Calling External Services
+
+One of OpenUnison's strengths is that it's capable of working with services outside of Kubernetes!  For example, you could use a [GitHub App](/applications/github/#provisioning-access-and-resources-to-github) to create resources in GitHub, provision projects to [GitLab](/applications/gitlab), or work with [AzureAD / EntraID](/applications/entraid) to lookup data or provision access.
+
+In addition to the applications specifically called out in the **Applications** section of the documentation, you can also look at the [Targets](/documentation/reference/targets/) provided by OpenUnison.  `Targets` provide a framework for interacting with remote services so your code doesn't need details.
+
+## Calling HTTP Services
+
+If you're interacting with a Kubernetes API server and need to interact with other remote services, you can re-use the http connection used with Kubernetes. The user's token isn't injected into the request until you call one of the `OpenShiftv3` target's methods, so you won't leak a bearer token.  It uses the [Apache HTTP Client 4.x](https://hc.apache.org/httpcomponents-client-4.5.x/index.html) libraries.  As an example, to call a remote api using an HTTP `Post`:
+
+```javascript
+//assuming you've already retrieved a connection from the local Kubernetes cluster and are inside of a try/finally block
+//create a POST object
+var httpPost = new HttpPost("https://oauth2.googleapis.com/token");
+// generate POST data
+params = new ArrayList();
+params.add(new BasicNameValuePair("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer"));
+params.add(new BasicNameValuePair("assertion", googleJwt));
+// set the post's entity data to what we want
+httpPost.setEntity(new UrlEncodedFormEntity(params));
+// run the post
+var resp = con.getHttp().execute(httpPost);
+```
+
+If you're not already using a Kubernetes API integration in whatever code you're writing, you can use the [Apache HTTP Client 4.x](https://hc.apache.org/httpcomponents-client-4.5.x/index.html) libraries directly or you can use [Java's built in HTTP client](https://openjdk.org/groups/net/httpclient/intro.html).
+
+Finally, if you're accessing a remote service that uses a certificate that is self signed or signed by a self-signed CA, you can add the CA or certificate to the `trusted_certs` section of your helm values and it will be trusted by OpenUnison.  There's no need to manually trust certificates in your code.
+
 ## Finding Examples
 
 Most of the various components that can be customized via JavaScript have existing examples to work off of.  The best places to look are:
@@ -120,3 +178,4 @@ Most of the various components that can be customized via JavaScript have existi
 * The [OpenUnison GitHub Organization](https://github.com/openunison)
 * The [Tremolo Security GitHub organization](https://github.com/TremoloSecurity)
 * The [Kubernetes: An Enterprise Guide, 3rd Ed GitHub Repository](https://github.com/PacktPublishing/Kubernetes-An-Enterprise-Guide-Third-Edition)
+
