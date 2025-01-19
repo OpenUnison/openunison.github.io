@@ -125,6 +125,8 @@ openunison:
 #   url: jdbc:mariadb://mariadb.mariadb.svc.cluster.local:3306/unison
 #   user: unison
 #   validation: SELECT 1
+#   maxcons: 10
+#   maxidlecons: 10
 
 #smtp:
 #  host: blackhole.blackhole.svc.cluster.local

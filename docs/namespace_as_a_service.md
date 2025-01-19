@@ -113,6 +113,9 @@ database:
   url: jdbc:mariadb://mariadb.mariadb.svc.cluster.local:3306/unison
   user: unison
   validation: SELECT 1
+  maxcons: 10
+  maxidlecons: 10
+
 
 smtp:
   host: blackhole.blackhole.svc.cluster.local
@@ -136,6 +139,8 @@ database:
   url: jdbc:mysql://mysql.mysql.svc:3306/unison
   user: unison
   validation: SELECT 1
+  maxcons: 10
+  maxidlecons: 10
 ```
 
 ##### MariaDB
@@ -148,6 +153,8 @@ database:
   url: jdbc:mariadb://mariadb.mariadb.svc.cluster.local:3306/unison
   user: unison
   validation: SELECT 1
+  maxcons: 10
+  maxidlecons: 10
 ```
 
 ##### PostgreSQL
@@ -160,6 +167,8 @@ database:
   url: jdbc:postgresql://postgresql-db.postgres.svc.cluster.local:5432/unison
   user: postgres
   validation: SELECT 1
+  maxcons: 10
+  maxidlecons: 10
 ```
 
 ##### SQL Server
@@ -174,6 +183,8 @@ database:
   url: jdbc:sqlserver://192.168.2.102:1433;databaseName=unison
   user: unison
   validation: SELECT 1
+  maxcons: 10
+  maxidlecons: 10
 ```
 
 With your configuration updated, the next step is to choose which management model to use.  That is covered in the next section.
