@@ -435,6 +435,317 @@ kubectl delete secret orchestra -n openunison
 
 Once you re-deploy OpenUnison, you'll have two ActiveMQ `Deployments`.  Once is called `amq-orchestra` and another called `amq-backup-orchestra`.  Only one will receive requests from OpenUnison at a time, and if the currently available `Deployment` isn't available OpenUnison will switch to the other one.  
 
+## GitOps
+
+When working with GitOps, you may prefer to provision your manifests first to a Git repository instead of directly into the API server.  OpenUnison can be configured to do this transparently.  To enable integration to git, you're going to need:
+
+1. A Git repository for cluster level objects
+2. A writeable deployment key
+
+Create a `Secret` for your deployment key called `sshkey-cluster-k8s` with the ssh private key stored as the key `id_rsa`.  For instance:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sshkey-cluster-k8s
+  namespace: openunison
+type: Opaque
+data:
+  id_rsa: LS0tLS1CRUd...
+```
+
+Next, add the following configuration options to your values.yaml:
+
+```yaml
+openunison:
+  non_secret_data:
+    # Email Address to use for commits
+    GIT_EMAIL: openunison@nodomain.io
+    # username to use for commits
+    GIT_USERNAME: openunison
+    # The git repo SSH URL to use for cluster level objects
+    K8S_GIT_URL: git@github.com:someorg/cluster.git
+  .
+  .
+  .
+  naas:
+    git:
+      # path, starting with "/", where to provision yaml to
+      prefix: /yaml
+```
+
+When you redeploy OpenUnison, click on the **New Kubernetes Namespace** badge, and choosing your cluster there are three new options:
+
+| Field | Description | Example |
+| ----- | ----------- | ------- |
+| Git URL | The SSH URL for the namespace | git@github.com:someorg/my-ns.git |
+| Git Path | The root to store manifest files in | /yaml |
+| Git SSH Private Key | An SSH private key that is writeable to the SSH | ... |
+
+![New Namespace with Git Enabled](/assets/images/gitops-byo-git-new-ns.png)
+
+### Automating Repo Deployment and Integration
+
+If you're integrated with GitHub or GitLab, you can automate the creation of repositories and SSH keys.  This makes it easier for users to onboard a namespace without first having a git repository.  In order to disable the additional form fields, add `openunison.naas.git.enable_byo=false`:
+
+```yaml
+openunison:
+  naas:
+    git:
+      # used to disable bring your own git repository
+      enable_byo: false
+```
+
+When you disable bring-your-own git repository, your workflow needs to populate the following user attributes:
+
+| User Attribute | Description | Example |
+| ----------------- | ----------- | ------- |
+| gitUrl | The SSH git URL | git@github.com:someorg/my-ns.git |
+| gitPath | The path, starting with "/", where to provision YAML to |
+
+In addition to populating these request attributes, a deployment key with write privileges must be added to a `Secret` with the name `sshkey-namespace-k8s-MYNAMESPACE` where **MYNAMESPACE** is the name of the `Namespace` being created.  For instance, if creating the namespace `myns` we'd create the `Secret`:
+
+```yaml
+kind: Secret
+apiVersion: v1
+metadata:
+  name: sshkey-namespace-k8s-myns
+  namespace: openunison
+  labels:
+    cluster: k8s
+data:
+  id_rsa: LS0tLS1CRUd...
+type: Opaque
+```
+
+#### Creating a GitHub Repository
+
+Assuming you're using GitHub, you can use the [GitHub target and tasks](/applications/github) from inside of a `Workflow` configured to run as the [pre-run workflow](/documentation/customize-naas-onboarding/#pre-run-workflow):
+
+```yaml
+---
+apiVersion: openunison.tremolo.io/v1
+kind: Workflow
+metadata:
+  name: pre-namespace
+  namespace: openunison
+spec:
+  description: creates a ResourceQuota object
+  inList: false
+  label: Creates a ResourceQuota
+  orgId: internal-does-not-exist
+  tasks: |-
+      # Create a team for writing to the repo
+      - taskType: customTask
+        className: com.tremolosecurity.provisioning.customTasks.AddGroupToStore
+        params:
+          target: github
+          name: proj-$nameSpace$-admin
+          attributes: []
+
+      # Generate a GitHub repo
+      - taskType: customTask
+        className: com.tremolosecurity.provisioning.customTasks.github.CreateGithubRepo
+        params:
+            targetName: github
+            name: $nameSpace$-infra
+            description: $nameSpace$ Infrastructure Manifests
+            team: proj-$nameSpace$-admin
+            # optional paramters
+            allowSquashMerge: "true"
+            allowMergeCommit: "true"
+            allowRebaseMerge: "true"
+            deleteBranchOnMerge: "false"
+            defaultBranch: "main"
+            homePage: "https://www.tremolosecurity.com/"
+            visibility: "public"
+            issues: "true"
+            projects: "true"
+            wiki: "true"
+            downloads: "true"
+            isTemplate: "false"
+            gitignoreTemplate: ""
+            licenseTemplate: ""
+            autoInit: "true"
+            owner: ""
+            # deployKeyName: "deployment-key"
+            # webhookUrl: ""
+            # webhookEvents: []
+      
+      # Create a writeable deployment key
+      - taskType: customTask
+        className: com.tremolosecurity.provisioning.customTasks.github.CreateDeploymentKey
+        params:
+          targetName: github
+          repo: $nameSpace$-infra
+          keyLabel: openunison
+          makeWriteable: "true"
+          privateKeyReuestName: "infraSshKeyB64"
+          privateKeyReuestNamePT: "infraSshKey"
+
+      # GitOps - Create SSH Key for Namespace
+      - taskType: customTask
+        className: com.tremolosecurity.provisioning.tasks.CreateK8sObject
+        params:
+          targetName: k8s
+          template: |-
+            kind: Secret
+            apiVersion: v1
+            metadata:
+              name: sshkey-namespace-$cluster$-$nameSpace$
+              namespace: openunison
+              labels:
+                cluster: $cluster$
+            data:
+              id_rsa: $infraSshKeyB64$
+            type: Opaque
+          srcType: yaml
+          writeToRequest: "false"
+
+      
+      # Create the 
+      - taskType: customTask
+        className: com.tremolosecurity.provisioning.customTasks.JavaScriptTask
+        params:
+          javaScript: |-
+            HashMap = Java.type("java.util.HashMap");
+            OpenShiftTarget = Java.type("com.tremolosecurity.unison.openshiftv3.OpenShiftTarget");
+            Attribute = Java.type("com.tremolosecurity.saml.Attribute");
+            K8sUtils = Java.type("com.tremolosecurity.k8s.util.K8sUtils");
+            System = Java.type("java.lang.System");
+
+            function init(task,params) {
+            // nothing to do
+            }
+
+            function reInit(task) {
+            // do nothing
+            }
+
+            function doTask(user,request) {
+
+                user.getAttribs().put("gitPath", new Attribute("gitPath","/yaml"));
+                request.put("gitPath","/yaml");
+
+                user.getAttribs().put("gitUrl", new Attribute("gitUrl","git@github.com:my-org/" + request.get("nameSpace") + "-infra.git"));
+                request.put("gitUrl","git@github.com:my-org/" + request.get("nameSpace") + "-infra.git");
+                
+                return true;
+            }
+```
+
+With your git repo created and deployed, you'll next want to provide a way to trigger the synchronization into your cluster.
+
+#### Synchonizing from Git Into Your Cluster
+
+When bringing your own git repository, you need to configure your repo to be synced from git into your cluster using a GitOps controller.  How you do this will be dependent on your GitOps controller.  If, as an example, you're using Argo CD, you can create an `ApplicationSet` that will connect to your repository in a [post-namespace `Workflow`](/documentation/customize-naas-onboarding/#post-namespace-create-workflow):
+
+```yaml
+---
+apiVersion: openunison.tremolo.io/v1
+kind: Workflow
+metadata:
+  name: post-namespace
+  namespace: openunison
+spec:
+  description: creates a ResourceQuota object
+  inList: false
+  label: Creates a ResourceQuota
+  orgId: internal-does-not-exist
+  tasks: |-
+      # Create a read only deployment key in our GitHub repository for Argo CD
+      - taskType: customTask
+        className: com.tremolosecurity.provisioning.customTasks.github.CreateDeploymentKey
+        params:
+            targetName: github
+            repo: $nameSpace$-infra
+            keyLabel: argocd
+            makeWriteable: "false"
+            privateKeyReuestName: "argocdinfrakeyb64"
+            privateKeyReuestNamePT: "argocdinfrakey"
+
+      # Create a Secret that will store the deployment key
+      - taskType: customTask
+        className: com.tremolosecurity.provisioning.tasks.CreateK8sObject
+        params:
+            # the name of the cluster to provision to, must by the name of a `Target` object
+            targetName: k8s
+            # The YAML or JSON to generate
+            template: |-
+                kind: Secret
+                apiVersion: v1
+                metadata:
+                  name: "github-$nameSpace$-infa"
+                  namespace: argocd
+                  labels:
+                    argocd.argoproj.io/secret-type: repo-creds
+                data:
+                  sshPrivateKey: $argocdinfrakeyb64$
+                stringData:
+                  type: git
+                  url: git@github.com:my-org/$nameSpace$-infra.git
+            srcType: yaml
+
+      # Create an ApplicationSet that will generate an Application for synchronizing from our repo
+      - taskType: customTask
+        className: com.tremolosecurity.provisioning.tasks.CreateK8sObject
+        params:
+            # the name of the cluster to provision to, must by the name of a `Target` object
+            targetName: k8s
+            # The YAML or JSON to generate
+            template: |-
+                apiVersion: argoproj.io/v1alpha1
+                kind: ApplicationSet
+                metadata:
+                  name: github-$nameSpace$-infra
+                  namespace: argocd
+                spec:
+                  generators:
+                    - git:
+                        repoURL: git@github.com:my-org/$nameSpace$-infra.git
+                        revision: main
+                        directories:
+                            - path: yaml
+                        interval: 1m
+                  template:
+                    metadata:
+                      name: '$nameSpace$-infra'
+                    spec:
+                      project: default
+                      source:
+                        repoURL: git@github.com:my-org/$nameSpace$-infra.git
+                        targetRevision: main
+                        path: yaml
+                        directory:
+                            recurse: true
+                      destination:
+                        server: https://kubernetes.default.svc
+                      syncPolicy:
+                        automated:
+                          prune: false
+                          selfHeal: true
+
+            srcType: yaml
+            writeToRequest: "true"
+            requestAttribute: "git-cluster"
+            path: /yaml/cluster/namespaced/argocd/applicationsets/github-$nameSpace$-infra.yaml
+
+      # push the ApplicationSet into our cluster repo
+      - taskType: customTask
+        className: com.tremolosecurity.provisioning.tasks.PushToGit
+        params:
+            secretName: sshkey-cluster-k8s
+            nameSpace: openunison
+            target: k8s
+            keyName: id_rsa
+            gitRepo: git@github.com:my-org/cluster.git
+            requestObject: git-cluster
+            commitMsg: $nameSpace$ setup $WORKFLOW.id$
+```
+
+In addition to provisioning an `ApplicationSet`, you can also provision a `AppProject` to contain the `Application` and manage access.
+
 ## Alternate Deployment Steps
 
 ### Manual Deployment
