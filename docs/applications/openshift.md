@@ -1,0 +1,121 @@
+# OpenShift
+
+RedHat's OpenShift is a multi-tenant Kubernetes platform popular with large enterprises.  It differs from more generic Kubernetes distributions in a few important ways:
+
+* **OpenShift has its own authentication service and users** - Unlike Kubernetes, OpenShift has its own OAuth service and includes `User` and `Group` objects.  In order to manage access, you will need to integrate with these objects instead of just providing a token with your user's groups.  
+* **OpenShift includes its own binary** - While you can use the `kubectl` command with OpenShift, most users use the provided `oc` command to interact with OpenShift.
+* **Built in Dashboard** - OpenShift has always had its own web UI.  This is often the first place users will go to interact with their clusters and it's integrated with OpenShift's authentication.
+* **Routes** - OpenShift builds in it's own ingress system called `Routes` built off of HAProxy.  
+
+OpenUnison's [Namespace as a Service (NaaS)](/namespace_as_a_service/) capability in particular is a great fit for providing self service access to create and manage access to projects in OpenShift.  All three access management methods work well (internal groups, external groups, and hybrid) making it much easier to centrally manage access to your OpenShift clusters.
+
+When deploying the NaaS on OpenShift, there's no special configuration needed to create and update OpenShift `User` and `Group` objects.  Everything works automatically.
+
+## Deployment
+
+Given the benefits of OpenUnison on OpenShift, the deployment steps are not much different then deploying to a generic Kubernetes distribution.  There are really only three changes to your typical values file:
+
+### Networking and Ingress
+
+Assuming you're using OpenShift's built in `Routes`, OpenUnison will setup a secure `Route` for you just as it will for other supported ingresses.  Set your `network.ingress_type` to `openshift` and make sure that your `network.openunison_host` points to a DNS alias for your `Route`'s load balancer.  A larger example:
+
+```yaml
+network:
+  openunison_host: "ou.apps-crc.testing"
+  session_inactivity_timeout_seconds: 900
+  force_redirect_to_tls: true
+  createIngressCertificate: false
+  ingress_type: openshift
+  ingress_annotations: {}
+```
+
+### Disable the Dashboard
+
+Chances are, you won't want to use the Kubernetes Dashboard.  Disable it by setting `dashboard.enabled` to `false`:
+
+```yaml
+dashboard:
+  enabled: false
+```
+
+### Disable the Token Services
+
+Since OpenShift has its own built in token service, you don't need to use OpenUnison's.  Setting `openunison.kubeAuth.enabled` to `false` will remove the "Token" badge and disable the token services. ***NOTE:*** this won't disable the built in identity provider, just the token services.
+
+```yaml
+openunison:
+  kubeAuth:
+    enabled: false
+```
+
+## Configuring SSO for OpenShift
+
+OpenUnison can support authentication for your OpenShift deployment.  You may already be using KeyCloak, or Red Hat Single Sign On, for your OpenShift deployment.  If using OpenUnison's NaaS service with OpenShift, inserting OpenUnison into the authentication process will make sure your groups stay synchronized, especially when using the external groups method.  
+
+If you're already using KeyCloak, you can pretty easily configure OpenUnison to authenticate against [KeyCloak](/identity%20providers/keycloak/) to make OpenUnison an identity proxy.
+
+Once you've decided how you want to authenticate to OpenUnison, either directly or to KeyCloak, the next step is to configure OpenSHift to authenticate to OpenUnison.  THe first step is to generate a secret to be used for OpenID Connect in the `openunison` `namespace`:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: openshift-oidc
+  namespace: openunison
+type: Opaque
+data:
+  oidc-secret: c2VjcmV0
+```
+
+Next, create a `Trust` in the `openunison` namespace:
+
+```yaml
+apiVersion: openunison.tremolo.io/v1
+kind: Trust
+metadata:
+  name: openshift
+  namespace: openunison
+spec:
+  accessTokenSkewMillis: 120000
+  accessTokenTimeToLive: 60000
+  authChainName: login-service
+  clientId: openshift
+  clientSecret:
+    keyName: oidc-secret
+    secretName: openshift-oidc
+  codeLastMileKeyName: lastmile-oidc
+  codeTokenSkewMilis: 60000
+  publicEndpoint: false
+  redirectURI:
+  - https://oauth-openshift.apps-crc.testing/oauth2callback/openunison
+  signedUserInfo: false
+  verifyRedirect: true
+```
+
+Make sure `spec.redirectURI[0]` is in the format `https://oauth-openshift.apps.<cluster_name>.<cluster_domain>/oauth2callback/<idp_provider_name>`.
+
+Once OpenUnison is configured, follow the [instructions for your version of OpenShift](https://docs.openshift.com/container-platform/4.18/authentication/identity_providers/configuring-oidc-identity-provider.html) to configure your cluster with the issuer `https://host/auth/idp/k8sIdp` where the `host` is the same value as your values' `network.openunison_host`.
+
+### Creating a Badge
+
+You can create a "badge" in OpenUnison for OpenShift to build a central portal for accessing your cluster and any additional cluster management applications:
+
+```yaml
+apiVersion: openunison.tremolo.io/v1
+kind: PortalUrl
+metadata:
+  name: openshift
+  namespace: openunison
+spec:
+  label: OpenShift
+  org: B158BD40-0C1B-11E3-8FFD-0800200C9A66
+  url: https://console-openshift-console.apps-crc.testing/dashboards
+  icon: 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SMrEdLuvJeZfZZG6yZfn+VYw0vDiANccDca13W0OlktVT3EhAWDbRWcbNj8D4OiR1Dti+8T++2uSnVAkVOl3F/yUmX84vMX4dYA2A+QF4e++fE8NM/9VEbUwMAOEw8A4vufihwZbdiWkyBjpi+4lHN6ROW3KCQRcD2Awd62NgbuixIcGIpFwKhZGxtSc2wHUDNuSNDW9bxs0B8DtALYBKCWiGxn4LYAf9IhoG4DvBpsaL5Nqnh49EgCgrq6uC8BdFaj49WZ345GKqVgz70PAp4AKtcY61rS0tAz7QtSw6eSookwAyNDcNdbn2YkuK4uz5o/2d9m6s882bNvAWort3pxGGRQZygZer/cERDFrdyMT2jlY4wPg5gpU3Nqc3/BvBONgRZgBxmeAvXFnNPraUPaKQT9ssPGii2LbRjZE5AqtDaMdnV9+H+VSf9Zd/C70ADuEe5VJ/017Y6+1Q99PEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEAbl/wNe5BZDV5uwMQAAAABJRU5ErkJggg==
+  azRules:
+  - constraint: o=Tremolo
+    scope: dn
+```
+
+Once updated, you'll have a badge to OpenShift in OpenUnison:
+
+![OpenUnison with an OpenShift Badge](/assets/images/apps/openshift/openunison-with-badge.png)
