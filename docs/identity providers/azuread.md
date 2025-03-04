@@ -50,15 +50,15 @@ Click on **+ New client secret**, give it a description and a life span.  How lo
 
 With the client secret created and stored in your cluster, the next step is to setup your token.  Next, click on **Token configuration** on the left hand side.  Next, click on **Add optional claim** and choose `email`, `family_name`,`given_name`, `upn`, and `preferred_username` and click **Add**.  When EntraID asks if you want to add the scopes automatically, agree.  Adding these claims isn't required, but will make it much easier to manage your integration.
 
-![Add optional claims](../../../assets/images/identity-providers/EntraID/3.png)
+![Add optional claims](../../../assets/images/identity-providers/azuread/3.png)
 
 The last configuration step is to enable the correct APIs and provide organizational consent.  Click on **API permissions** on the left hand side.  The `email`, `profile`, and `User.Read` delegated permissions are already present.  Click on **+ Add a permission**, Choose **Microsoft Graph**, and then **Application Permissions**.  Under **User** check `User.Read.All`.  Under `Group` check `Group.Read.All`.  Under **GroupMember** check `GroupMember.Read.All`.  Click **Add permission**.
 
-![API Permissions](../../../assets/images/identity-providers/EntraID/4.png)
+![API Permissions](../../../assets/images/identity-providers/azuread/4.png)
 
 Next, click on **Grant admin consent for Default Directory** and answer **Yes**.  This will allow OpenUnison to lookup the user's groups.  
 
-![Grant Organization Consent](../../../assets/images/identity-providers/EntraID/4.png)
+![Grant Organization Consent](../../../assets/images/identity-providers/azuread/4.png)
 
 Return to the **Overview** section to configure OpenUnison.
 
