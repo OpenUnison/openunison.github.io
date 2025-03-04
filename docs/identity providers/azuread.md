@@ -99,15 +99,15 @@ azure:
   tennant_id: 61cbe426-d3ca-4ebd-8ca4-e47e354a85bb
 ```
 
-The final configuration change is to set `openunison.include_auth_chain` to `EntraID-load-groups`.  ***NOTE: `openunison.include_auth_chain` is NOT included in the default values yaml.*** This last step will tell OpenUnison to run our custom authentication mapping.  The next section covers the details as to what is happening in this custom mapping.
+The final configuration change is to set `openunison.include_auth_chain` to `azuread-load-groups`.  ***NOTE: `openunison.include_auth_chain` is NOT included in the default values yaml.*** This last step will tell OpenUnison to run our custom authentication mapping.  The next section covers the details as to what is happening in this custom mapping.
 
-All configuration is complete.  The next step is to install the `orchestra-login-EntraID` chart:
+All configuration is complete.  The next step is to install the `orchestra-login-azuread` chart:
 
 ```
-helm install orchestra-login-EntraID tremolo/orchestra-login-EntraID -n openunison -f /path/to/openunison-values.yaml
+helm install orchestra-login-azuread tremolo/orchestra-login-azuread -n openunison -f /path/to/openunison-values.yaml
 ```
 
-With this chart installed, you may complete the [Deploy the Portal](../../deployauth#deploy-the-portal) step.  The details for how the `orchestra-login-EntraID` chart maps from group ids to names is in the next section.
+With this chart installed, you may complete the [Deploy the Portal](../../deployauth#deploy-the-portal) step.  The details for how the `orchestra-login-azuread` chart maps from group ids to names is in the next section.
 
 ## Mapping Technical Details
 
@@ -116,7 +116,7 @@ The details of how the mapping occurs invovles creating two new objects in your 
 1. AzreAD provisioning target - Targets are how OpenUnison communicates with remote services.  The EntraID target knows how to authenticate to EntraID and load users based on their `userPrinicipalName` and translates the group ids the user is a member of into group names.
 2. Custom authentication chain - A custom authentication chain, written in JavaScript, retrieves the authenticated user, loads the EntraID target, finds the user, and stores the user's groups in the authenticated user's object.
 
-The target is straight forward.  It uses the same identity as OpenUnison's OIDC configuration.  The additional permissions we added gives it the ability to prerform the look.
+The target is straight forward.  It uses the same identity as OpenUnison's OIDC configuration.  The additional permissions we added gives it the ability to perform the lookup.
 
 The custom authentication is where the actual mapping happens.  Here's the javascript snippet:
 
@@ -137,8 +137,8 @@ function doAuth(request,response,as) {
 
     // Load the user from EntraID by their UserPrincipalName (user@domain)
     var upn = ac.getAuthInfo().getAttribs().get("uid").getValues().get(0);
-    var EntraID = GlobalEntries.getGlobalEntries().getConfigManager().getProvisioningEngine().getTarget("EntraID");
-    var userFromEntraID = EntraID.findUser(upn,new HashMap());
+    var azuread = GlobalEntries.getGlobalEntries().getConfigManager().getProvisioningEngine().getTarget("azuread");
+    var userFromEntraID = azuread.findUser(upn,new HashMap());
 
     // remove the old groups, then add the ones from the lookup to EntraID
     var memberof = ac.getAuthInfo().getAttribs().get("memberOf");
