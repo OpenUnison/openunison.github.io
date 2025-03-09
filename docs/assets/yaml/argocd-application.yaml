@@ -24,7 +24,7 @@ spec:
       valueFiles:
       - $values/userauth/values.yaml
     repoURL: https://nexus.tremolo.io/repository/helm
-    targetRevision: 3.0.13
+    targetRevision: XXXX
 
   - chart: orchestra
     helm:
@@ -32,7 +32,7 @@ spec:
       valueFiles:
       - $values/userauth/values.yaml
     repoURL: https://nexus.tremolo.io/repository/helm
-    targetRevision: 2.10.61
+    targetRevision: 
 
   - chart: orchestra-login-portal
     helm:
@@ -40,7 +40,7 @@ spec:
       valueFiles:
       - $values/userauth/values.yaml
     repoURL: https://nexus.tremolo.io/repository/helm
-    targetRevision: 2.3.57
+    targetRevision: XXXX
 
   - repoURL: https://github.com/TremoloSecurityDemos/openunison-argocd.git
     path: userauth
