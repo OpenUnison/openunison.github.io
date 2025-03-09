@@ -11,6 +11,15 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v2
+
+      - name: generate templates
+        run: |-
+          OPENUNISON_OPERATOR_VERSION=$(curl https://nexus.tremolo.io/repository/helm/charts.json  2>/dev/null | jq -r '.[] | select(.name == "openunison-operator") | .version')
+          OPENUNISON_ORCHESTRA_VERSION=$(curl https://nexus.tremolo.io/repository/helm/charts.json  2>/dev/null | jq -r '.[] | select(.name == "orchestra") | .version')
+          OPENUNISON_ORCHESTRA_LOGIN_PORTAL_VERSION=$(curl https://nexus.tremolo.io/repository/helm/charts.json  2>/dev/null | jq -r '.[] | select(.name == "orchestra-login-portal") | .version')
+
+          cat docs/assets/yaml/argocd-application-template.yaml | sed s/OPENUNISON_OPERATOR_VERSION/$OPENUNISON_OPERATOR_VERSION/g | sed s/OPENUNISON_ORCHESTRA_VERSION/$OPENUNISON_ORCHESTRA_VERSION/g | sed s/OPENUNISON_ORCHESTRA_LOGIN_PORTAL_VERSION/$OPENUNISON_ORCHESTRA_LOGIN_PORTAL_VERSION/g > docs/assets/yaml/argocd-application.yaml
+
         
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
