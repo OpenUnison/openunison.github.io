@@ -4,9 +4,9 @@ The `ouctl` utility simplifies the deployment of OpenUnison's helm charts. It al
 
 ## Downloads
 
-* [Linux](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.11-linux)
-* [Windows](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.11-win.exe)
-* [MacOS](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.11-macos)
+* [Linux](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.13-linux)
+* [Windows](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.13-win.exe)
+* [MacOS](https://nexus.tremolo.io/repository/ouctl/ouctl-0.0.13-macos)
 
 Rename the downloaded file to `ouctl` (or `ouctl.exe` on windows).
 
@@ -23,8 +23,7 @@ brew install openunison/ouctl/ouctl
 The `ouctl` utility can be installed as a kubectl plugin using krew as a self-hosted plugin (the krew project does not accept installation utilities).  This method supports Linux, macOS, and Windows.
 
 ```
-curl https://nexus.tremolo.io/repository/ouctl/ouctl.yaml > /tmp/ouctl.yaml
-kubectl krew install --manifest=/tmp/ouctl.yaml
+kubectl krew install --manifest-url=https://nexus.tremolo.io/repository/ouctl/ouctl.yaml
 ```
 
 
