@@ -4,6 +4,22 @@ This section details the pre-built provisioning custom tasks. These tasks can be
 
 All tasks have a common interface for specifying configuration options. Each task can take any number of name/value pairs. A single configuration option can have multiple values by listing the name/value pair for each value.
 
+## AsyncCallWorkflow
+
+Launches another workflow asynchronously.  This will generate a new workflow in the audit database that will start and finish outside of the context of the original workflow.
+
+```yaml
+- taskType: customTask
+  className: com.tremolosecurity.provisioning.customTasks.AsyncCallWorkflow
+  params:
+    # The name of the workflow to call
+    workflowName: vcluster-post-namespace-create
+    # The uid attribute of the user object passed into the workflow
+    uidAttributeName: sub
+    # The reason field for the workflow call
+    workflowReason: "deploy vcluster for $nameSpace$"
+```
+
 ## FilterGroups
 
 This task can be used to limit the groups that are available to a target. For instance if a user could have the groups "Admin","Developer" and "User" but the target only has the groups "Admin" and "User" this task can be used to filter out "Developer". This way no "rogue" groups are presented to a target. This task should be used inside of a mapping task to make sure that other tasks are not effected.
