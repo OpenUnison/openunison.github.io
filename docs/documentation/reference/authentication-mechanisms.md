@@ -1061,9 +1061,55 @@ spec:
       nameAttr: "uid"
       # The name of the workflow
       workflowName: "JIT-Saml2"
+      # 1.0.43+
+      # optional - enables JIT to only be run outside of timeframes.  useful if your using with an API that runs at a high rate
+      # # number of seconds between JIT runs
+      # gracePeriod: 60
+      # # An attribute on the user's authentication object that represents the number of milliseconds since the last time the account was updated.
+      # # this attribute should be updated within the JIT workflow
+      # lastUpdatedAttributeName: lastUpdated
+      # # The base DN to reload the object from if the JIT workflow isn't run
+      # reloadBaseDN: o=Tremolo
     secretParams: []
   level: 5
   root: o=Tremolo
+```
+
+#### LoadLastUpdatedAuth
+
+*1.0.43+ only*
+
+Loads the last updated attribute from OpenUnison's Kubernetes Namespace as a Service (NaaS) database.
+
+##### Mechanism
+
+```yaml
+apiVersion: openunison.tremolo.io/v1
+kind: AuthenticationMechanism
+metadata:
+  name: load-last-updated
+  namespace: openunison
+spec:
+  className: com.tremolosecurity.proxy.auth.LoadLastUpdatedAuth
+  init: {}
+  secretParams: []
+  uri: /auth/loadlastupdated
+```
+
+##### Chain
+
+```yaml
+  - name: load-last-updated
+    params:
+      # the attribute to be loaded from the db, also the attribute to be added the user's authentication object.  Should be the same of the JITAuthMech's lastUpdatedAttributeName chain configuration.
+      lastUpdatedForUser: lastUpdated
+      # The SQL to load the value from the database
+      sql: SELECT lastUpdated FROM localUsers WHERE sub=?
+      # the target to load the attribute from
+      target: jitdb
+      # The user's authentication object's unique id attribute
+      uidAttributeName: uid
+    required: required
 ```
 
 #### PersistentCookie

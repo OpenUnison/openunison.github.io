@@ -650,4 +650,17 @@ Appends to the RBAC ConfigMap in ArgoCD.
   secretParams: []
 ```
 
+## AddTimestampToUser
+
+*1.0.43+*
+
+Adds the current timestamp, in milliseconds since EPOCH, to the current user object.
+
+```yaml
+- taskType: customTask
+  className: com.tremolosecurity.provisioning.customTasks.AddTimestampToUser
+  params:
+    # name of the attribute to add
+    attributeName: lastUpdated
+```
 
