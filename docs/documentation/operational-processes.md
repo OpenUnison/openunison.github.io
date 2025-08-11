@@ -2,6 +2,46 @@
 
 This page references several operational processes for OpenUnison.
 
+## Force User Logouts / End Sessions
+
+There are situations where a user's session must be terminated immediately.  Depending on OpenUnison's configuration, there are two ways to do this when working with Kubernetes.  You can manually delete the user's OpenID Connect sessions to keep them from refreshing their tokens and create an `EndSession` object to force a user logout from web sessions.
+
+### Kubernetes Login Portal
+
+Using the login portal to end a user's sessions quickly is done manually via either kubectl or directly using the Kubernetes API.
+
+#### Ending OpenID Connect Sessions
+
+OpenUnison uses very short lived tokens, between 1-2 minutes depending on your clock skew, requiring your client or `kubectl` to constantly refresh.  This entails sending a refresh token to OpenUnison to request a new `id_token` and `refresh_token`.  OpenUnison stores this information, encrypted, as CRDs in your cluster.  You can delete these CRDs, meaning that the next time your client tries to refresh the `id_token`, the process will fail and the user will no longer be able to interact with your cluster.
+
+| Step | Explanation | Example |
+| ---- | ----------- | ------- |
+| Determine the user DN to delete | Each user that's authenticated to OpenUnison has a Distinguished Name (DN) that identifies the user inside of the internal LDAP virtual directory.  This DN will take the form `uid=user,ou=shadow,o=Tremolo` for the login portal,  You can find the exact DN by looking in the OpenUnison access logs.  The DN is in every `AzLog` line. | `uid=mmosley,ou=shadow,o=Tremolo` |
+| Generate a sha1 hash of the DN | OpenUnison stores a SHA1 hash of the  user's DN as a label on each session object to make it easier to delete. | `echo -n 'uid=mmosley,ou=shadow,o=Tremolo' | sha1sum` generates `5204c08a79c11dbdc2fdda1e07bc866fb4f22888  -` |
+| Delete all instances of the `oidc-session` object with the sha1 label | You can delete the sessions using `kubectl` | `k delete oidc-sessions -l tremolo.io/user-dn=5204c08a79c11dbdc2fdda1e07bc866fb4f22888 -n openunison` |
+
+Once the `oidc-session` objects are deleted, sessions will end once tokens expire.
+
+#### Ending Web Sessions
+
+Prior to 1.0.43, killing the `oidc-sessions` was enough to also end portal and dashboard sessions.  However, with the desire to have more web accessible tools, we separated this by default in 1.0.43.  To kill a user's web session in 1.0.43+, you need to create a special object called `EndSession` with the user's DN.  For instance, the below object:
+
+```yaml
+kind: EndSession
+apiVersion: openunison.tremolo.io/v1
+metadata:
+  name: kill-mmosley
+  namespace: openunison
+spec:
+  dn: uid=mmosley,ou=shadow,o=Tremolo
+```
+
+Will delete the user `mmosley`.  The DN will be the same as what was used to generate the sha1sum when deleting OIDC sessions.  You don't need to worry about deleting this object, OpenUnison will delete it after about a minute.
+
+### Namespace as a Service (NaaS) Portal
+
+If you've deployed the NaaS portal, you can [delete user's sessions quickly from the portal using the **End sessions** workflow.](/documentation/naas/#end-sessions)
+
 ## Upgrading Satellite Clusters
 
 When using OpenUnison, either as an SSO portal or using NaaS, with a control plane/satellite model there are two ways to upgrade an integrated satellite:

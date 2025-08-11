@@ -1573,6 +1573,8 @@ spec:
       idpName: "oidc"
       # The name of the trust to generate a session for
       trustName: "kubernetes"
+      # set to true if you don't want to tie the generated oidc token to the web session, 1.0.43+
+      doNotTieSession: "true"
     secretParams: []
   level: 1
   root: "dc=domain,dc=com"

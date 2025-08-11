@@ -188,3 +188,24 @@ Cleans request attributes that are meant to become labels on Kubernetes objects.
     attributes: "raw label"
   secretParams: []
 ```
+
+### CheckApiExists
+
+***1.0.43+***
+
+When working in a multi-cluster environment, you can't always guarantee every cluster is at the same API level.  This task will let you check the remote cluster and add an attribute to the user object that can be tested with the `ifAttrExists` task:
+
+```yaml
+# check if the remote target has EndSessions enabled
+- taskType: customTask
+  className: com.tremolosecurity.provisioning.tasks.CheckApiExists
+  params:
+    # apiGroup to check
+    apiGroup: openunison.tremolo.io/v1
+    # kind to check
+    apiKind: EndSession
+    # cluster to check, must have a corresponding Target object
+    cluster: k8s-$clusterName$
+    # the user attribute to create
+    attribute: api_enabled
+```

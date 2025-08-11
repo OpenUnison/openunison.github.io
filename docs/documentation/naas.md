@@ -146,3 +146,40 @@ OpenUnison has several reports that you can use to find the status of open reque
 | Single User Change Log | List of all attributes and objects that have been created that are associated with the user provided when running the report | OpenUnison Administrators |
 Change Log for Period | List of all attributes and objects that have been created or changed between the two dates provided | OpenUnison Administrators |
 | Dormant Users | List of users that haven't logged in for 30 days | OpenUnison Administrators |
+
+## End Sessions
+
+***Requires OpenUnison 1.0.43+***
+
+Administrators and security operators can automatically clear a user's sessions across all integrated clusters by running the **End sessions** workflow for a user.  This workflow will delete all `oidc-session` objects across all clusters for the user, and create an `EndSession` object to force immediate logout from existing web sessions.  This will end all user's access once their `id_token` expires (usually within a minute or two depending on clock skew) and force user logged into dashboards to re-authenticate.  
+
+The first step is to login to the OpenUnison portal, then:
+
+1. Click on **Users** to search for the user you want to force logout for
+2. Search for the user based on their login id, or any other attributes available for searching
+3. Once you locate the user you want to logout, click **Add to cart**
+
+![Search for user to logout](/assets/images/manual/naas/clear-login-1.png)
+
+Once the user(s) you want to clear out have been added to the local cart:
+
+1. Click on the **OpenUnison Security Operations** organization
+2. Choose the **End sessions** workflow and specify a reason for end the user's sessions
+3. Click **Submit your requests**
+
+![Submit request for user to logout](/assets/images/manual/naas/clear-login-2.png)
+
+### Delegating to a Security Team
+
+In large organizations, the security team may want to be directly responsible for ending user sessions.  For internal group based NaaS portals, create the database group `security-internal` and add your security team to it.  For external groups enabled NaaS portals, create a `GroupMetaData` object to map to the `security-external` group:
+
+```yaml
+apiVersion: openunison.tremolo.io/v1
+kind: GroupMetaData
+metadata:
+  name: security-external
+  namespace: openunison
+spec:
+  externalName: CN=security-team,CN=Users,DC=ent2k22,DC=tremolo,DC=dev
+  groupName: security-external
+```
