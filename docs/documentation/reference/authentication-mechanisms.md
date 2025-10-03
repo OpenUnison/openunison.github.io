@@ -963,6 +963,12 @@ spec:
       realm: "kubernetes"
       # HTTP Scope
       scope: "auth"
+      # 1.0.44+
+      # CORS Support, if set CORS responses will be added to OPTIONS requests
+      cores-headers:
+      - Access-Control-Allow-Origin=*
+      - Access-Control-Allow-Methods=*
+      - Access-Control-Allow-Headers=*
     secretParams: []
   level: 20
   root: o=Tremolo
