@@ -965,7 +965,7 @@ spec:
       scope: "auth"
       # 1.0.44+
       # CORS Support, if set CORS responses will be added to OPTIONS requests
-      cores-headers:
+      cors-headers:
       - Access-Control-Allow-Origin=*
       - Access-Control-Allow-Methods=*
       - Access-Control-Allow-Headers=*
