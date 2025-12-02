@@ -42,10 +42,10 @@ spec:
     repoURL: https://nexus.tremolo.io/repository/helm
     targetRevision: XXXX
 
-  - repoURL: https://github.com/TremoloSecurityDemos/openunison-argocd.git
-    path: userauth
   - ref: values
     repoURL: https://github.com/TremoloSecurityDemos/openunison-argocd.git
   syncPolicy:
+    automated:
+      selfHeal: true
     syncOptions:
     - RespectIgnoreDifferences=true

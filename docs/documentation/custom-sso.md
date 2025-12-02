@@ -289,7 +289,7 @@ spec:
     uri: /auth/idp/argocd
 ```
 
-Here's the explination of each part of this configuration:
+Here's the explanation of each part of this configuration:
 
 | Lines | Description |
 | ----- | ----------- |
@@ -299,18 +299,349 @@ Here's the explination of each part of this configuration:
 | 24 | This tells OpenUnison this applications is an identity provider, not a reverse proxy |
 | 25 | Every `Application` in OpenUnison is made of multiple `url` entries.  Identity providers, like this one, only have one URL definition. |
 | 26 - 28 | Each URL can have its own authorization rules (`azRules`).  An authorization rule is made of a `scope` (one of `dn`,`group`,`filter`,`custom`) and a `constraint`, which defines what the rule is.  The combination of `dn` and `o=Tremolo` tells OpenUnison to authorize any user in the internal LDAP virtual directory.  If you wanted to only allow users in the group `cn=argocd-users,ou=Groups,DC=domain,DC=com` you would use `filter` as the `scope` and `(groups=cn=argocd-users,ou=Groups,DC=domain,DC=com)` as the `constraint` because OpenUnison internally represents groups in the Kubernetes integration as attributes instead of seperate objects. Multipls rules may be listed.  If ***ANY*** rule passes, the url is authorized |
-| 29 | Customizations can be done here to impect the request and response.  For identity providers, this is generally not needed |
+| 29 | Customizations can be done here to impact the request and response.  For identity providers, this is generally not needed |
 | 30 - 31 | URLs need specific hosts to be associated with.  This is generally left unchanged |
 | 32 - 77 | The `idp` section is where you define the details for your identity provider |
 | 33 | The `className` should not change |
-| 34 - 51 | The `mappings` section defines which claims, or attributes, will be included in the `id_token` provided to your application.  These same claims are provided by the `user_info` endpoint.  OpenUnison makes no distinction between the attributes in the `id_token` vs `user_info` endpoint.  Each claim has three attributes.  The `sourceType` can be a `user`, `composite`, `static`, or `custom`.  When `user`, the claim is pulled straight for the user's object based on the `targetAttributeSource` attribute.  If `static`, the `targetAttributeSource` is taken as is.  If `composite`, the `targetAttributeSource` provides attributes and text from the user.  Finally, `custom` lets you define a custom implmenetation.  For `groups`, the `targetAttributeSource` is `com.tremolosecurity.mapping.JavaScriptMapping|k8s,openunison,argocd-groups`.  The `com.tremolosecurity.mapping.JavaScriptMapping|` generally won't change.  The `k8s` tells OpenUnison which cluster to pull the mapping from.  `openunison` is the namespace and finally `argocd-groups` is the `JavaScriptMapping` defined earlier. Finally, `strict` tells OpenUnison to only include the attributes specifically defined here.  In general this should be `true` |
+| 34 - 51 | The `mappings` section defines which claims, or attributes, will be included in the `id_token` provided to your application.  These same claims are provided by the `user_info` endpoint.  OpenUnison makes no distinction between the attributes in the `id_token` vs `user_info` endpoint.  Each claim has three attributes.  The `sourceType` can be a `user`, `composite`, `static`, or `custom`.  When `user`, the claim is pulled straight for the user's object based on the `targetAttributeSource` attribute.  If `static`, the `targetAttributeSource` is taken as is.  If `composite`, the `targetAttributeSource` provides attributes and text from the user.  Finally, `custom` lets you define a custom implementation.  For `groups`, the `targetAttributeSource` is `com.tremolosecurity.mapping.JavaScriptMapping|k8s,openunison,argocd-groups`.  The `com.tremolosecurity.mapping.JavaScriptMapping|` generally won't change.  The `k8s` tells OpenUnison which cluster to pull the mapping from.  `openunison` is the namespace and finally `argocd-groups` is the `JavaScriptMapping` defined earlier. Finally, `strict` tells OpenUnison to only include the attributes specifically defined here.  In general this should be `true` |
 | 52 - 56 | This section defines parameters for the identity provider and should generally be left unchanged.  |
-| 57 -73 | The `trusts` section is where you define which applications will trust this identity provdier.  This has the same options as a `Trust` object. |
+| 57 -73 | The `trusts` section is where you define which applications will trust this identity provider.  This has the same options as a `Trust` object. |
 | 70 - 73 | Each trust can provide a list of `secretParams` that references external `Secret` objects instead of local configuration. |
 | 74 - 76 | The `results` section defines what happens in response to certain events.  Here, in response to the `auFail` and `azFail` events, the user is redirected to an invalid credentials page |
 | 77 | The `uri` tells OpenUnison how to access this identity provider.  It will always follow the pattern `/auth/idp/appname`. |
 
 Once your `Application` is deployed, you can test it without any kind of container restart.  Once you're tested, you can also [add a badge to the front page of your OpenUnison portal as well](#adding-a-badge-to-the-portal).
+
+### Limiting Attributes in the access_token
+
+***1.0.44+***
+
+It's not unusual to want a slimmer `access_token` then your `id_token`.  Usually a user's groups are the biggest difference in token size.  To remove certain claims from a token, add the `accessTokenIgnoreClaims` configuration to your identity provider.  As an example:
+
+```yaml
+---
+apiVersion: openunison.tremolo.io/v2
+kind: Application
+metadata:
+  labels:
+    app.kubernetes.io/component: openunison-applications
+    app.kubernetes.io/instance: openunison-orchestra-login-portal
+    app.kubernetes.io/name: openunison
+    app.kubernetes.io/part-of: openunison
+  name: argocd
+  namespace: openunison
+spec:
+  azTimeoutMillis: 3000
+  cookieConfig:
+    cookiesEnabled: true
+    domain: '#[OU_HOST]'
+    httpOnly: true
+    keyAlias: session-unison
+    logoutURI: /logout
+    scope: -1
+    secure: true
+    sessionCookieName: tremolosession
+    timeout: 900
+  isApp: false
+  urls:
+  - azRules:
+    - constraint: o=Tremolo
+      scope: dn
+    filterChain: []
+    hosts:
+    - '#[OU_HOST]'
+    idp:
+      className: com.tremolosecurity.idp.providers.OpenIDConnectIdP
+      mappings:
+        map:
+        - sourceType: user
+          targetAttributeName: sub
+          targetAttributeSource: sub
+        - sourceType: composite
+          targetAttributeName: name
+          targetAttributeSource: ${givename} ${sn}
+        - sourceType: user
+          targetAttributeName: preferred_username
+          targetAttributeSource: uid
+        - sourceType: user
+          targetAttributeName: email
+          targetAttributeSource: mail
+        - sourceType: custom
+          targetAttributeName: groups
+          targetAttributeSource: com.tremolosecurity.mapping.JavaScriptMapping|k8s,openunison,argocd-groups
+        strict: true
+      params:
+        jwtSigningKey: unison-saml2-rp-sig
+        k8sNameSpace: 'openunison'
+        k8sTarget: k8s
+        sessionStoreClassName: com.tremolosecurity.oidc.k8s.K8sSessionStore
+
+        # remove the below claims from the access token
+        accessTokenIgnoreClaims:
+        - groups
+        - name
+        - email
+        - preferred_username
+        - uid
+      trusts:
+      - name: 'https://app/'
+        params:
+          accessTokenSkewMillis: "120000"
+          accessTokenTimeToLive: '60000'
+          authChainName: login-service
+          clientID: app
+          codeLastMileKeyName: lastmile-oidc
+          codeTokenSkewMilis: '60000'
+          publicEndpoint: "true"
+          redirectURI: 
+          - https://app/auth/callback
+        secretParams:
+        - name: clientSecret
+          secretName: orchestra-secrets-source
+          secretKey: K8S_DB_SECRET
+    results:
+      auFail: default-login-failure
+      azFail: default-login-failure
+    uri: /auth/idp/app
+```
+
+### CORS Headers
+
+***1.0.44+***
+
+If OpenUnison is not in the same domain as your client, and you're using a Single Page Application (SPA), you may need to add CORS headers to make sure that your user's browsers are able to complete the SSO process.  This step isn't needed when working with applications that splits the OIDC process between the browser and a server side API.  Adding `cors-headers` under `spec.urls[0].idp.params` with your headers will have them generated on each request and will properly support the `OPTIONS` pre-request:
+
+```yaml
+# generate the proper CORS headers
+cors-headers:
+- Access-Control-Allow-Origin=https://my.app/
+- Access-Control-Allow-Methods=GET, POST, OPTIONS
+- Access-Control-Allow-Headers=Content-Type, Authorization, X-Requested-With, Cookie, Cookie2
+- Access-Control-Allow-Credentials=false
+```
+
+### Client Credentials Grant
+
+***1.0.44+***
+
+The [client credentials grant type](https://datatracker.ietf.org/doc/html/rfc6749) allows you to get an `access_token` and `id_token` based solely on a set of credentials instead of having to login to a remote provider through a series of redirects.  It's meant for machine-to-machine communications where a browser is not involved. As an example, you might use the client credentials grant to allow a `Pod` to get a token for a specific client using it's `ServiceAccount` identity.  When defining a client credentials grant based client, you need to either create a `Trust` or add a static client that has the option `enableClientCredentialsGrant` set to `true`.  Here is an example `Trust` that will work with an OpenUnison Kubernetes implementation:
+
+```yaml
+---
+apiVersion: openunison.tremolo.io/v1
+kind: Trust
+metadata:
+  labels:
+    app.kubernetes.io/name: openunison
+    app.kubernetes.io/instance: openunison-orchestra
+    app.kubernetes.io/part-of: openunison
+  name: k8s2ou
+  namespace: openunison
+spec:
+  accessTokenSkewMillis: 120000
+  accessTokenTimeToLive: 60000
+  # use an AuthenticationChain that will authenticate, and potentially
+  # authorize your machine client
+  authChainName: oauth2k8s
+  clientId: k8s2ou
+  # a secret is needed, but it's not referenced
+  clientSecret:
+    keyName: K8S_DB_SECRET
+    secretName: orchestra-secrets-source
+  codeLastMileKeyName: lastmile-oidc
+  codeTokenSkewMilis: 60000
+  publicEndpoint: false
+  redirectURI:
+  - "http://does.not.matter"
+  signedUserInfo: false
+  verifyRedirect: true
+  # mark this as a client credentials grant
+  enableClientCredentialsGrant: true
+```
+
+With the trust created, you can create a URL using curl that will get a token for you based on a service account token:
+
+```sh
+export TOKEN=$(kubectl create token openunison-orchestra -n openunison)
+curl -k -X POST \
+  https://k8sou.192-168-2-168.nip.io/auth/idp/k8sIdp/token \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=client_credentials" \
+  -d "client_id=k8s2ou"
+{"access_token":"eyJraWQiOiJDPU15Q291bnRyeSwgU1Q9LCBMPU15IENsdXN0ZXIsIE89TXlPcmcsIE9VPUt1YmVybmV0ZXMsIENOPXVuaXNvbi1zYW1sMi1ycC1zaWctQz1NeUNvdW50cnksIFNUPSwgTD1NeSBDbHVzdGVyLCBPPU15T3JnLCBPVT1LdWJlcm5ldGVzLCBDTj11bmlzb24tc2FtbDItcnAtc2lnLTE3NjIyMDg5NjYxNTMiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2s4c291LjE5Mi0xNjgtMi0xNjgubmlwLmlvL2F1dGgvaWRwL2s4c0lkcCIsImF1ZCI6Ims4czJvdSIsImV4cCI6MTc2MjI4MzA0NCwianRpIjoidjJrRFgtZU5UbFl6anZsa096VWpNdyIsImlhdCI6MTc2MjI4Mjk4NCwibmJmIjoxNzYyMjgyODY0LCJub25jZSI6ImEyNTRmZjYxLWUxOTQtNGYxYS05Y2ViLTA5YzliODE0MTEwMCIsInVpZCI6ImRmMGU3ZDc0LTdmYjEtNDEyNC05YmE4LTU5MzM4NGRhMDM3MiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpvcGVudW5pc29uOm9wZW51bmlzb24tb3JjaGVzdHJhIiwiZXh0cmEiOiJ7XCJhdXRoZW50aWNhdGlvbi5rdWJlcm5ldGVzLmlvXFwvY3JlZGVudGlhbC1pZFwiOltcIkpUST0yNTg4YzIyYi01MmRjLTRhZmItYTk2Yi1mYTViNDE4MTJjYjdcIl19Iiwib2JqZWN0Q2xhc3MiOiJpbmV0T3JnUGVyc29uIiwiZ3JvdXBzIjpbInN5c3RlbTpzZXJ2aWNlYWNjb3VudHMiLCJzeXN0ZW06c2VydmljZWFjY291bnRzOm9wZW51bmlzb24iLCJzeXN0ZW06YXV0aGVudGljYXRlZCJdLCJ1c2VybmFtZSI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpvcGVudW5pc29uOm9wZW51bmlzb24tb3JjaGVzdHJhIiwic2Vzc2lvbl9pZCI6InExYktMRk95VWpKSURVdk9pTWpQTVBQS1RIS3B5aWszY000TGlYU01LVFV3TUU2QmtFbzZTcWw1eVVXVkJTV3BLVUdwaGFXcHhTVkFmUjV1UG1sbHZ2a0ZrWW01NlJhdWxVYkZBVTVGbFVaUlZYa1crdDVHSlZHSkViNHBhVVY1YnJtbUlaRkJBUVhlUm1WKzZmb1ovbDVCcmpubXVibWxWYzVLdFFBPSJ9.WPvbtI93hn65j6szxZ6LDhNU4q2aLL9WmVCpgprCL_R8CgJb3aE4-yhfbpjHDdnaUbwU1B0aHE9DmvtK0Qrl6FEhee-9BSBKvrV0V5MivjPSMOGjapwo7NnhXgSsnioO-GTdrmCvdqk7bILmygBxRSNVcnCUhck8HsQSqnHdrMbAg-efbjE9R8HRaY8frWbnOs1twfpktjL7GLafrdmr89WiB-6naDlOplEzHACAog7CzTcENf6pWY0fsJu5EFlekdz9WOXQxxD937daJJtwgndp63v78XrszcJc9T0X3mBeQqPY1zxDdT72InfcIv3X1l23j0YvP_ZcDM3q4hSpLQ","expires_in":60,"token_type":"Bearer","id_token":"eyJraWQiOiJDPU15Q291bnRyeSwgU1Q9LCBMPU15IENsdXN0ZXIsIE89TXlPcmcsIE9VPUt1YmVybmV0ZXMsIENOPXVuaXNvbi1zYW1sMi1ycC1zaWctQz1NeUNvdW50cnksIFNUPSwgTD1NeSBDbHVzdGVyLCBPPU15T3JnLCBPVT1LdWJlcm5ldGVzLCBDTj11bmlzb24tc2FtbDItcnAtc2lnLTE3NjIyMDg5NjYxNTMiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2s4c291LjE5Mi0xNjgtMi0xNjgubmlwLmlvL2F1dGgvaWRwL2s4c0lkcCIsImF1ZCI6Ims4czJvdSIsImV4cCI6MTc2MjI4MzA0NCwianRpIjoiMlQ1NE0wMzFqTHNjcEl3Z0dQSEVFQSIsImlhdCI6MTc2MjI4Mjk4NCwibmJmIjoxNzYyMjgyODY0LCJub25jZSI6ImEyNTRmZjYxLWUxOTQtNGYxYS05Y2ViLTA5YzliODE0MTEwMCIsInVpZCI6ImRmMGU3ZDc0LTdmYjEtNDEyNC05YmE4LTU5MzM4NGRhMDM3MiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpvcGVudW5pc29uOm9wZW51bmlzb24tb3JjaGVzdHJhIiwiZXh0cmEiOiJ7XCJhdXRoZW50aWNhdGlvbi5rdWJlcm5ldGVzLmlvXFwvY3JlZGVudGlhbC1pZFwiOltcIkpUST0yNTg4YzIyYi01MmRjLTRhZmItYTk2Yi1mYTViNDE4MTJjYjdcIl19Iiwib2JqZWN0Q2xhc3MiOiJpbmV0T3JnUGVyc29uIiwiZ3JvdXBzIjpbInN5c3RlbTpzZXJ2aWNlYWNjb3VudHMiLCJzeXN0ZW06c2VydmljZWFjY291bnRzOm9wZW51bmlzb24iLCJzeXN0ZW06YXV0aGVudGljYXRlZCJdLCJ1c2VybmFtZSI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpvcGVudW5pc29uOm9wZW51bmlzb24tb3JjaGVzdHJhIn0.dmwe7iO5y7B1CFp2BmvcVIosl5UfQMEMQhKN4jNPM70-floDthbIxq_l1r-GrsqGT8negsjJGvIV0ewIn0awNj4wPKe78S2XNrFv4zmkOYCPgStzDWrwGae-k730tcBMVRjkF8hUBWd04CGFHRaxs4LLl_-JrFEoEdc21fs8H7MUM7knPvduhcP91RoerKuTfyjQa_0r7FlZMaJV8LqovwtLrxGrSrMPrDscg9MgXDfWmA2wAMnwRZCdNwWb2C1PthFpjQ5ZwaWzdr0q6fceATArKvU86qq37_qkVtPYEL2EEg9lIWICfY8IG9Bzt61Aj92bHW5cHuvrBcg7YpAicg"}
+```
+
+If we inspect the `id_token` or the `access_token` we'll see that we have an identity based on our `ServiceAccount` token:
+
+```json
+{
+  "iss": "https://k8sou.192-168-2-168.nip.io/auth/idp/k8sIdp",
+  "aud": "k8s2ou",
+  "exp": 1762283044,
+  "jti": "2T54M031jLscpIwgGPHEEA",
+  "iat": 1762282984,
+  "nbf": 1762282864,
+  "nonce": "a254ff61-e194-4f1a-9ceb-09c9b8141100",
+  "uid": "df0e7d74-7fb1-4124-9ba8-593384da0372",
+  "sub": "system:serviceaccount:openunison:openunison-orchestra",
+  "extra": "{\"authentication.kubernetes.io\\/credential-id\":[\"JTI=2588c22b-52dc-4afb-a96b-fa5b41812cb7\"]}",
+  "objectClass": "inetOrgPerson",
+  "groups": [
+    "system:serviceaccounts",
+    "system:serviceaccounts:openunison",
+    "system:authenticated"
+  ],
+  "username": "system:serviceaccount:openunison:openunison-orchestra"
+}
+```
+
+Any client that is configured to trust our identity provider can now validate this token.
+
+### Token Exchange
+
+OpenUnison supports the [OAuth2 token exchange protocol](https://datatracker.ietf.org/doc/html/rfc8693) to allow an actor to exchange a token provided for its own client for use with another client.  This allows services to act on a users behalf in a way that allows you to track how a user's identity is transitioned throughout a transaction.  It also promotes shorter lived tokens with narrower scopes by making it easier to maintain identity without having to pass the user's original token to other services.
+
+To see token exchange in action with Istio, see this video from Kubernetes: An Enterprise Guide, 3rd Ed:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sElLCZ0l7YM?si=gqNNhuQcKoTq4m0j" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+Setting up token exchange is a three step process:
+
+1. Enable the `amr` claim on your identity provider
+2. Create `Trust` definitions, or static trusts, that can be exchanged to
+3. Create a `Trust` object, or static trust, as a Security Token Service (STS) that controls the delegation process
+
+First, updating your identity provider to support the `amr` claim is required because the `amr` claim is required by the token exchange spec to know how the user authenticated.  To enable the `amr` claim, add `authChainToAmr` to your identity provider configuration in the form of `authentication-chain-name=amrvalue`.  For instance, if you're using the standard OpenUnison with Kubernetes and want to note your enterprise login you would use:
+
+```yaml
+authChainToAmr:
+- enterprise-idp=basicLoginSimple
+```
+
+Once you login to OpenUnison and inspect your `id_token`, you'll see the `amr` claim now says `basicLoginSimple`:
+
+```json
+{
+  "iss": "https://k8sou.192-168-2-168.nip.io/auth/idp/k8sIdp",
+  "aud": "kubernetes",
+  "exp": 1762296434,
+  "jti": "HfvmOuHzRK5UuifilomP-Q",
+  "iat": 1762296374,
+  "nbf": 1762296254,
+  "sub": "mmosley@marcboorshteintremolosecuri.onmicrosoft.com",
+  "name": " Mosley",
+  "groups": [
+    "k8s-administrator",
+    "wordpress-subscriber",
+    "Default Directory"
+  ],
+  "preferred_username": "mmosleyx-64-xmarcboorshteintremolosecuri.onmicrosoft.com",
+  "email": "mmosley@marcboorshteintremolosecuri.onmicrosoft.com",
+  "amr": [
+    "basicLoginSimple"
+  ]
+}
+```
+
+With the `amr` claim now available, the next step is to create a `Trust` or static trust that will be exchanged to.  There really aren't any differences between a `Trust` that can be exchanged to, other then the `clientSecret` is never used.  For instance, if we want to exchange to a client called `excahnge1`:
+
+```yaml
+---
+apiVersion: openunison.tremolo.io/v1
+kind: Trust
+metadata:
+  name: exchange1
+  namespace: openunison
+spec:
+  accessTokenSkewMillis: 1200000
+  accessTokenTimeToLive: 600000
+  authChainName: login-service
+  clientId: exchange1
+  codeLastMileKeyName: lastmile-oidc
+  codeTokenSkewMilis: 600000
+  publicEndpoint: false
+  redirectURI: []
+  signedUserInfo: false
+  verifyRedirect: false
+  # needs to be here for configuration reasons, but ignored
+  clientSecret:
+    keyName: OIDC_CLIENT_SECRET
+    secretName: orchestra-secrets-source
+```
+
+Next, we need to create an STS that will control which actors can perform an exchange for which users (subject) an exchange can be performed for.  These `Trust`s are similar to regular trusts with some additional configuration options:
+
+| Configuration Option | Description | Example |
+| -------------------- | ----------- | ------- |
+| isSts | Determines if the trust is a Security Token Service | `true` |
+|  stsImpersonation | Determines if the STS supports impersonation | `true` |
+| stsDelegation | Determines if the STS supports delegation | `true` |
+| authorizedAudiences | List of client ids that this STS can exchange for.  This should be the trust's `clientId` | `exchange1` |
+| clientAzRules | A list of authorization rules applied to the actor (client) performing the exchange in the form of `scope;constraint`. See https://portal.apps.tremolo.io/docs/tremolosecurity-docs/1.0.19/openunison/openunison-manual.html#_applications_applications for an explanation of the authorization rules | `filter;(username=system:serviceaccount:openunison:openunison-orchestra)`
+| 
+| subjectAzRules | A list of authorization rules applied to the user (subject) performing the exchange in the form of `scope;constraint`. See https://portal.apps.tremolo.io/docs/tremolosecurity-docs/1.0.19/openunison/openunison-manual.html#_applications_applications for an explanation of the authorization rules | `filter;(objectClass=*)` |
+
+Here's an example STS `Trust` that will allow the `openunison-orchestra` `ServiceAccount` to impersonate any authenticated user:
+
+```yaml
+---
+apiVersion: openunison.tremolo.io/v1
+kind: Trust
+metadata:
+  name: sts-impersonation
+  namespace: openunison
+spec:
+  accessTokenSkewMillis: 1200000
+  accessTokenTimeToLive: 600000
+  # how will we authenticate actors?
+  authChainName: oauth2k8s
+  clientId: sts-impersonation
+  codeLastMileKeyName: lastmile-oidc
+  codeTokenSkewMilis: 600000
+  publicEndpoint: false
+  redirectURI: []
+  signedUserInfo: false
+  verifyRedirect: false
+  isSts: true
+  stsImpersonation: true
+  clientAzRules:
+  - "filter;(username=system:serviceaccount:openunison:openunison-orchestra)"
+  authorizedAudiences:
+  - "exchange1"
+  subjectAzRules:
+  - "dn;o=Tremolo"
+  clientSecret:
+    keyName: OIDC_CLIENT_SECRET
+    secretName: orchestra-secrets-source
+```
+
+Once your STS is deployed, you'll need to get the user's `id_token` from the OpenUnison portal's *Kubernetes Tokens* screen and a token for authorization:
+
+```
+$ export TOKEN=$(kubectl create token openunison-orchestra -n openunison)
+$ export JWT_IDTOKEN='eyJraWQiOiJDPU1...'
+$ curl -k -X POST https://k8sou.192-168-2-168.nip.io/auth/idp/k8sIdp/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d "grant_type=urn:ietf:params:oauth:grant-type:token-exchange" \
+  -d "subject_token=$JWT_IDTOKEN" \
+  -d "subject_token_type=urn:ietf:params:oauth:token-type:id_token" \
+  -d "requested_token_type=urn:ietf:params:oauth:token-type:access_token" \
+  -d "audience=exchange1" \
+  -d "client_id=sts-impersonation"
+
+{
+  "access_token": "eyJraWQiOiJDPU15...",
+  "expires_in": 600,
+  "token_type": "Bearer",
+  "id_token": "eyJraWQiOiJDPU15Q2...",
+  "refresh_token": "q1bKLFOyUvKsCDJOKwxMKalM..."
+}
+```
+
+The tokens generated by the above request are now valid for the `exchange1` client.
+
 
 ## Creating a SAML2 Identity Provider
 
@@ -320,7 +651,7 @@ In addition to acting as an identity provider for applications that know how to 
 
 ### Using OpenUnison's Host
 
-This is the easier of the two scenarios.  Similar to identity providers, Prometheus will be integrated using an `Application` object.  First, configure your Prometheus to use the correct external URL and prefix.  For instance, if your OpenUnison is configured to run on `openunison.domain.com` make sure your Promtheus `StatefulSet` has the following configureation parameters:
+This is the easier of the two scenarios.  Similar to identity providers, Prometheus will be integrated using an `Application` object.  First, configure your Prometheus to use the correct external URL and prefix.  For instance, if your OpenUnison is configured to run on `openunison.domain.com` make sure your Prometheus `StatefulSet` has the following configuration parameters:
 
 ```yaml
 - '--web.external-url=https://openunison.domain.com/prometheus'

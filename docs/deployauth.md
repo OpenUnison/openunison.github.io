@@ -167,7 +167,17 @@ Assuming there are no issues, OpenUnison will be deployed and ready for access. 
 
 The OpenUnison charts include the `argocd.argoproj.io/sync-wave` annotation on all manifests to deploy them in the correct sequence.  To simplify deployment, ArgoCD supports multiple repos in a single `Application`, allowing for each helm chart to be deployed.  This allows you to easily add additional charts too, such as the [EntraID](/identity%20providers/azuread/) chart or the cluster management chart for [Namespace as a Service](/namespace_as_a_service).  Additionally, the [default ArgoCD Application](/assets/yaml/argocd-application.yaml) configuration tells ArgoCD not to overwrite the validating webhooks that the operator configures with certificates.  This let's us continue to update OpenUnison directly from ArgoCD instead of using the ouctl command without having to first generate YAML manifests.
 
-First, you'll need a git repository to store your values.yaml file in.  You can't embed your values into your `Application` object because of how the CRD is constructed.
+When configuring your values.yaml, add the following:
+
+```yaml
+openunison:
+  auto_timestamp: false
+  force_update: initial-deployment
+```
+
+The `openunison.auto_timestamp=false` entry stops the helm charts from generating a new timestamp every minute so that ArgoCD can continuously synchronize the `Application` without the OpenUnison operator constantly reprocessing data.  If you do need to force the operator to reprocess data, in case you want to replace a key as an example, update `openunison.force_update` in your values.yaml and commit.  This will force the operator to re-run and regenerate keys.
+
+Next, you'll need a git repository to store your values.yaml file in.  You can't embed your values into your `Application` object because of how the CRD is constructed.
 
 Once you have a git repository that will store your values.yaml, the next step is to generate your `orchestra-secrets-source` `Secret`.  These instructions are the same as the [manual instructions](#manual-deployment).  OpenUnison separates secret information out of it's configurations.  No secret data should ever be stored in a Helm chart.  A `Secret` object needs to be created to store OpenUnison's secret data (such as passwords, keys, and tokens).  The operator will pull this `Secret` in when generating OpenUnison's configuration.
 
@@ -191,13 +201,11 @@ kind: Secret
 Once your `Secret` is deployed and your values.yaml is stored in a git repository, the last step is to customize the OpenUnison `Application` object.  You can get the [latest chart versions](https://artifacthub.io/packages/search?ts_query_web=openunison&sort=relevance&page=1) from Artifact Hub.  Next, you'll need to update the last two entries in `spec.sources`. For both entries `repoURL` must point to your git repo storing the values yaml:
 
 ```yaml
-  - repoURL: https://github.com/TremoloSecurityDemos/openunison-argocd.git
-    path: userauth
   - ref: values
     repoURL: https://github.com/TremoloSecurityDemos/openunison-argocd.git
 ```
 
-For the second to last listing, `path` is the relative path in the repository where you want ArgoCD to look for files.  In this instance, our values file is in the repository's `/userauth` directory.  
+For the values listing, `path` is the relative path in the repository where you want ArgoCD to look for files.  In this instance, our values file is in the repository's `/userauth` directory.  
 
 Finally, for the other entries in `spec.sources` update the `valuesFile` to `$values/full/path/to/values.yaml`.  In this example the values.yaml file is in `/userauth`, so each chart's `valuesFiles` goes to `$values/userauth/values.yaml`.  
 
