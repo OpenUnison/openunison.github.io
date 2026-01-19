@@ -945,6 +945,8 @@ spec:
     params:
       # The required Issuer
       issuer: "https://k8sou.tremolo.lan/auth/idp/k8sIdp"
+      # The audience required in the JWT
+      audience: "https://myou.domain.com/"
       # If true, OpenUnison will pull URLs and public keys from the well-known URL
       fromWellKnown: "true"
       # Certificate entry to use to validate the JWT's signature ONLY NEEDED if fromWellKnown is false
@@ -1015,7 +1017,7 @@ spec:
       # The OU in the DN to use if the user isn't found in the virtual directory
       noMatchOU: "oauth2"
       # If not linked to a user, the claim to use as the user identifier
-      uidAttr: "uid"
+      uidAttr: "username"
       # LDAP filter to lookup the user, can include attributes from the JWT
       lookupFilter: "(uid=${sub})"
       # The objectClass to use if the user can't be found

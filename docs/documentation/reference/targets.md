@@ -83,6 +83,9 @@ spec:
   # When integrated with GitOps, the URL for git for the cluster repo
   - name: gitUrl
     values: ""
+  # Set a timeout in millisenconds, default is 30,000
+  - name: timeout
+    value: "30000"
   secretParams: []
   ## if the tokenType is static
   #  - name: token
