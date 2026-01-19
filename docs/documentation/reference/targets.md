@@ -559,7 +559,7 @@ spec:
 
 ## OktaTarget
 
-The Okta target will provision objects to your Okta service.  It will provision users and group memberships. 
+The Okta target will provision objects to your Okta service.  It will provision users and group memberships. Starting with 1.0.44 you can use either the legacy token authentication or OAuth 2.0.
 
 ```yaml
 ---
@@ -573,11 +573,33 @@ spec:
     # Your Okta domain
     - name: domain
       value: xyz.okta.com
+    
+    # starting with 1.0.44, it's recommended to use Okta's OAuth 2.0 for authentication
+    # Your application's clientid
+    - name: clientid
+      value: clientid_from_okta_for_your_service_application
+    # scopes that are needed, these must be added to your application in Okta
+    - name: scopes
+      value:
+      - okta.users.manage
+      - okta.users.read
+      - okta.groups.manage
+      - okta.groups.read
+    # the name of the key in OpenUnison to use to generate the JWT
+    - name: keyName
+      value: okta-key
+    # The KID of the JWT public key in Okta
+    - name: kid
+      value: Daud1OLumv8rc1LATWs9FcRWuLvYYYEUF1VMnBzbPMk
   secretParams:
-  # The token from the "API" section of your Okta domain administration console
-  - name: token
-    secretName: orchestra-secrets-source
-    secretKey: token
+  
+
+  
+  # The token from the "API" section of your Okta domain administration console, for legacy authentication
+  # - name: token
+  #   secretName: orchestra-secrets-source
+  #   secretKey: token
+
   targetAttributes:
     - name: login
       source: uid
