@@ -10,7 +10,7 @@ The `openunison-cli` plugin makes it easier to access your clusters using OpenUn
 The easiest way to deploy is using the [krew](https://krew.sh/) plugin manager:
 
 ```sh
-k krew install --manifest-url=https://nexus.tremolo.io/repository/openunison-cli/openunison-cli.yaml
+kubectl krew install --manifest-url=https://nexus.tremolo.io/repository/openunison-cli/openunison-cli.yaml
 ```
 
 ## Manual Installation
@@ -19,7 +19,7 @@ You can also manually download and install the plugins by adding them to your pa
 ```sh
 wget https://nexus.tremolo.io/repository/openunison-cli/openunison-cli-v1.0.0-macos.zip
 unzip openunison-cli-v1.0.0-macos.zip
-mv openunison-cli kubectl-openunison-cli
+mv openunison-cli kubectl-openunison_cli
 ```
 
 Downloads are available for:
