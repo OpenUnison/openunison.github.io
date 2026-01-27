@@ -26,11 +26,7 @@ impersonation:
   explicit_certificate_trust: true
 
 dashboard:
-  namespace: "kubernetes-dashboard"
-  cert_name: "kubernetes-dashboard-certs"
-  label: "k8s-app=kubernetes-dashboard"
-  service_name: kubernetes-dashboard
-  new: true
+  enabled: false
 certs:
   use_k8s_cm: false
 
@@ -39,6 +35,8 @@ trusted_certs: []
 monitoring:
   prometheus_service_account: system:serviceaccount:monitoring:prometheus-k8s
 
+headlamp:
+  enabled: true
 
 #oidc:
 #  client_id: xxxxxx

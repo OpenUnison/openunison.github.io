@@ -27,12 +27,10 @@ impersonation:
   explicit_certificate_trust: true
 
 dashboard:
-  namespace: "kubernetes-dashboard"
-  cert_name: "kubernetes-dashboard-certs"
-  label: "k8s-app=kubernetes-dashboard"
-  service_name: kubernetes-dashboard
-  require_session: 
-  new: true
+  enabled: false
+
+headlamp:
+  enabled: true
 
 certs:
   use_k8s_cm: false
