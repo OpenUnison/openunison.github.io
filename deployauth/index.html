@@ -1,0 +1,4830 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../getting-help/">
+      
+      
+      <link rel="icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>Deploying The Authentication Portal - Kubernetes Authentication and SSO - OpenUnison</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploying-the-authentication-portal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Kubernetes Authentication and SSO - OpenUnison" class="md-header__button md-logo" aria-label="Kubernetes Authentication and SSO - OpenUnison" data-md-component="logo">
+      
+  <img src="../assets/ts-logo-white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kubernetes Authentication and SSO - OpenUnison
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deploying The Authentication Portal
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Kubernetes Authentication and SSO - OpenUnison" class="md-nav__button md-logo" aria-label="Kubernetes Authentication and SSO - OpenUnison" data-md-component="logo">
+      
+  <img src="../assets/ts-logo-white.png" alt="logo">
+
+    </a>
+    Kubernetes Authentication and SSO - OpenUnison
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Authentication and SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Deploying The Authentication Portal
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Deploying The Authentication Portal
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-the-login-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying the Login Portal
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploying the Login Portal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-requisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-requisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-requisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ingress-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ingress Controller
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#site-specific-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Site Specific Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Site Specific Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-server-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Server Certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-configuration-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Final Configuration steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-the-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy the Portal
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy the Portal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploy-with-ouctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy with ouctl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploying-with-argocd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying with ArgoCD
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finishing-your-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finishing Your Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrating-your-kubernetes-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integrating Your Kubernetes Cluster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-an-identity-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing an Identity Source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Choosing an Identity Source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#active-directory-ldap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Active Directory / LDAP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Active Directory / LDAP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rbac-bindings" class="md-nav__link">
+    <span class="md-ellipsis">
+      RBAC Bindings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openid-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenID Connect
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenID Connect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rbac-bindings_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      RBAC Bindings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rbac-bindings_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      RBAC Bindings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saml2" class="md-nav__link">
+    <span class="md-ellipsis">
+      SAML2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SAML2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rbac-bindings_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      RBAC Bindings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#headlamp-configuration-and-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Headlamp Configuration and Plugins
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Headlamp Configuration and Plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Plugins
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#namespace-visibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      Namespace Visibility
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Namespace Visibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Namespaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      No Namespaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disabling-headlamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disabling Headlamp
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detailed-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detailed Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Detailed Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host-names-and-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Host Names and Networking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Host Names and Networking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-dns-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      No DNS Server?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-load-balancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      No Load Balancer?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Configuration Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managed-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Managed Clusters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Managed Clusters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-execcpport-forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      kubectl exec/cp/port-forward
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openunison-resource-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenUnison Resource Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenUnison Resource Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenrequest-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenRequest API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customizing-the-openunison-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Customizing The OpenUnison Object
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Customizing The OpenUnison Object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authorizing-access-to-your-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authorizing Access To Your Cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detailed-configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detailed configuration options:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integrating-other-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integrating Other Applications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternate-deployment-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternate Deployment Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternate Deployment Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Manual Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#base-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-the-portal_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy the Portal
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-from-1023-and-earlier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrading from 1.0.23 and Earlier
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-kubernetes-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Kubernetes Dashboard
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Kubernetes Dashboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upgrading-an-existing-dashboard-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrading an Existing Dashboard Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disabling-kubernetes-dashboard-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disabling Kubernetes Dashboard Support
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-help/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Help
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing OpenUnison with JavaScript
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kube-sts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Security Token Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectlplugin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubectl Plugin
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi_cluster_sso/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi Cluster SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../namespace_as_a_service/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Namespace as a Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../priv_access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privileged Access Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scim-gateway/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SCIM 2.0 Gateway
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading from 1.0.23 and Earlier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Well Known Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/argoworkflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Argo Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/drupal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Drupal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/entraid/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EntraID / AzureAD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/gitlab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitLab
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana Community Edition
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/kiali/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kiali
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/kubeapps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMware Kubeapps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/openshift/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/vault/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hashicorp Vault
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Customization
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Customization
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/custom_jit_workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customized Just-In-Time Login Workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/custom_logos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Logos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/custom_provisioning_targets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Provisioning Targets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/custom_provisioning_tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Provisioning Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/resource_management_sheduling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resource Management and Scheduling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/themes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Themes and Colors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/configuring-openunison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring OpenUnison Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/custom-sso/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/customize-naas-onboarding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing the NaaS Onboarding Workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/kerberos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kerberos Support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/login-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Login Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/naas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Namespace as a Service Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/operational-processes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operational Processes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/ouctl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ouctl
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9" id="__nav_14_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Apis
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9">
+            <span class="md-nav__icon md-icon"></span>
+            Apis
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/apis/apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison's APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/apis/restful/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison RESTful APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_3" id="__nav_14_9_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Callworkflow
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_9_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_3">
+            <span class="md-nav__icon md-icon"></span>
+            Callworkflow
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/apis/callworkflow/callworkflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CallWorkflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_4" id="__nav_14_9_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Scalejs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_9_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_4">
+            <span class="md-nav__icon md-icon"></span>
+            Scalejs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_4_1" id="__nav_14_9_4_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Register
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_9_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            Register
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/apis/scalejs/register/scalejs-register/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ScaleJS Register
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10" id="__nav_14_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Javadocs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10">
+            <span class="md-nav__icon md-icon"></span>
+            Javadocs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaDocs for OpenUnison
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_2" id="__nav_14_10_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.0.42
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_10_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_2">
+            <span class="md-nav__icon md-icon"></span>
+            1.0.42
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_2_1" id="__nav_14_10_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Legal
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_10_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.42/legal/dejavufonts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dejavufonts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.42/legal/jquery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jquery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.42/legal/jqueryUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    jqueryUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_3" id="__nav_14_10_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.0.43.1
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_10_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_3">
+            <span class="md-nav__icon md-icon"></span>
+            1.0.43.1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_3_1" id="__nav_14_10_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Legal
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_10_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.43.1/legal/dejavufonts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dejavufonts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.43.1/legal/jquery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jquery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.43.1/legal/jqueryUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    jqueryUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_11" id="__nav_14_11_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_11">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/authentication-mechanisms/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authentication Mechanisms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/custom-authorizations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Authorizations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/custom-results/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Results
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/custom-tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Custom Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/filters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Application URL Filters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/jobs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled Jobs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/openunison-crds/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison Kubernetes CRD Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/operator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operator Helm Chart Customization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/provisioning-tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/targets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Targets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Identity providers
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Identity providers
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../identity%20providers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Documented Identity Providers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../identity%20providers/azuread/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EntraID / AzureAD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../identity%20providers/keycloak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Keycloak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../identity%20providers/okta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Okta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ingresses
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Ingresses
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Documented Ingress Controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/f5nginx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    F5 NGINX Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/gatewayapi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gateway API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/istio/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Istio Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/nginx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NGINX Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/traefik/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Traefik
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Knowledgebase
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_17">
+            <span class="md-nav__icon md-icon"></span>
+            Knowledgebase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/airgap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Air-Gap Implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/broken_dashboard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Broken Dashboard Login
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Certificate Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/customizingmyvd/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing MyVirtualDirectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/orchestra_deployment_failed/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Failed Orchestra Deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/prometheus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monitoring OpenUnison with Prometheus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/sessions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Session Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-the-login-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying the Login Portal
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploying the Login Portal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-requisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-requisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-requisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ingress-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ingress Controller
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#site-specific-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Site Specific Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Site Specific Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-server-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Server Certificates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-configuration-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Final Configuration steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-the-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy the Portal
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy the Portal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploy-with-ouctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy with ouctl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploying-with-argocd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying with ArgoCD
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finishing-your-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finishing Your Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrating-your-kubernetes-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integrating Your Kubernetes Cluster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-an-identity-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing an Identity Source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Choosing an Identity Source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#active-directory-ldap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Active Directory / LDAP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Active Directory / LDAP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rbac-bindings" class="md-nav__link">
+    <span class="md-ellipsis">
+      RBAC Bindings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openid-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenID Connect
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenID Connect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rbac-bindings_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      RBAC Bindings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rbac-bindings_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      RBAC Bindings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saml2" class="md-nav__link">
+    <span class="md-ellipsis">
+      SAML2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SAML2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rbac-bindings_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      RBAC Bindings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#headlamp-configuration-and-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Headlamp Configuration and Plugins
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Headlamp Configuration and Plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Plugins
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#namespace-visibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      Namespace Visibility
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Namespace Visibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Namespaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      No Namespaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disabling-headlamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disabling Headlamp
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detailed-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detailed Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Detailed Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host-names-and-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Host Names and Networking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Host Names and Networking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-dns-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      No DNS Server?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-load-balancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      No Load Balancer?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Configuration Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managed-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Managed Clusters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Managed Clusters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-execcpport-forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      kubectl exec/cp/port-forward
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openunison-resource-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenUnison Resource Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenUnison Resource Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tokenrequest-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenRequest API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customizing-the-openunison-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      Customizing The OpenUnison Object
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Customizing The OpenUnison Object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authorizing-access-to-your-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authorizing Access To Your Cluster
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detailed-configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detailed configuration options:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integrating-other-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integrating Other Applications
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternate-deployment-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternate Deployment Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternate Deployment Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Manual Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#base-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Base Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-the-portal_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy the Portal
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-from-1023-and-earlier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrading from 1.0.23 and Earlier
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-kubernetes-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Kubernetes Dashboard
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Kubernetes Dashboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upgrading-an-existing-dashboard-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrading an Existing Dashboard Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disabling-kubernetes-dashboard-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disabling Kubernetes Dashboard Support
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="deploying-the-authentication-portal">Deploying The Authentication Portal</h1>
+<p>The authentication portal is the best place to start.  This guide is a step-by-step explanation of each of the components
+of the portal, what they do and how to configure them.  </p>
+<h2 id="deploying-the-login-portal">Deploying the Login Portal</h2>
+<p>These are the step-by-step instructions for deploying OpenUnison with Kubernetes.  Each step provides some explanation, but with greater details linked out through this document.  The goal of this section is to give you the deployment instructions as succinctly as possible, with supporting details provided in reference sections.  OpenUnison can be deployed in multiple ways and its deployment will vary based on your cluster's configuration and needs.  There are four steps to the deployment are:</p>
+<table>
+<thead>
+<tr>
+<th>Deployment Phase</th>
+<th>Description</th>
+<th>Approximate Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-requisites</td>
+<td>Deploy the <code>Ingress</code> controller and dashboard.</td>
+<td>This is dependent on how long it takes to deploy and validate your <code>Ingress</code> controller of choice and accompanying network infrastructure such as load balancers.</td>
+</tr>
+<tr>
+<td>Site Specific Configuration</td>
+<td>This is where you'll configure OpenUnison for your authentication source and for your infrastructure by configuring a Helm chart values.yaml and generating your configuration <code>Secret</code></td>
+<td>Generally 5 - 30 minutes depending on if all your prerequisite are ready</td>
+</tr>
+<tr>
+<td>Deploy the Portal</td>
+<td>Use the <code>ouctl</code> tool to deploy your portal</td>
+<td>Less then 5 minutes</td>
+</tr>
+<tr>
+<td><em>Optional</em> - Integrating Your Cluster</td>
+<td>If you're using OpenID Connect to integrate directly with your cluster, you'll need to configure your cluster to trust OpenUnison for authentication</td>
+<td>Dependent on the Kubernetes distribution, usually less then five minutes</td>
+</tr>
+</tbody>
+</table>
+<p>In any OpenUnison deployment the most amount of time spent is on getting the networking for your cluster working and getting the right authentication configuration for your identity store.  Once those are ready the rest of the deployment is very direct.</p>
+<h3 id="pre-requisites">Pre-requisites</h3>
+<h4 id="ingress-controller">Ingress Controller</h4>
+<p>In order to use OpenUnison, you'll need to first have an <code>Ingress</code> controller deployed.  While any controller should work, we have documented deployment steps for these controllers.  If you need help deploying an additional type of controller, please open an <a href="https://github.com/openunison/openunison-k8s/issues">issue</a> and we'll be happy to help.</p>
+<table>
+<thead>
+<tr>
+<th>Ingress Controller</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../ingresses/traefik">Traefik</a></td>
+</tr>
+<tr>
+<td><a href="../ingresses/gatewayapi">Gateway API</a></td>
+</tr>
+<tr>
+<td><a href="../ingresses/istio">Istio</a></td>
+</tr>
+<tr>
+<td><a href="../ingresses/f5nginx">F5 NGINX</a></td>
+</tr>
+<tr>
+<td><a href="../ingresses/nginx">NGINX</a></td>
+</tr>
+</tbody>
+</table>
+<p>Once your <code>Ingress</code> controller is deployed, the next step is to deploy the dashboard.</p>
+<h3 id="site-specific-configuration">Site Specific Configuration</h3>
+<p>This section is where you'll do the work of configuring OpenUnison for your cluster and spend the most time.  The deployment steps are here, with links to detailed configuration options to guide you through the process.</p>
+<p>There are three supported ways to deploy OpenUnison:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Benefits</th>
+<th>Artifacts Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Using <code>ouctl</code></td>
+<td>The <code>ouctl</code> utility automated the creation of <code>Secret</code> objects and deploys the helm charts for you.  This utility will automatically remove corrupted installs and re-apply charts.  It will also wait for deployments to become healthy before moving to the next chart.  Finally, it can automate the installation of additional charts to aid in fleet deployments of customizations.</td>
+<td>[<a href="/documentation/ouctl">Download the <code>ouctl</code> utility</a>] [<a href="/assets/yaml/openunison-default.yaml">Download Default values.yaml</a>]</td>
+</tr>
+<tr>
+<td>ArgoCD <code>Application</code></td>
+<td>ArgoCD is a powerful GitOps controller that can deploy and manage OpenUnison for you.  Instead of deploying multiple <code>Application</code> objects for each chart, you can use a multi repo <code>Application</code>.  see the <a href="#deploying-with-argocd">Deploying with ArgoCD</a> section for detailed instructions, you'll need to create the <code>orchestra-secrets-source</code> <code>Secret</code></td>
+<td>[<a href="/assets/yaml/argocd-application.yaml">Download the ArgoCD <code>Application</code> object</a>]</td>
+</tr>
+<tr>
+<td>Manual Deployment</td>
+<td>If you already have a workflow for deploying multiple Helm charts, you can use the manual deployment method to deploy the charts</td>
+<td>[<a href="/assets/yaml/openunison-default.yaml">Download Default values.yaml</a>]</td>
+</tr>
+</tbody>
+</table>
+<p>Once you have chosen how to deploy OpenUnison, the minimum configuration points are:</p>
+<table>
+<thead>
+<tr>
+<th>Values Section</th>
+<th>Decision Points</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enable_impersonation</code></td>
+<td>Determine if you want to integrate your cluster directly with OpenUnison using OpenID Connect (<code>false</code>), or use OpenUnison's integrated impersonating reverse proxy when interacting with the API server (<code>true</code>).  In general, if you're working with an on-premises cluster this will be <code>false</code>.  If you're using a hosted, or managed, cluster such as EKS or Civo this would by <code>true</code>.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>network</code></td>
+<td>This section describes how you will access OpenUnison and how OpenUnison will interact with your cluster</td>
+<td><a href="#host-names-and-networking">Host Names and Networking</a></td>
+</tr>
+<tr>
+<td>Authentication (<strong><em>One</em></strong> of <code>activedirectory</code>, <code>oidc</code>, <code>github</code>, or <code>saml</code>)</td>
+<td>How will OpenUnison authenticate users?  This is covered in detail next.  At least one option is required.</td>
+<td><a href="#choosing-an-identity-source">Choosing an Identity Source</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="api-server-certificates">API Server Certificates</h4>
+<p>If you're using impersonation, you can skip this section.  If you're connecting directly via OpenID Connect, then you'll need the CA certificate for either your API Server <strong><em>OR</em></strong> the load balancer for your API servers.  Once you have this certificate, in PEM format, base64 encoded it and add it to the <code>trusted_certs</code> section of your values.yaml with the name <code>k8s_master</code>.  This will tell OpenUnison which certificate to include in your kubectl configuration files.  As an example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">trusted_certs</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s_master</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">pem_b64</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AERR...</span>
+</code></pre></div>
+<h4 id="final-configuration-steps">Final Configuration steps</h4>
+<p><strong><em>NOTE</em></strong>: While not required, you should update the <code>k8s_cluster_name</code> value in your values.yaml to have a descriptive label for your cluster.</p>
+<p>Once you've chosen an identity source, return here to finish the installation.</p>
+<h3 id="deploy-the-portal">Deploy the Portal</h3>
+<p>OpenUnison is deployed using a series of Helm Charts that cover different aspects of the deployment between configuration, integration with the API server, and the operator that manages certificates for you.  You can <a href="#manual-deployment">deploy these charts manually</a>, but either the <code>ouctl</code> command or using ArgoCD makes this much easier.  </p>
+<h4 id="deploy-with-ouctl">Deploy with ouctl</h4>
+<p>First, <a href="/documentation/ouctl">download <code>ouctl</code> for the correct platform</a>.  Next, download the OpenUnison helm repo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>helm repo add tremolo https://nexus.tremolo.io/repository/helm/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>helm repo update
+</code></pre></div>
+<p>The next step is to create a file with your secret in it for AD/LDAP, OIDC, or GitHub login.  This file is <strong><em>NOT</em></strong> a <code>Secret</code>, just the value of your password/client secret/etc in the file.  The <code>ouctl</code> utility will base64 encode the file and generate the <code>Secret</code> for you.</p>
+<hr />
+<p><strong>SECURITY NOTE</strong></p>
+<p>You shouldn't use the <code>echo</code> command to create this file for two important reasons:</p>
+<ol>
+<li>It adds an extra <code>\n</code> at the end</li>
+<li>It will store your secret information in your shell's history file</li>
+</ol>
+<p>It's best to create this file manually and add the secret to it. <strong><em>NOTE</em></strong>: Do not base64 encode the data before putting it in this file.  The <code>ouctl</code> command will handle that for you.</p>
+<hr />
+<p>Finally, deploy the portal:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ouctl install-auth-portal -s /path/to/secret/file /path/to/yaml
+</code></pre></div>
+<p>Assuming there are no issues, OpenUnison will be deployed and ready for access.  The <code>ouctl</code> command is safe to re-run.  If you want to update the secret, you can provide the <code>-s</code> again.  If you just want to upgrade the charts, you can run <code>ouctl</code> without <code>-s</code> and it will just update the charts.</p>
+<h4 id="deploying-with-argocd">Deploying with ArgoCD</h4>
+<p>The OpenUnison charts include the <code>argocd.argoproj.io/sync-wave</code> annotation on all manifests to deploy them in the correct sequence.  To simplify deployment, ArgoCD supports multiple repos in a single <code>Application</code>, allowing for each helm chart to be deployed.  This allows you to easily add additional charts too, such as the <a href="/identity%20providers/azuread/">EntraID</a> chart or the cluster management chart for <a href="/namespace_as_a_service">Namespace as a Service</a>.  Additionally, the <a href="/assets/yaml/argocd-application.yaml">default ArgoCD Application</a> configuration tells ArgoCD not to overwrite the validating webhooks that the operator configures with certificates.  This let's us continue to update OpenUnison directly from ArgoCD instead of using the ouctl command without having to first generate YAML manifests.</p>
+<p>When configuring your values.yaml, add the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">openunison</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">auto_timestamp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">force_update</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">initial-deployment</span>
+</code></pre></div>
+<p>The <code>openunison.auto_timestamp=false</code> entry stops the helm charts from generating a new timestamp every minute so that ArgoCD can continuously synchronize the <code>Application</code> without the OpenUnison operator constantly reprocessing data.  If you do need to force the operator to reprocess data, in case you want to replace a key as an example, update <code>openunison.force_update</code> in your values.yaml and commit.  This will force the operator to re-run and regenerate keys.</p>
+<p>Next, you'll need a git repository to store your values.yaml file in.  You can't embed your values into your <code>Application</code> object because of how the CRD is constructed.</p>
+<p>Once you have a git repository that will store your values.yaml, the next step is to generate your <code>orchestra-secrets-source</code> <code>Secret</code>.  These instructions are the same as the <a href="#manual-deployment">manual instructions</a>.  OpenUnison separates secret information out of it's configurations.  No secret data should ever be stored in a Helm chart.  A <code>Secret</code> object needs to be created to store OpenUnison's secret data (such as passwords, keys, and tokens).  The operator will pull this <code>Secret</code> in when generating OpenUnison's configuration.</p>
+<p>The below example uses random data.  Do <strong>NOT</strong> use this exact <code>Secret</code>, create your own random data for the values
+that don't contain an <code>&amp;</code>.  A password generator is a great way to generate this data.</p>
+<p>Additionally, each authentication method will require its own secret data so this <code>Secret</code> will need to be updated.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>apiVersion: v1
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>type: Opaque
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>metadata:
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  name: orchestra-secrets-source
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  namespace: openunison
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>data:
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  # only needed if the kubernetes dashboard is enabled
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  #K8S_DB_SECRET: UTJhQzVNNjBMbWljc3Y0UEphYVhsWlRRbw==
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  unisonKeystorePassword: SGRVSEg1c1Z0ZUdaTjFxdjJEUHlnYk1wZQ==
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>kind: Secret
+</code></pre></div>
+<p>Once your <code>Secret</code> is deployed and your values.yaml is stored in a git repository, the last step is to customize the OpenUnison <code>Application</code> object.  You can get the <a href="https://artifacthub.io/packages/search?ts_query_web=openunison&amp;sort=relevance&amp;page=1">latest chart versions</a> from Artifact Hub.  Next, you'll need to update the last two entries in <code>spec.sources</code>. For both entries <code>repoURL</code> must point to your git repo storing the values yaml:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">values</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nt">repoURL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/TremoloSecurityDemos/openunison-argocd.git</span>
+</code></pre></div>
+<p>For the values listing, <code>path</code> is the relative path in the repository where you want ArgoCD to look for files.  In this instance, our values file is in the repository's <code>/userauth</code> directory.  </p>
+<p>Finally, for the other entries in <code>spec.sources</code> update the <code>valuesFile</code> to <code>$values/full/path/to/values.yaml</code>.  In this example the values.yaml file is in <code>/userauth</code>, so each chart's <code>valuesFiles</code> goes to <code>$values/userauth/values.yaml</code>.  </p>
+<p>If you want to add additional charts, insert them before the second to last in the <code>spec.sources</code> list.</p>
+<p>Once your <code>Application</code> is updated it can be deployed.  If there's a synchronization error because webhooks haven't yet been deployed, it usually means there's a delay between the <code>app=openunison-openunison</code> <code>Pods</code> being ready and being able to process connections.  A re-sync generally clears this issue.</p>
+<p>With OpenUnison being deployed, you can move on to finishing the deployment.</p>
+<h3 id="finishing-your-deployment">Finishing Your Deployment</h3>
+<p>If you're going to integrate your cluster with OpenID Connect (most on-prem clusters will be integrated this way), the final step is to enable SSO with your Kubernetes cluster. If you configured enable_impersonation to true, skip this step.</p>
+<p>Finally, login to your portal by going to https://<code>network.openunison_host</code>/, where <code>network.openunison_host</code> is the host name you specified in your values.yaml. If everything was setup correctly, you can now start working with your cluster!</p>
+<p>Learn to use the OpenUnison Login Portal by exploring our <a href="../documentation/login-portal">user guide</a>.</p>
+<h3 id="integrating-your-kubernetes-cluster">Integrating Your Kubernetes Cluster</h3>
+<p>If you're running on a <a href="#managed-clusters">managed cluster</a> such as EKS, AKS, or GKE, you can skip this section.</p>
+<p>To get the correct flags for your API server, run</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>kubectl describe configmap api-server-config -n openunison
+</code></pre></div>
+<p>If you're using the certificate generated by OpenUnison, you can retrieve it with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>kubectl get secret ou-tls-certificate -n openunison -o json | jq -r &#39;.data[&quot;tls.crt&quot;]&#39; | base64 -d &gt; /path/to/ou-ca.pem
+</code></pre></div>
+<p>Next, depending on your distribution, update your cluster's command line parameters with the output for describing the above <code>ConfigMap</code>.
+If you do not need to explicitly trust a certificate, skip <code>--oidc-ca-file</code>.  Once you're API servers restart, you should be able to use
+either the dashboard or the kubectl API.</p>
+<h2 id="choosing-an-identity-source">Choosing an Identity Source</h2>
+<p>Before starting the deployment process, choose how you want to authenticate your users.  This is how OpenUnison will authenticate users,
+regardless of how OpenUnison integrates with your cluster.  Each authentication options includes prerequisite that must be collected
+before deployment.  Below are the available options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#active-directory-ldap">Active Directory / LDAP</a></td>
+<td>Popular with enterprises and on-premises deployments</td>
+</tr>
+<tr>
+<td><a href="#openid-connect">OpenID Connect</a></td>
+<td>Most common integration method.  Useful with common providers such as Okta, Azure Active Directory, and Google.</td>
+</tr>
+<tr>
+<td><a href="#github">GitHub</a></td>
+<td>Useful for when you want to drive management based on your GitHub organizations and teams</td>
+</tr>
+<tr>
+<td><a href="#saml2">SAML2</a></td>
+<td>Most often used in legacy environments with Microsoft's Active Directory Federation Services (ADFS)</td>
+</tr>
+</tbody>
+</table>
+<p>At the end of each section is a link to bring you back to the deployment.</p>
+<h3 id="active-directory-ldap">Active Directory / LDAP</h3>
+<p>Using Active Directory or LDAP, OpenUnison collects your user's username and password then uses an LDAP bind operation against your Active Directory or LDAP server.  This is
+common in many enterprises.  The main advantage to this approach is it's simplicity.  It does however require that the user's password move
+through OpenUnison (and your cluster).</p>
+<p><img alt="OpenUnison and Active Directory" src="../assets/images/ou-auth-ad.png" /></p>
+<p>To get started, you will need:</p>
+<ol>
+<li>The full distinguished name and password for a service account.  This account needs no privileges.  The distinguished name will look something like <code>cn=serviceaccount,cn=Users,dc=domain,dc=com</code></li>
+<li>The host and port for your domain controllers OR the domain that you want to query.  OpenUnison doesn't know how to talk to multiple hosts, so you will either need to keep your domain controllers behind a load balancer or if your cluster is connected via DNS to the 
+domain OpenUnison can use SRV records to discover domain controllers</li>
+<li>The CA certificate for your domain controllers</li>
+</ol>
+<p>Your domain controllers <strong>MUST</strong> have TLS enabled and running.  Most Active Directory deployments will not allow authentication over
+a plain text connection.</p>
+<p>The following attributes must be available to OpenUnison:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>samAccountName</td>
+<td>The user's login ID</td>
+<td>mmosley</td>
+</tr>
+<tr>
+<td>memberOf</td>
+<td>The DN of all groups the user is a member of</td>
+<td>cn=group1,cn=users,dc=domain,dc=com</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, users may also have:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>givenName</td>
+<td>User's first name</td>
+<td>Matt</td>
+</tr>
+<tr>
+<td>sn</td>
+<td>User's last name</td>
+<td>Mossley</td>
+</tr>
+<tr>
+<td>mail</td>
+<td>User's email address</td>
+<td>mmosley@tremolo.dev</td>
+</tr>
+<tr>
+<td>displayName</td>
+<td>The user's display name</td>
+<td>Matt Mosley</td>
+</tr>
+</tbody>
+</table>
+<p>Any of these attribute names can be changed by <a href="../knowledgebase/customizingmyvd">customizing the MyVirtualDirectory configuration</a> used by 
+OpenUnison.</p>
+<p>Once all the prerequisites have been gathered, uncomment the <code>activedirectory</code> section of your values.yaml and update accordingly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>active_directory:
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  base: cn=users,dc=ent2k12,dc=domain,dc=com
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  host: &quot;192.168.2.75&quot;
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  port: &quot;636&quot;
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  bind_dn: &quot;cn=Administrator,cn=users,dc=ent2k12,dc=domain,dc=com&quot;
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>  con_type: ldaps
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>  srv_dns: &quot;false&quot;
+</code></pre></div>
+<p>The detailed explanation of each setting is below:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>active_directory.base</td>
+<td>The search base for Active Directory</td>
+</tr>
+<tr>
+<td>active_directory.host</td>
+<td>The host name for a domain controller or VIP.  If using SRV records to determine hosts, this should be the fully qualified domain name of the domain</td>
+</tr>
+<tr>
+<td>active_directory.port</td>
+<td>The port to communicate with Active Directory</td>
+</tr>
+<tr>
+<td>active_directory.bind_dn</td>
+<td>The full distinguished name (DN) of a read-only service account for working with Active Directory</td>
+</tr>
+<tr>
+<td>active_directory.con_type</td>
+<td><code>ldaps</code> for secure, <code>ldap</code> for plain text</td>
+</tr>
+<tr>
+<td>active_directory.srv_dns</td>
+<td>If <code>true</code>, OpenUnison will lookup domain controllers by the domain's SRV DNS record</td>
+</tr>
+</tbody>
+</table>
+<p>The secret file used with the <code>ouctl</code> command will contain the password for your service account.  If configuring OpenUnison manually, update the <code>orchestra-secrets-source</code> <code>Secret</code> with a key called <code>AD_BIND_PASSWORD</code> that contains the base64 encoded password for the service account named
+in <code>activedirectory.bind_dn</code>.</p>
+<h4 id="rbac-bindings">RBAC Bindings</h4>
+<p>If you can populate groups in Active Directory for Kubernetes, you can use those groups for authorization via OpenUnison.  OpenUnison will provide all of a user's groups via the <code>id_token</code> supplied to Kubernetes.  The <code>groups</code> claim is a list of values, in this case the Distinguished Names of the user's groups.  As an example, I created a group in AD called <code>k8s_login_ckuster_admins</code> in the <code>Users</code> container of my <code>ent2k12.domain.com</code> domain.  This means the group will be <code>CN=k8s_login_ckuster_admins,CN=Users,DC=ent2k12,DC=domain,DC=com</code> (you can get the exact name of the group from the <code>distinguishedName</code> attribute of the group in Active Directory).  To authorize members of this group to be cluster administrators, we create a <code>ClusterRoleBinding</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kind: ClusterRoleBinding
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>apiVersion: rbac.authorization.k8s.io/v1
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>metadata:
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>  name: activedirectory-cluster-admins
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>subjects:
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>- kind: Group
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  name: CN=k8s_login_ckuster_admins,CN=Users,DC=ent2k12,DC=domain,DC=com
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>roleRef:
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>  kind: ClusterRole
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>  name: cluster-admin
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>  apiGroup: rbac.authorization.k8s.io
+</code></pre></div>
+<p>Once completed, continue to <a href="#deploy-the-portal">Deploy the Portal</a> to finish the OpenUnison deployment.</p>
+<h3 id="openid-connect">OpenID Connect</h3>
+<p>The OpenID Connect protocol is a popular protocol used by Google, Okta, and many others.  It is a well documented standard that is usually the first choice of most
+SSO implementations.  While Kubernetes can integrate directly with most OpenID Connect providers, those providers won't generate a kubectl configuration, support the dashboard, or support other cluster management applications.  OpenUnison will support this for your without having to make multiple integrations with your identity
+provider.</p>
+<p>These following steps will work with any OpenID Connect compatible identity provider.  Here are detailed instructions for specific implementations:</p>
+<ul>
+<li><a href="../../identity%20providers/okta">Okta</a></li>
+<li><a href="../../identity%20providers/keycloak">Keycloak</a></li>
+<li><a href="../../identity%20providers/azuread">AzureAD</a></li>
+</ul>
+<p><img alt="OpenUnison and OpenID Connect" src="../assets/images/ou-auth-oidc.png" /></p>
+<p>To get started, you'll need:</p>
+<ol>
+<li>Your identity provider's issuer</li>
+<li>A client id</li>
+<li>A client secret</li>
+<li>Claims from your identity provider</li>
+</ol>
+<p>The following are required for OpenUnison:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sub</td>
+<td>The user's unique id</td>
+<td>mmosley</td>
+</tr>
+<tr>
+<td>groups</td>
+<td>The DN of all groups the user is a member of</td>
+<td>admins,users</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, users may also have:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>given_name</td>
+<td>User's first name</td>
+<td>Matt</td>
+</tr>
+<tr>
+<td>family_name</td>
+<td>User's last name</td>
+<td>Mossley</td>
+</tr>
+<tr>
+<td>email</td>
+<td>User's email address</td>
+<td>mmosley@tremolo.dev</td>
+</tr>
+<tr>
+<td>name</td>
+<td>The user's display name</td>
+<td>Matt Mosley</td>
+</tr>
+</tbody>
+</table>
+<p>You'll need to provide a redirect URL to your identity provider.  The URL will be <code>https://[network.openunison_host]/auth/oidc</code>.  For instance if your <code>network.openunison_host</code> 
+is k8sou.domain.com your direct URL is <code>https://k8sou.domain.com/auth/oidc</code>.</p>
+<p>For previously tested identity providers and how to configure them, see the <a href="../identity%20providers">Identity Providers</a> section of the documentation.</p>
+<p>To configure OpenID Connect for authentication to your Kubernetes cluster, uncomment the <code>oidc</code> section of the base values.yaml file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>oidc:
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  client_id: abcdefgh
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>  issuer: https://dev-XXXX.okta.com/
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>  user_in_idtoken: false
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>  domain: &quot;&quot;
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>  scopes: openid email profile groups
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>  claims:
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>    sub: sub
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    email: email
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    given_name: given_name
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    family_name: family_name
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>    display_name: name
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>    groups: groups
+</code></pre></div>
+<p>You can customize these values based on your identity provider's needs.  </p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>oidc.client_id</td>
+<td>The client ID registered with your identity provider</td>
+</tr>
+<tr>
+<td>oidc.auth_url</td>
+<td>Your identity provider's authorization url</td>
+</tr>
+<tr>
+<td>oidc.token_url</td>
+<td>Your identity provider's token url</td>
+</tr>
+<tr>
+<td>oidc.domain</td>
+<td>An email domain to limit access to</td>
+</tr>
+<tr>
+<td>oidc.user_in_idtoken</td>
+<td>Set to <code>true</code> if the user's attributes (such as name and groups), is contained in the user's <code>id_token</code>.  Set to <code>false</code> if a call to the identity provider's user info endpoint is required to load the full profile</td>
+</tr>
+<tr>
+<td>oidc.userinfo_url</td>
+<td>If <code>oidc.user_in_idtoken</code> is <code>false</code>, the <code>user_info</code> endpoint for your identity provider</td>
+</tr>
+<tr>
+<td>oidc.scopes</td>
+<td>The list of scopes to include, may change based on your identity provider</td>
+</tr>
+<tr>
+<td>oidc.claims.sub</td>
+<td>If specified, the claim from the <code>id_token</code> to use for the <code>sub</code> attribute</td>
+</tr>
+<tr>
+<td>oidc.claims.email</td>
+<td>If specified, the claim from the <code>id_token</code> to use for the <code>mail</code> attribute</td>
+</tr>
+<tr>
+<td>oidc.claims.givenName</td>
+<td>If specified, the claim from the <code>id_token</code> to use for the <code>givenName</code> attribute</td>
+</tr>
+<tr>
+<td>oidc.claims.familyName</td>
+<td>If specified, the claim from the <code>id_token</code> to use for the <code>sn</code> attribute</td>
+</tr>
+<tr>
+<td>oidc.claims.displayName</td>
+<td>If specified, the claim from the <code>id_token</code> to use for the <code>dipslayName</code> attribute</td>
+</tr>
+<tr>
+<td>oidc.claims.groups</td>
+<td>If specified, the claim from the <code>id_token</code> to use for the <code>groups</code> attribute</td>
+</tr>
+</tbody>
+</table>
+<p>If you prefer to keep your identity provider's <code>client_id</code> as a <code>Secret</code>, store it as <code>OIDC_CLIENT_ID</code> in the <code>orchestra-secrets-source</code> <code>Secret</code> in the <code>openunison</code> namespace and set <code>oidc.client_id_is_secret: true</code> in your values.yaml.  The <code>client_id</code> will be read from the <code>Secret</code> instead of being stored directly in the configuration object.</p>
+<p>The secret file used with the <code>ouctl</code> command will contain the client secret.  If you want to configure OpenUnison manually, add <code>OIDC_CLIENT_SECRET</code> to the <code>orchestra-secrets-source</code> <code>Secret</code> in the <code>openunison</code> namespace with the base64 encoded client secret from your identity provider.</p>
+<p><strong><em>If using <code>echo DATA | base64</code> to encode your <code>Secret</code>, make sure to use <code>-n</code> to remove the excess carriage return, ie <code>echo -n DATA | base64</code>.  Your authentication will fail otherwise.</em></strong></p>
+<h4 id="rbac-bindings_1">RBAC Bindings</h4>
+<p>The <code>groups</code> claim will be passed to Kubernetes to support RBAC bindings.  You can create <code>RoleBinding</code> and <code>ClusterRoleBinding</code> objects based on this attributes.  For
+example if you have a group called <code>k8s-admins</code> you can make those users with that group a cluster admin with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>kind: ClusterRoleBinding
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>apiVersion: rbac.authorization.k8s.io/v1
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>metadata:
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>  name: activedirectory-cluster-admins
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>subjects:
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>- kind: Group
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>  name: k8s-admins
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>roleRef:
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>  kind: ClusterRole
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>  name: cluster-admin
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>  apiGroup: rbac.authorization.k8s.io
+</code></pre></div>
+<p>Once completed, continue to <a href="#deploy-the-portal">Deploy the Portal</a> to finish the OpenUnison deployment.</p>
+<h3 id="github">GitHub</h3>
+<p>GitHub is one of the most popular places to store directory your code.  It's also got a powerful identity system that supports SSO and organizing
+access to your code.  OpenUnison can leverage this system to provide access to your Kubernetes cluster, using your teams and memberships in RBAC bindings.</p>
+<p><img alt="OpenUnison and Active Directory" src="../assets/images/ou-auth-github.png" /></p>
+<p>To get started, you'll need to create an OAuth app under your organization's <code>Developer Settings</code>.  You'll need to provide an <code>Authorization callback URL</code>,
+which is <code>https://[network.openunison_host]/auth/github</code>.  For instance if your <code>network.openunison_host</code> is k8sou.domain.com your callback URL is 
+<code>https://k8sou.domain.com/auth/github</code>.</p>
+<p>Once created, you'll need your client id and a client secret.  The client id is added with a list of authorized teams to your values.yaml:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>github:
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  client_id: abcd123
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  teams: TremoloSecurity/
+</code></pre></div>
+<p>It's very important to specify at least one team, otherwise anyone on GitHub will have access to your cluster!  GitHub doesn't provide any authorization
+for your OAuth apps, that's left to you.  Membership is specified in the form <code>Organization/Team</code> where <code>Organization/</code> means all teams in that organization.
+You can specify multiple teams by commas.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>github.client_id</td>
+<td>The client id from your OAuth2 application configuration</td>
+</tr>
+<tr>
+<td>github.teams</td>
+<td>A comma separated list of authorized teams and organizations.  An organization is listed in the format <code>OrgName/</code> and a team in the format <code>OrgName/TeamName</code></td>
+</tr>
+</tbody>
+</table>
+<p>The secret file used with the <code>ouctl</code> command will contain the GitHub client secret.  If configuring OpenUnison manually, add <code>GITHUB_SECRET_ID</code> to the <code>orchestra-secrets-source</code> <code>Secret</code> in the <code>openunison</code> namespace with the base64 encoded client secret from your OAuth app.</p>
+<h4 id="rbac-bindings_2">RBAC Bindings</h4>
+<p>Kubernetes will see your user's organizations and teams as groups.  To authorize users based on these groups, list them in your RBAC policies as groups with organizations being in the format <code>OrgName/</code> and teams being the format <code>OrgName/TeamName</code>.   To authorize members of team <code>TremnoloSecurity/Owners</code> to be cluster administrators, we create a <code>ClusterRoleBinding</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>kind: ClusterRoleBinding
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>apiVersion: rbac.authorization.k8s.io/v1
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>metadata:
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>  name: github-cluster-admins
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>subjects:
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>- kind: Group
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>  name: TremoloSecurity/Owners
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>roleRef:
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>  kind: ClusterRole
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>  name: cluster-admin
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>  apiGroup: rbac.authorization.k8s.io
+</code></pre></div>
+<p>Once completed, continue to <a href="#deploy-the-portal">Deploy the Portal</a> to finish the OpenUnison deployment.</p>
+<h3 id="saml2">SAML2</h3>
+<p>SAML2 is a popular user federation protocol, especially in enterprises.  OpenUnison can integrate with your enterprise's SAML2 identity provider for users and
+groups.  If you want to test with a SAML2 identity provider, but don't have one you can use Tremolo Security's <a href="https://portal.apps.tremolo.io/">testing identity provider</a> (requires registration).</p>
+<p>To get started, you'll need either the SAML2 metadata URL for your identity provider or the XML of your SAML2 identity provider.  For instructions for specific identity
+providers, see the <em>Identity providers</em> section of the documentation.</p>
+<p>To deploy OpenUnison with SAML2 support, uncomment the <code>saml2</code> section of the base values.yaml:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>saml:
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>  idp_url: &quot;https://portal.apps.tremolo.io/idp-test/metadata/XXXXXXXXX&quot;
+</code></pre></div>
+<p>Here are the options for the <code>saml</code> section:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>saml.idp_url</td>
+<td>The url to your identity provider's saml2 metadata.  If not using a metadata url, set this to an empty string <code>""</code></td>
+</tr>
+<tr>
+<td>saml.metadata_xml_b64</td>
+<td>Base64 encoded metadata.  Will only be used if <code>idp_url</code> is an empty string</td>
+</tr>
+</tbody>
+</table>
+<p>Your identity provider must supply the following attributes:</p>
+<p>The following attributes must be available to OpenUnison:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uid</td>
+<td>The user's login ID</td>
+<td>mmosley</td>
+</tr>
+<tr>
+<td>memberOf</td>
+<td>The DN of all groups the user is a member of</td>
+<td>cn=group1,cn=users,dc=domain,dc=com</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, users may also have:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>givenName</td>
+<td>User's first name</td>
+<td>Matt</td>
+</tr>
+<tr>
+<td>sn</td>
+<td>User's last name</td>
+<td>Mossley</td>
+</tr>
+<tr>
+<td>mail</td>
+<td>User's email address</td>
+<td>mmosley@tremolo.dev</td>
+</tr>
+<tr>
+<td>displayName</td>
+<td>The user's display name</td>
+<td>Matt Mosley</td>
+</tr>
+</tbody>
+</table>
+<p>To stand up your identity provider, you'll need to use OpenUnison's saml2 metadata URL.  The url is https://network.openunison_host/auth/forms/saml2_rp_metadata.jsp. 
+For instance if your <code>network.openunison_host</code> is k8sou.domain.com the metadata URL will be <code>https://k8sou.domain.com/auth/forms/saml2_rp_metadata.jsp</code>.</p>
+<p>There is no client secret with SAML2, so you'll skip the <code>-s</code> parameter with the <code>ouctl</code> command.</p>
+<h4 id="rbac-bindings_3">RBAC Bindings</h4>
+<p>The <code>memberOf</code> attribute from your assertions will be included as the <code>groups</code> claim in your <code>id_token</code>.  You can use any value from the <code>memberOf</code> attribute in
+your RBAC bindings.</p>
+<p>Once completed, continue to <a href="#deploy-the-portal">Deploy the Portal</a> to finish the OpenUnison deployment.</p>
+<h2 id="headlamp-configuration-and-plugins">Headlamp Configuration and Plugins</h2>
+<p><a href="https://headlamp.dev/">Headlamp</a> deploys with OpenUnison automatically.  There's no separate chart to install or deploy.  The charts for OpenUnison deploy Headlamp with:</p>
+<ul>
+<li><strong>End to End TLS</strong> - Connections from OpenUnison to Headlamp are encrypted out of the box, no need for special configuration.</li>
+<li><strong>Hardened Charts</strong> - Headlamp is deployed with the same security posture as OpenUnison.  All privileges are revoked, containers are read-only, and the <code>ServiceAccount</code> has no privileges.</li>
+<li><strong>OpenUnison Plugin</strong> - A pre-built plugin to support knowing who you logged in as and which namespaces you have access to.</li>
+<li><strong>Plugins</strong> - You can configure plugins to be deployed to your Headlamp implementation.</li>
+</ul>
+<h3 id="configuring-plugins">Configuring Plugins</h3>
+<p>When deploying Headlamp with OpenUnison, you can <a href="https://headlamp.dev/docs/latest/installation/in-cluster/#plugin-management">configure plugins the same way as with the generic Headlamp charts</a>, with one change: the <code>config</code> and <code>pluginManager</code> blocks go under <code>headlamp</code> in your values.yaml.  For instance, to configure the cert-manager and AI assistant plugins your yaml would look like:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">headlamp</span><span class="p">:</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="nt">watchPlugins</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="nt">pluginsManager</span><span class="p">:</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="nt">configContent</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">      </span><span class="no">plugins:</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">      </span><span class="no">- name: cert-manager</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">        </span><span class="no">source: https://artifacthub.io/packages/headlamp/headlamp-plugins/headlamp_cert-manager</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">        </span><span class="no">version: 0.1.0</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">        </span><span class="no">dependencies: []</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">      </span><span class="no">- name: ai-assistant</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">        </span><span class="no">source: https://artifacthub.io/packages/headlamp/headlamp-plugins/headlamp_ai_assistant</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">        </span><span class="no">version: 0.1.0-alpha</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">      </span><span class="no">installOptions:</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">        </span><span class="no">parallel: true</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="w">        </span><span class="no">maxConcurrent: 2</span>
+</code></pre></div>
+<p><strong><em>SECURITY WARNING ABOUT PLUGINS</em></strong> - Headlamp plugin configuration is stored in your browser's local storage.  It is NOT centrally managed.  This means that when you configure a plugin through Headlamp, it is not tied to your OpenUnison login.  As an example, If mmosley logs into OpenUnison and configures the AI assistant with an API key for OpenAI, and then logs out but jjackson logs in to the same desktop she will be using the same OpenAI configuration.  It also means that, as an administrator you can not enforce configuration rules.  For instance, you can't keep a user from configuring OpenAI with the AI assistant, sending cluster information to OpenAI.  Be very careful in deciding which plugins to enable until Headlamp supports centralized configuration.</p>
+<h3 id="namespace-visibility">Namespace Visibility</h3>
+<p>Headlamp, by default, performs all searches from the cluster level.  This means when it lists workloads, it's search is at the cluster level.  If your user only has access to specific namespaces, which is often the case with multi-tenant deployments, you need to tell Headlamp which namespaces are available.  With the stock version of Headlamp, the only way to do this is to manually configure which namespaces are available in your local Headlamp configuration.  OpenUnison includes a plugin to automate this for your users.</p>
+<p>The OpenUnison plugin for Headlamp uses an API to determine which namespaces are visible to a user.  <strong><em>NOTE</em></strong> this does not override RBAC, it only determines which namespaces are visible in Headlamp.  If a user doesn't not have access to that Namespace based on the cluster's RBAC, they can not access it even if it's listed.  When using the <a href="namespace_as_a_service/">Namespace as a Service</a> portal OpenUnison knows which namespaces you have access to, eliminating the need for you to build an API.</p>
+<p>For users using the OpenUnison authentication portal, by default there's an API that will always return a list of all namespaces.  This is similar behavior as the legacy Kubernetes Dashboard and provides the best user experience securely for the most use cases.  There are additional methods for populating the namespaces filter in Headlamp.</p>
+<h4 id="test-namespaces">Test Namespaces</h4>
+<p>If you don't have a way to know which namespaces a user should have access to based on groups or some other mechanism, OpenUnison can test each namespace on behalf of the user.  To enable this version of the namespaces api:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">headlamp</span><span class="p">:</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">namespace_api</span><span class="p">:</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="nt">all_namespaces</span><span class="p">:</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">    </span><span class="nt">test</span><span class="p">:</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">      </span><span class="c1"># list the groups that will be cluster-admins</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">      </span><span class="nt">admin_groups</span><span class="p">:</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CN=k8s-cluster-administrators,CN=Users,DC=ent2k22,DC=tremolo,DC=dev</span>
+</code></pre></div>
+<p>List out which groups will be admins so that way you can skip testing for them.  Note that because this method does a test of every namespace it can get expensive if you have a large number of namespaces.</p>
+<h4 id="no-namespaces">No Namespaces</h4>
+<p>If all of your users are cluster administrators, you can skip the namespaces api entirely and return an empty list with the following configuration change.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">headlamp</span><span class="p">:</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">namespace_api</span><span class="p">:</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="nt">all_namespaces</span><span class="p">:</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="nt">no_namespaces</span><span class="p">:</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<h4 id="custom-api">Custom API</h4>
+<p>Finally, if you do have a way to determine which namespaces are available for a user, the best way to do that is to build an <code>Application</code>. For example, the following <code>Application</code> will limit namespaces to those built of the user's username:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nn">---</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v1</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Application</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-apis</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">  </span><span class="nt">azTimeoutMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">  </span><span class="nt">isApp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">  </span><span class="nt">urls</span><span class="p">:</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;#[OU_HOST]&quot;</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">    </span><span class="nt">filterChain</span><span class="p">:</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">className</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">com.tremolosecurity.proxy.filters.JavaScriptFilter</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">      </span><span class="nt">params</span><span class="p">:</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">        </span><span class="nt">javaScript</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">          </span><span class="no">// imports</span>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">          </span><span class="no">GlobalEntries = Java.type(&quot;com.tremolosecurity.server.GlobalEntries&quot;);</span>
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">          </span><span class="no">HashMap = Java.type(&quot;java.util.HashMap&quot;);</span>
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="w">          </span><span class="no">System = Java.type(&quot;java.lang.System&quot;);</span>
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">          </span><span class="no">JwtClaims = Java.type(&quot;org.jose4j.jwt.JwtClaims&quot;);</span>
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="w">          </span><span class="no">JsonWebSignature = Java.type(&quot;org.jose4j.jws.JsonWebSignature&quot;);</span>
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="w">          </span><span class="no">ProxyConstants = Java.type(&quot;com.tremolosecurity.proxy.util.ProxyConstants&quot;);</span>
+<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="w">          </span><span class="no">AlgorithmIdentifiers = Java.type(&quot;org.jose4j.jws.AlgorithmIdentifiers&quot;);</span>
+<a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">          </span><span class="no">Attribute = Java.type(&quot;com.tremolosecurity.saml.Attribute&quot;);</span>
+<a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="w">          </span><span class="no">ArrayList = Java.type(&quot;java.util.ArrayList&quot;);</span>
+<a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a>
+<a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a>
+<a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="w">          </span><span class="no">// initialize your filter</span>
+<a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a><span class="w">          </span><span class="no">function initFilter(config) {</span>
+<a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a>
+<a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a><span class="w">          </span><span class="no">}</span>
+<a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a>
+<a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a>
+<a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a><span class="w">          </span><span class="no">// create the list of namespaces</span>
+<a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a><span class="w">          </span><span class="no">function doFilter(request,response,chain) {</span>
+<a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a><span class="w">            </span><span class="no">var allowedNamespaces = [];</span>
+<a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a>
+<a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a><span class="w">            </span><span class="no">var userData = (request.getSession().getAttribute(ProxyConstants.AUTH_CTL)).getAuthInfo();</span>
+<a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a><span class="w">            </span><span class="no">var sub = userData.getAttribs().get(&quot;sub&quot;).getValues().get(0);</span>
+<a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a>
+<a id="__codelineno-18-42" name="__codelineno-18-42" href="#__codelineno-18-42"></a><span class="w">            </span><span class="no">allowedNamespaces.push(sub + &#39;-ns&#39;);</span>
+<a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a>
+<a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a><span class="w">            </span><span class="no">response.getWriter().print(JSON.stringify({&quot;namespaces&quot;:allowedNamespaces}));</span>
+<a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a><span class="w">          </span><span class="no">}</span>
+<a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a><span class="w">    </span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/apis/namespaces&quot;</span>
+<a id="__codelineno-18-47" name="__codelineno-18-47" href="#__codelineno-18-47"></a><span class="w">    </span><span class="nt">proxyTo</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<a id="__codelineno-18-48" name="__codelineno-18-48" href="#__codelineno-18-48"></a><span class="w">    </span><span class="nt">authChain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">login-service</span>
+<a id="__codelineno-18-49" name="__codelineno-18-49" href="#__codelineno-18-49"></a><span class="w">    </span><span class="nt">azRules</span><span class="p">:</span>
+<a id="__codelineno-18-50" name="__codelineno-18-50" href="#__codelineno-18-50"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dn</span>
+<a id="__codelineno-18-51" name="__codelineno-18-51" href="#__codelineno-18-51"></a><span class="w">      </span><span class="nt">constraint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">o=Tremolo</span>
+<a id="__codelineno-18-52" name="__codelineno-18-52" href="#__codelineno-18-52"></a>
+<a id="__codelineno-18-53" name="__codelineno-18-53" href="#__codelineno-18-53"></a>
+<a id="__codelineno-18-54" name="__codelineno-18-54" href="#__codelineno-18-54"></a><span class="w">  </span><span class="nt">cookieConfig</span><span class="p">:</span>
+<a id="__codelineno-18-55" name="__codelineno-18-55" href="#__codelineno-18-55"></a><span class="w">    </span><span class="nt">sessionCookieName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tremolosession</span>
+<a id="__codelineno-18-56" name="__codelineno-18-56" href="#__codelineno-18-56"></a><span class="w">    </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#[OU_HOST]&quot;</span>
+<a id="__codelineno-18-57" name="__codelineno-18-57" href="#__codelineno-18-57"></a><span class="w">    </span><span class="nt">secure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-18-58" name="__codelineno-18-58" href="#__codelineno-18-58"></a><span class="w">    </span><span class="nt">httpOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-18-59" name="__codelineno-18-59" href="#__codelineno-18-59"></a><span class="w">    </span><span class="nt">logoutURI</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/logout&quot;</span>
+<a id="__codelineno-18-60" name="__codelineno-18-60" href="#__codelineno-18-60"></a><span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">900</span>
+<a id="__codelineno-18-61" name="__codelineno-18-61" href="#__codelineno-18-61"></a><span class="w">    </span><span class="nt">keyAlias</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">session-unison</span>
+</code></pre></div>
+<p>Then, update your values to disable the all_namespaces api:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">headlamp</span><span class="p">:</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">namespace_api</span><span class="p">:</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="nt">no_namespaces</span><span class="p">:</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<h3 id="disabling-headlamp">Disabling Headlamp</h3>
+<p>In order to disable Headlamp, add the following to your values.yaml:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nt">headlamp</span><span class="p">:</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<h2 id="detailed-configuration">Detailed Configuration</h2>
+<h3 id="host-names-and-networking">Host Names and Networking</h3>
+<p>OpenUnison is a web application that can host multiple systems routed by host name.  If you ever worked with web servers,
+this is similar to how virtual sites work.  When OpenUnison receives a request, it routes the request based on it's internal
+configuration to the right application using the request's host name and URI path.  To prepare for using OpenUnison to 
+manage access to your cluster, you'll need at least one host name for the portal and the built in headlamp service.</p>
+<p>If you're running OpenUnison on a managed cluster like EKS or GKE, you'll need a third host name specifically for the api service
+that kubectl will use.  </p>
+<p><strong><em>All of these host names must be different</em></strong></p>
+<p>This diagram shows the relationships between the host names used to access OpenUnison, your <code>Ingress</code> controller, and the load balancer.  In this example, <code>https://k8sou.domain.com</code> is the URL for the OpenUnison portal.  The dashboard is accessed using <code>https://k8sdb.domain.com</code>, and the API server is accessed using <code>https://k8sapi.domain.com</code>.  All three URL's host names point to the same IP address (<code>a.b.c.d</code>), which is assigned to the load balancer.</p>
+<p><img alt="OpenUnison Network" src="../assets/images/openunison_k8s_network.png" /></p>
+<p>When your browser goes to <code>https://k8sou.domain.com/</code> it's going to a load balancer that forwards the traffic to your <code>Ingress</code>
+controller.  Depending on your setup your load balancer may be a TLS termination point.  The <code>Ingress</code> controller is a TLS termination 
+point that decrypts your request and forwards it to the <code>openunison-orchestra</code> <code>Service</code> which then forwards the packets to the
+<code>openunison-orchestra</code> <code>Pod</code>.  The Helm chart sets all this up for you, so don't worry about having to wire everything yourself.</p>
+<p>Headlamp works in a similar way.  Going to <code>https://k8sou.domain.com/headlamp/</code> goes through the same process as above.  Once OpenUnison has authenticated you, it forwards
+all requests to Headlamp with either your <code>id_token</code> or an <a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#user-impersonation">Impersonation</a>
+header with your user's information.  Headlamp runs without privileges, and without it's own <code>Ingress</code> object.  All traffic
+runs through OpenUnison's reverse proxy.</p>
+<p>When using OpenUnison with a managed cluster, such as EKS, you can enable impersonation for authentication to your cluster.
+This scenario replaces your API server's host with the value from <code>network.api_server_host</code> routing all API requests through
+OpenUnison.  OpenUnison authenticates your <code>id_token</code> and then injects Impersonation headers into each request.  This allows
+you to authenticate to your cluster without getting cloud IAM credentials.  This process will be transparent to your tools, such
+as kubectl.</p>
+<h4 id="no-dns-server">No DNS Server?</h4>
+<p><em>If you don't have a DNS server where you can setup host names, try using nip.io.  This service will take any host name with an IP and return the IP address for DNS resolution.  For instance k8sou.apps.192-168-2-119.nip.io will resolve to 192.168.2.119.</em></p>
+<h4 id="no-load-balancer">No Load Balancer?</h4>
+<p>It's not uncommon for development releases to not have a load balancer available.  You can configure your <code>Ingress</code> controller to listen directly on ports 80 and 443.  Each <a href="../ingresses">Ingress controller's</a> documentation provides instructions on how to run the controller this way.</p>
+<h4 id="network-configuration-options">Network Configuration Options</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>network.openunison_host</td>
+<td>The host name for OpenUnison.  This is what user's will put into their browser to login to Kubernetes</td>
+</tr>
+<tr>
+<td>network.dashboard_host</td>
+<td><strong><em>Optional, only required if <code>dashboard.enabled=true</code></em></strong> The host name for the dashboard.  This is what users will put into the browser to access to the dashboard. <strong>NOTE:</strong> <code>network.openunison_host</code> and <code>network.dashboard_host</code> Both <code>network.openunison_host</code> and <code>network.dashboard_host</code> <strong>MUST</strong> point to OpenUnison</td>
+</tr>
+<tr>
+<td>network.api_server_host</td>
+<td>The host name to use for the api server reverse proxy.  This is what <code>kubectl</code> will interact with to access your cluster. <strong>NOTE:</strong> <code>network.openunison_host</code> and <code>network.dashboard_host</code></td>
+</tr>
+<tr>
+<td>network.k8s_url</td>
+<td>The URL for the Kubernetes API server</td>
+</tr>
+<tr>
+<td>network.session_inactivity_timeout_seconds</td>
+<td>The number of seconds of inactivity before the session is terminated, also the length of the refresh token's session</td>
+</tr>
+<tr>
+<td>network.createIngressCertificate</td>
+<td>If true (default), the operator will create a self signed Ingress certificate.  Set to false if using an existing certificate or LetsEncrypt</td>
+</tr>
+<tr>
+<td>network.force_redirect_to_tls</td>
+<td>If <code>true</code>, all traffic that reaches OpenUnison over HTTP will be redirected to HTTPS.  Defaults to <code>true</code>.  Set to <code>false</code> when using an external TLS termination point, such as an istio sidecar proxy</td>
+</tr>
+<tr>
+<td>network.ingress_type</td>
+<td>The type of <code>Ingress</code> object to create.  <code>nginx</code> and <a href="https://openunison.github.io/ingresses/istio/">istio</a> is supported</td>
+</tr>
+<tr>
+<td>network.ingress_annotations</td>
+<td>Annotations to add to the <code>Ingress</code> object</td>
+</tr>
+<tr>
+<td>network.ingress_certificate</td>
+<td>The certificate that the <code>Ingress</code> object should reference</td>
+</tr>
+<tr>
+<td>network.istio.selectors</td>
+<td>Labels that the istio <code>Gateway</code> object will be applied to.  Default is <code>istio: ingressgateway</code></td>
+</tr>
+</tbody>
+</table>
+<p>Return to <a href="#site-specific-configuration">Site Specific Configuration</a></p>
+<h3 id="network-policies">Network Policies</h3>
+<p>The <code>orchestra</code> helm chart will create <code>NetworkPolicy</code> objects to lock down all network access to the OpenUnison pods, limiting it to:</p>
+<ul>
+<li>Access from the <code>Ingress</code> controller or gateway</li>
+<li>Access from within the <code>openunison</code> namespace</li>
+<li>Access from the monitoring system's namespace</li>
+<li>Access from the API server</li>
+</ul>
+<p>Limiting access to the OpenUnison pods can be important, especially when running OpenUnison in impersonation mode, to cut down attacks from inside
+the cluster.  Access from the API server is needed because there are validating webhooks hosted on OpenUnison for validating configuration objects
+that are created.  </p>
+<p>Enable the creation of policies by setting <code>network_policies.enabled</code> to <code>true</code>.  This will disable all inbound access to OpenUnison pods from outside
+of the OpenUnison namespace.  Then enable which namespaces you want to create ingress <code>NetworkPolicy</code> objects for: </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>network_policies:
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>  enabled: true
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>  ingress:
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>    enabled: true
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>    labels:
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>      app.kubernetes.io/name: ingress-nginx
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>  monitoring:
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>    enabled: true
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>    labels:
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>      app.kubernetes.io/name: monitoring
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>  apiserver:
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>    enabled: true
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>    labels:
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>      app.kubernetes.io/name: kube-system
+</code></pre></div>
+<p><strong><em>NOTE :</em></strong> Every distribution has its own mechanism for running the API server and enabling access from the API server for webhooks.  If you run into errors while deploying the <code>orchestra-login-portal</code> chart such as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>message: &quot;Helm install failed for release openunison/portal with chart orchestra-login-portal@2.3.78:
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>      36 errors occurred:\n\t* Internal error occurred: failed calling webhook \&quot;applications-openunison.tremolo.io\&quot;:
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>      failed to call webhook: Post \&quot;https://openunison-orchestra.openunison.svc:443/k8s/webhooks/v1/applications?timeout=30s\&quot;:
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>      context deadline exceeded\n\t* Internal error occurred: failed calling webhook
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>      \&quot;applications-openunison.tremolo.io\&quot;: failed to call webhook: Post \&quot;https://openunison-orchestra.openunison.svc:443/k8s/webhooks/v1/applications?timeout=30s\&quot;:
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>      dial tcp 192.168.8.79:8443: i/o timeout\n\t* 
+</code></pre></div>
+<p>it generally means that you have <code>NetworkPolicy</code> objects in the openunison namespace, but need to create a specific policy for your distribution.</p>
+<h3 id="managed-clusters">Managed Clusters</h3>
+<p>Most hosted clusters do not support configuring an OpenID Connect identity provider.  The easiest way to manage external access to these clusters is by
+enabling <code>Impersonation</code> in OpenUnison.  Using <code>Impersonation</code>, OpenUnison provides a reverse proxy in front of your API server, enabling external authentication
+without having to configure an OpenID Connect identity provider.  To enable impersonation, set <code>enable_impersonation</code> to <code>true</code> in your values.yaml and make sure
+to include a host name for <code>openunison.api_server_host</code>. </p>
+<h4 id="kubectl-execcpport-forward">kubectl exec/cp/port-forward</h4>
+<p>Prior to Kubernetes 1.31, the kubectl exec, cp, proxy, and port-forward commands use a protocol called SPDY.  This protocol was deprecated by Google in 2016.
+Very few modern systems still support SPDY.  If using OpenUnison with a managed cluster like EKS, GKE, or AKS, OpenUnison supports SPDY by integrating <a href="https://github.com/tremolosecurity/kube-oidc-proxy">Tremolo Security's OIDC Proxy</a>. </p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>impersonation:
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>  use_jetstack: true
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>  jetstack_oidc_proxy_image: ghcr.io/tremolosecurity/kube-oidc-proxy:latest
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>  explicit_certificate_trust: true
+</code></pre></div>
+Here are the details configuration options for impersonation:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>impersonation.use_jetstack</td>
+<td>if <code>true</code>, the operator will deploy an instance of JetStack's OIDC Proxy (https://github.com/jetstack/kube-oidc-proxy).  Default is <code>false</code></td>
+</tr>
+<tr>
+<td>impersonation.jetstack_oidc_proxy_image</td>
+<td>The name of the image to use</td>
+</tr>
+<tr>
+<td>impersonation.explicit_certificate_trust</td>
+<td>If <code>true</code>, oidc-proxy will explicitly trust the <code>tls.crt</code> key of the <code>Secret</code> named in <code>impersonation.ca_secret_name</code>.  Defaults to <code>true</code></td>
+</tr>
+<tr>
+<td>impersonation.ca_secret_name</td>
+<td>If <code>impersonation.explicit_certificate_trust</code> is <code>true</code>, the name of the tls <code>Secret</code> that stores the certificate for OpenUnison that the oidc proxy needs to trust.  Defaults to <code>ou-tls-secret</code></td>
+</tr>
+<tr>
+<td>impersonation.resources.requests.memory</td>
+<td>Memory requested by oidc proxy</td>
+</tr>
+<tr>
+<td>impersonation.resources.requests.cpu</td>
+<td>CPU requested by oidc proxy</td>
+</tr>
+<tr>
+<td>impersonation.resources.limits.memory</td>
+<td>Maximum memory allocated to oidc proxy</td>
+</tr>
+<tr>
+<td>impersonation.resources.limits.cpu</td>
+<td>Maximum CPU allocated to oidc proxy</td>
+</tr>
+</tbody>
+</table>
+<p>The terminal in the dashboard will work without issue, since the dashboard uses websockets instead of SPDY.</p>
+<h3 id="openunison-resource-configuration">OpenUnison Resource Configuration</h3>
+<p>The helm chart can be used to customize openunison's resource utilization and limits and manage access to tokens for communicating with the API server.  You can
+also specif node selector labels to limit which nodes your pods run on.</p>
+<h4 id="tokenrequest-api">TokenRequest API</h4>
+<p>Starting in Kubernetes 1.20 all tokens mounted into pods are projected TokenRequest API tokens.  These tokens are only valid for the life of the pod
+and have an expiration (though it is a year into the future).  OpenUnison can be configured to use shorter lived tokens.  When using the shorter lived
+tokens, OpenUnison will reload them when the tokens expire.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>services:
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>  enable_tokenrequest: true
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>  token_request_audience: &quot;https://kubernetes.default.svc.cluster.local&quot;
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>  token_request_expiration_seconds: 600
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>  node_selectors: []
+</code></pre></div>
+<p>Here are the detailed configuration options:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>services.enable_tokenrequest</td>
+<td>If <code>true</code>, the OpenUnison <code>Deployment</code> will use the <code>TokenRequest</code> API instead of static <code>ServiceAccount</code> tokens.</td>
+</tr>
+<tr>
+<td>services.token_request_audience</td>
+<td>The audience expected by the API server</td>
+</tr>
+<tr>
+<td>services.token_request_expiration_seconds</td>
+<td>The number of seconds TokenRequest tokens should be valid for, minimum 600 seconds</td>
+</tr>
+<tr>
+<td>services.node_selectors</td>
+<td>annotations to use when choosing nodes to run OpenUnison, maps to the <code>Deployment</code> <code>nodeSelector</code></td>
+</tr>
+<tr>
+<td>services.pullSecret</td>
+<td>The name of the <code>Secret</code> that stores the pull secret for pulling the OpenUnison image</td>
+</tr>
+<tr>
+<td>services.resources.requests.memory</td>
+<td>Memory requested by OpenUnison</td>
+</tr>
+<tr>
+<td>services.resources.requests.cpu</td>
+<td>CPU requested by OpenUnison</td>
+</tr>
+<tr>
+<td>services.resources.limits.memory</td>
+<td>Maximum memory allocated to OpenUnison</td>
+</tr>
+<tr>
+<td>services.resources.limits.cpu</td>
+<td>Maximum CPU allocated to OpenUnison</td>
+</tr>
+</tbody>
+</table>
+<h3 id="customizing-the-openunison-object">Customizing The OpenUnison Object</h3>
+<p>You can customize additions to the <code>openunison</code> object generated by the <code>orchestra</code> helm chart.  This section lets you specify additional environment
+properties for OpenUnison, secrets to load, and specify a custom HTML image. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>openunison:
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>  replicas: 1
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>  non_secret_data:
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>    PROMETHEUS_SERVICE_ACCOUNT: system:serviceaccount:monitoring:prometheus-k8s
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>    SHOW_PORTAL_ORGS: &quot;true&quot;
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>  secrets: []
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>  html:
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>    image: docker.lab.tremolo.dev/nginx
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>  enable_provisioning: false
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>  az_groups: []
+</code></pre></div>
+<h4 id="authorizing-access-to-your-cluster">Authorizing Access To Your Cluster</h4>
+<p>The default implementation of OpenUnison authorizes anyone to authenticate to your cluster and leaves authorization to your RBAC objects.  This
+may not be the desired behavior if you know that only users in a certain group should have access to a cluster at all.  For example, if a
+cluster was built for the payments team, then developers on the marketing application shouldn't have access to your cluster at all.</p>
+<p>To authorize access to the portal, and your cluster, add the authorized groups to <code>openunison.az_groups</code> in your values.yaml.  The group names
+will be the same as how you would specify them in an RBAC binding. </p>
+<h4 id="detailed-configuration-options">Detailed configuration options:</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>openunison.replicas</td>
+<td>The number of OpenUnison replicas to run, defaults to 1</td>
+</tr>
+<tr>
+<td>openunison.non_secret_data</td>
+<td>Add additional non-secret configuration options, added to the <code>non_secret_data</code> section of the <code>OpenUnison</code> object</td>
+</tr>
+<tr>
+<td>openunison.secrets</td>
+<td>Add additional keys from the <code>orchestra-secrets-source</code> <code>Secret</code></td>
+</tr>
+<tr>
+<td>openunison.html.image</td>
+<td>A custom NGINX image for the HTML frontend for OpenUnison's apis.</td>
+</tr>
+<tr>
+<td>openunison.enable_provisioning</td>
+<td>If <code>true</code>, enables openunison's provisioning and audit database.</td>
+</tr>
+<tr>
+<td>openunison.az_groups</td>
+<td>List of groups to authorize access for this cluster</td>
+</tr>
+</tbody>
+</table>
+<h2 id="integrating-other-applications">Integrating Other Applications</h2>
+<p>OpenUnison can support the authentication for your entire environment, not just Kubernetes!  Take a look at our <a href="../applications">guides for well known applications</a>.  Also check out our documentation for <a href="../documentation/custom-sso">SSO application integration</a>.</p>
+<h2 id="alternate-deployment-methods">Alternate Deployment Methods</h2>
+<h3 id="manual-deployment">Manual Deployment</h3>
+<h4 id="base-configuration">Base Configuration</h4>
+<p>The base configuration deploys the groundwork for running OpenUnison.  OpenUnison is a powerful authentication and automation platform that can be used with all of your cluster applications and APIs.  We wanted to make this complexity as easy as possible to manage so we encoded most of the deployment and validation steps in automation technologies.  You'll need <a href="https://helm.sh/docs/intro/install/">helm version 3+</a> to finish the deployment.</p>
+<p><strong>Create the OpenUnison namespace:</strong></p>
+<p>First, create the <code>Namespace</code> that will host OpenUnison.  If using <a href="../ingresses/istio">Istio</a> or another <code>Ingress</code> controller that requires the <code>Namespace</code> to be labeled, now is a good time to apply those labels.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>kubectl create ns openunison
+</code></pre></div>
+<p><strong>Setup the helm repo with the charts:</strong></p>
+<p>Add OpenUnison's Helm repos to your system.  We host these repos on our own services behind our certificate.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>helm repo add tremolo https://nexus.tremolo.io/repository/helm/
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>helm repo update
+</code></pre></div>
+<p><strong>Install the operator</strong></p>
+<p>Next, install the operator.  The operator is responsible for generating OpenUnison's configuration and consolidating certificates and keys into a central keystore used by OpenUnison.  You can <a href="../documentation/reference/operator">customize the operator's chart</a> for your environment, but most deployments can use the defaults.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>helm install openunison tremolo/openunison-operator --namespace openunison
+</code></pre></div>
+<p>Wait until the operator pod is running.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>while [[ $(kubectl get pods -l app=openunison-operator -n openunison -o &#39;jsonpath={..status.conditions[?(@.type==&quot;Ready&quot;)].status}&#39;) != &quot;True&quot; ]]; do echo &quot;waiting for operator pod&quot; &amp;&amp; sleep 1; done
+</code></pre></div>
+<p><strong>Create a <code>Secret</code> that will be used for storing secret information like passwords and shared secrets.</strong>  </p>
+<p>OpenUnison separates secret information out of it's configurations.  No secret data should ever be stored in a Helm chart.  A <code>Secret</code> object needs to be created to store OpenUnison's secret data (such as passwords, keys, and tokens).  The operator will pull this <code>Secret</code> in when generating OpenUnison's configuration.</p>
+<p>The below example uses random data.  Do <strong>NOT</strong> use this exact <code>Secret</code>, create your own random data for the values
+that don't contain an <code>&amp;</code>.  A password generator is a great way to generate this data.</p>
+<p>Additionally, each authentication method will require its own secret data so this <code>Secret</code> will need to be updated.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>apiVersion: v1
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>type: Opaque
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>metadata:
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>  name: orchestra-secrets-source
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>  namespace: openunison
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>data:
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>  # only needed if the kubernetes dashboard is enabled
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>  #K8S_DB_SECRET: UTJhQzVNNjBMbWljc3Y0UEphYVhsWlRRbw==
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>  unisonKeystorePassword: SGRVSEg1c1Z0ZUdaTjFxdjJEUHlnYk1wZQ==
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>kind: Secret
+</code></pre></div>
+<h4 id="deploy-the-portal_1">Deploy the Portal</h4>
+<p><strong>Install the orchestra helm chart</strong></p>
+<p>First, install the <code>orchestra</code> chart, which does the configuration check and starts the openunison <code>Pod</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>helm install orchestra tremolo/orchestra --namespace openunison -f /path/to/values.yaml
+</code></pre></div>
+<p>If this deployment fails, it's likely from a misconfiguration of your values.yaml.  See <a href="../knowledgebase/orchestra_deployment_failed">troubleshooting your orchestra deployment failure</a> for instructions on how to debug.</p>
+<p>Wait until the orchestra pods are running.  There are validating webhook configurations that will fail in the last step if we 
+don't wait.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>while [[ $(kubectl get pods -l app=openunison-orchestra -n openunison -o &#39;jsonpath={..status.conditions[?(@.type==&quot;Ready&quot;)].status}&#39;) != &quot;True&quot; ]]; do echo &quot;waiting for pod&quot; &amp;&amp; sleep 1; done
+</code></pre></div>
+<p><strong>Deploy Portal Configuration</strong></p>
+<p>Last step, deploy the orchestra login portal chart with the <strong><em>same values.yaml as the previous chart</em></strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>helm install orchestra-login-portal tremolo/orchestra-login-portal --namespace openunison -f /path/to/values.yaml
+</code></pre></div>
+<p>If you're going to integrate your cluster with OpenID Connect (most on-prem clusters will be integrated this way), the final step is to
+<a href="#integrating-your-kubernetes-cluster">enable SSO with your Kubernetes cluster</a>.  If you configured <code>enable_impersonation</code> to <code>true</code>, skip this step.</p>
+<p>Finally, login to your portal by going to https://<code>network.openunison_host</code>/, where <code>network.openunison_host</code> is the host name you specified in your values.yaml.  If everything was setup correctly, you can now start working with your cluster!</p>
+<p>Learn to use the OpenUnison Login Portal by exploring our <a href="../../user-manuals/login-portal">user guide</a>.</p>
+<h2 id="upgrading-from-1023-and-earlier">Upgrading from 1.0.23 and Earlier</h2>
+<p>You can quickly <a href="../../upgrading">upgrade your existing OpenUnison deployment</a> without making significant changes to your deployment.</p>
+<h2 id="the-kubernetes-dashboard">The Kubernetes Dashboard</h2>
+<p><a href="https://groups.google.com/g/kubernetes-sig-ui/c/vpYIRDMysek/m/wd2iedUKDwAJ?utm_medium=email&amp;utm_source=footer&amp;pli=1">The Kubernetes Dashboard was archived in January, 2026</a>.  We will continue to support it for some time as it will take some time for users to move to headlamp.  This information is now considered legacy.</p>
+<p>The <a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/">Kubernetes Dashboard</a> is a powerful and simple way to work with your cluster without having access to a command line.  It is accessed securely by using the user's own permissions, with the dashboard its self having no permissions in your cluster.  OpenUnison manages the login process for you, so there's no need to upload a kubectl configuration to the dashboard to make it work.  </p>
+<p>Starting with version 7 of the dashboard, it was broken into multiple containers.  The default configuration tries to generate an internal ingress that is proxied in order to access the dashboard.  OpenUnison makes this requirement mute, so there's some specific customizations to the dashboard's helm values file that needs to be made.  You can <a href="/assets/yaml/kubernetes-dashboard-values.yaml">download the values template</a>.  The reasons for the customizations are:</p>
+<ol>
+<li>Disable the Kong <code>Ingress</code> controller from installing</li>
+<li>Mount the certificates generated by OpenUnison to the web and api containers</li>
+<li>Disable the auth container</li>
+</ol>
+<p>OpenUnison will be the reverse proxy that ties the web and api containers together, Kong is no longer needed.  A certificate is generated for both the api and web containers so that all communications between OpenUnison and the dashboard are encrypted.  Finally, the auth container is disabled because it doesn't support TLS at all and its functions are handled by OpenUnison removing the need for it to run.</p>
+<p>You can further customize the dashboard deployment, then install:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>helm repo update
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard -f /path/to/kubernetes-dashboard-values.yaml
+</code></pre></div>
+<p>or if you want to just deploy directly from our default values:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>helm repo update
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard -f https://openunison.github.io/assets/yaml/kubernetes-dashboard-values.yaml
+</code></pre></div>
+<p><strong><em>DO NOT SETUP AN INGRESS FOR YOUR DASHBOARD</em></strong> - OpenUnison takes care of that for you.</p>
+<h3 id="upgrading-an-existing-dashboard-deployment">Upgrading an Existing Dashboard Deployment</h3>
+<p>If you've already deployed the Kubernetes Dashboard 2.7.0 (or helm chart version 6.x or lower) with OpenUnison, you can upgrade the deployment, otherwise you can skip to <a href="#site-specific-configuration">Site Specific Configuration</a>.  Upgrade your dashboard deployment by:</p>
+<ol>
+<li>Wiping the dashboard from your cluster, including the namespace it's running in</li>
+<li>Add <code>dashboard.new: true</code> to your OpenUnison values.yaml</li>
+<li>Deploy the dashboard as per <a href="#the-kubernetes-dashboard">The Kubernetes Dashboard</a></li>
+<li>Redeploy OpenUnison</li>
+</ol>
+<p>A new certificate will be generated for the dashboard, as will the correct configurations in OpenUnison.</p>
+<h3 id="disabling-kubernetes-dashboard-support">Disabling Kubernetes Dashboard Support</h3>
+<p>If you wish to deploy without the Kubernetes Dashboard, add</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="nt">dashboard</span><span class="p">:</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<p>to your values.yaml.</p>
+<p>Having deployed the dashboard, next we'll deploy the base configuration for OpenUnison.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>
