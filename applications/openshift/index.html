@@ -1,0 +1,2752 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../kubernetes/">
+      
+      
+        <link rel="next" href="../vault/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>OpenShift - Kubernetes Authentication and SSO - OpenUnison</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bcfcd587.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#openshift" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Kubernetes Authentication and SSO - OpenUnison" class="md-header__button md-logo" aria-label="Kubernetes Authentication and SSO - OpenUnison" data-md-component="logo">
+      
+  <img src="../../assets/ts-logo-white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kubernetes Authentication and SSO - OpenUnison
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              OpenShift
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Kubernetes Authentication and SSO - OpenUnison" class="md-nav__button md-logo" aria-label="Kubernetes Authentication and SSO - OpenUnison" data-md-component="logo">
+      
+  <img src="../../assets/ts-logo-white.png" alt="logo">
+
+    </a>
+    Kubernetes Authentication and SSO - OpenUnison
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Authentication and SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployauth/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deploying The Authentication Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-help/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Help
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javascript/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing OpenUnison with JavaScript
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kube-sts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Security Token Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kubectlplugin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubectl Plugin
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../multi_cluster_sso/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi Cluster SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../namespace_as_a_service/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Namespace as a Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../priv_access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privileged Access Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../scim-gateway/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SCIM 2.0 Gateway
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../upgrading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading from 1.0.23 and Earlier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Well Known Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../argoworkflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Argo Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drupal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Drupal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entraid/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EntraID / AzureAD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gitlab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitLab
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana Community Edition
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kiali/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kiali
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubeapps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMware Kubeapps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    OpenShift
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#networking-and-ingress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Networking and Ingress
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-the-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disable the Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-the-token-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disable the Token Services
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-sso-for-openshift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring SSO for OpenShift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring SSO for OpenShift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-badge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a Badge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vault/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hashicorp Vault
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Customization
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Customization
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../customization/custom_jit_workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customized Just-In-Time Login Workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../customization/custom_logos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Logos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../customization/custom_provisioning_targets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Provisioning Targets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../customization/custom_provisioning_tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Provisioning Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../customization/resource_management_sheduling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resource Management and Scheduling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../customization/themes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Themes and Colors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/configuring-openunison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring OpenUnison Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/custom-sso/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/customize-naas-onboarding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing the NaaS Onboarding Workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/kerberos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kerberos Support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/login-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Login Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/naas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Namespace as a Service Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/operational-processes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operational Processes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/ouctl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ouctl
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9" id="__nav_14_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Apis
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9">
+            <span class="md-nav__icon md-icon"></span>
+            Apis
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/apis/apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison's APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/apis/restful/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison RESTful APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_3" id="__nav_14_9_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Callworkflow
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_9_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_3">
+            <span class="md-nav__icon md-icon"></span>
+            Callworkflow
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/apis/callworkflow/callworkflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CallWorkflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_4" id="__nav_14_9_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Scalejs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_9_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_4">
+            <span class="md-nav__icon md-icon"></span>
+            Scalejs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_4_1" id="__nav_14_9_4_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Register
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_9_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            Register
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/apis/scalejs/register/scalejs-register/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ScaleJS Register
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10" id="__nav_14_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Javadocs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10">
+            <span class="md-nav__icon md-icon"></span>
+            Javadocs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/javadocs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaDocs for OpenUnison
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_2" id="__nav_14_10_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.0.42
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_10_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_2">
+            <span class="md-nav__icon md-icon"></span>
+            1.0.42
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_2_1" id="__nav_14_10_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Legal
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_10_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/javadocs/1.0.42/legal/dejavufonts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dejavufonts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/javadocs/1.0.42/legal/jquery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jquery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/javadocs/1.0.42/legal/jqueryUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    jqueryUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_3" id="__nav_14_10_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.0.43.1
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_10_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_3">
+            <span class="md-nav__icon md-icon"></span>
+            1.0.43.1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_3_1" id="__nav_14_10_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Legal
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_10_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/javadocs/1.0.43.1/legal/dejavufonts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dejavufonts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/javadocs/1.0.43.1/legal/jquery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jquery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/javadocs/1.0.43.1/legal/jqueryUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    jqueryUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_11" id="__nav_14_11_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_11">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/reference/authentication-mechanisms/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authentication Mechanisms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/reference/custom-authorizations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Authorizations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/reference/custom-results/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Results
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/reference/custom-tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Custom Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/reference/filters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Application URL Filters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/reference/jobs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled Jobs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/reference/openunison-crds/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison Kubernetes CRD Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/reference/operator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operator Helm Chart Customization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/reference/provisioning-tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../documentation/reference/targets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Targets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Identity providers
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Identity providers
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../identity%20providers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Documented Identity Providers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../identity%20providers/azuread/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EntraID / AzureAD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../identity%20providers/keycloak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Keycloak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../identity%20providers/okta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Okta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ingresses
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Ingresses
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ingresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Documented Ingress Controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ingresses/f5nginx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    F5 NGINX Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ingresses/gatewayapi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gateway API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ingresses/istio/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Istio Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ingresses/nginx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NGINX Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ingresses/traefik/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Traefik
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Knowledgebase
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_17">
+            <span class="md-nav__icon md-icon"></span>
+            Knowledgebase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/airgap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Air-Gap Implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/broken_dashboard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Broken Dashboard Login
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Certificate Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/customizingmyvd/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing MyVirtualDirectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/orchestra_deployment_failed/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Failed Orchestra Deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/prometheus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monitoring OpenUnison with Prometheus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../knowledgebase/sessions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Session Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#networking-and-ingress" class="md-nav__link">
+    <span class="md-ellipsis">
+      Networking and Ingress
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-the-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disable the Dashboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-the-token-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disable the Token Services
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-sso-for-openshift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring SSO for OpenShift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring SSO for OpenShift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-badge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a Badge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="openshift">OpenShift</h1>
+<p>RedHat's OpenShift is a multi-tenant Kubernetes platform popular with large enterprises.  It differs from more generic Kubernetes distributions in a few important ways:</p>
+<ul>
+<li><strong>OpenShift has its own authentication service and users</strong> - Unlike Kubernetes, OpenShift has its own OAuth service and includes <code>User</code> and <code>Group</code> objects.  In order to manage access, you will need to integrate with these objects instead of just providing a token with your user's groups.  </li>
+<li><strong>OpenShift includes its own binary</strong> - While you can use the <code>kubectl</code> command with OpenShift, most users use the provided <code>oc</code> command to interact with OpenShift.</li>
+<li><strong>Built in Dashboard</strong> - OpenShift has always had its own web UI.  This is often the first place users will go to interact with their clusters and it's integrated with OpenShift's authentication.</li>
+<li><strong>Routes</strong> - OpenShift builds in it's own ingress system called <code>Routes</code> built off of HAProxy.  </li>
+</ul>
+<p>OpenUnison's <a href="/namespace_as_a_service/">Namespace as a Service (NaaS)</a> capability in particular is a great fit for providing self service access to create and manage access to projects in OpenShift.  All three access management methods work well (internal groups, external groups, and hybrid) making it much easier to centrally manage access to your OpenShift clusters.</p>
+<p>When deploying the NaaS on OpenShift, there's no special configuration needed to create and update OpenShift <code>User</code> and <code>Group</code> objects.  Everything works automatically.</p>
+<h2 id="deployment">Deployment</h2>
+<p>Given the benefits of OpenUnison on OpenShift, the deployment steps are not much different then deploying to a generic Kubernetes distribution.  There are really only three changes to your typical values file:</p>
+<h3 id="networking-and-ingress">Networking and Ingress</h3>
+<p>Assuming you're using OpenShift's built in <code>Routes</code>, OpenUnison will setup a secure <code>Route</code> for you just as it will for other supported ingresses.  Set your <code>network.ingress_type</code> to <code>openshift</code> and make sure that your <code>network.openunison_host</code> points to a DNS alias for your <code>Route</code>'s load balancer.  A larger example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">network</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">openunison_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ou.apps-crc.testing&quot;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">session_inactivity_timeout_seconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">900</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">force_redirect_to_tls</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">createIngressCertificate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="nt">ingress_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">ingress_annotations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+</code></pre></div>
+<h3 id="disable-the-dashboard">Disable the Dashboard</h3>
+<p>Chances are, you won't want to use the Kubernetes Dashboard.  Disable it by setting <code>dashboard.enabled</code> to <code>false</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">dashboard</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<h3 id="disable-the-token-services">Disable the Token Services</h3>
+<p>Since OpenShift has its own built in token service, you don't need to use OpenUnison's.  Setting <code>openunison.kubeAuth.enabled</code> to <code>false</code> will remove the "Token" badge and disable the token services. <strong><em>NOTE:</em></strong> this won't disable the built in identity provider, just the token services.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">openunison</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">kubeAuth</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<h2 id="configuring-sso-for-openshift">Configuring SSO for OpenShift</h2>
+<p>OpenUnison can support authentication for your OpenShift deployment.  You may already be using KeyCloak, or Red Hat Single Sign On, for your OpenShift deployment.  If using OpenUnison's NaaS service with OpenShift, inserting OpenUnison into the authentication process will make sure your groups stay synchronized, especially when using the external groups method.  </p>
+<p>If you're already using KeyCloak, you can pretty easily configure OpenUnison to authenticate against <a href="/identity%20providers/keycloak/">KeyCloak</a> to make OpenUnison an identity proxy.</p>
+<p>Once you've decided how you want to authenticate to OpenUnison, either directly or to KeyCloak, the next step is to configure OpenSHift to authenticate to OpenUnison.  THe first step is to generate a secret to be used for OpenID Connect in the <code>openunison</code> <code>namespace</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-oidc</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nt">oidc-secret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">c2VjcmV0</span>
+</code></pre></div>
+<p>Next, create a <code>Trust</code> in the <code>openunison</code> namespace:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v1</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Trust</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="nt">accessTokenSkewMillis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120000</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nt">accessTokenTimeToLive</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60000</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span><span class="nt">authChainName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">login-service</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span><span class="nt">clientId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span><span class="nt">clientSecret</span><span class="p">:</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="nt">keyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oidc-secret</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift-oidc</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">  </span><span class="nt">codeLastMileKeyName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lastmile-oidc</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">  </span><span class="nt">codeTokenSkewMilis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60000</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">  </span><span class="nt">publicEndpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">  </span><span class="nt">redirectURI</span><span class="p">:</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://oauth-openshift.apps-crc.testing/oauth2callback/openunison</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">  </span><span class="nt">signedUserInfo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">  </span><span class="nt">verifyRedirect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<p>Make sure <code>spec.redirectURI[0]</code> is in the format <code>https://oauth-openshift.apps.&lt;cluster_name&gt;.&lt;cluster_domain&gt;/oauth2callback/&lt;idp_provider_name&gt;</code>.</p>
+<p>Once OpenUnison is configured, follow the <a href="https://docs.openshift.com/container-platform/4.18/authentication/identity_providers/configuring-oidc-identity-provider.html">instructions for your version of OpenShift</a> to configure your cluster with the issuer <code>https://host/auth/idp/k8sIdp</code> where the <code>host</code> is the same value as your values' <code>network.openunison_host</code>.</p>
+<h3 id="creating-a-badge">Creating a Badge</h3>
+<p>You can create a "badge" in OpenUnison for OpenShift to build a central portal for accessing your cluster and any additional cluster management applications:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v1</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PortalUrl</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openshift</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenShift</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">B158BD40-0C1B-11E3-8FFD-0800200C9A66</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://console-openshift-console.apps-crc.testing/dashboards</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">  </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">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SMrEdLuvJeZfZZG6yZfn+VYw0vDiANccDca13W0OlktVT3EhAWDbRWcbNj8D4OiR1Dti+8T++2uSnVAkVOl3F/yUmX84vMX4dYA2A+QF4e++fE8NM/9VEbUwMAOEw8A4vufihwZbdiWkyBjpi+4lHN6ROW3KCQRcD2Awd62NgbuixIcGIpFwKhZGxtSc2wHUDNuSNDW9bxs0B8DtALYBKCWiGxn4LYAf9IhoG4DvBpsaL5Nqnh49EgCgrq6uC8BdFaj49WZ345GKqVgz70PAp4AKtcY61rS0tAz7QtSw6eSookwAyNDcNdbn2YkuK4uz5o/2d9m6s882bNvAWort3pxGGRQZygZer/cERDFrdyMT2jlY4wPg5gpU3Nqc3/BvBONgRZgBxmeAvXFnNPraUPaKQT9ssPGii2LbRjZE5AqtDaMdnV9+H+VSf9Zd/C70ADuEe5VJ/017Y6+1Q99PEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEARBEAbl/wNe5BZDV5uwMQAAAABJRU5ErkJggg==</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">  </span><span class="nt">azRules</span><span class="p">:</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">constraint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">o=Tremolo</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="nt">scope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dn</span>
+</code></pre></div>
+<p>Once updated, you'll have a badge to OpenShift in OpenUnison:</p>
+<p><img alt="OpenUnison with an OpenShift Badge" src="/assets/images/apps/openshift/openunison-with-badge.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>

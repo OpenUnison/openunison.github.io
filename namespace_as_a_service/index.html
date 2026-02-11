@@ -1,0 +1,3957 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../multi_cluster_sso/">
+      
+      
+        <link rel="next" href="../priv_access/">
+      
+      
+      <link rel="icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>Namespace as a Service - Kubernetes Authentication and SSO - OpenUnison</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#namespace-as-a-service" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Kubernetes Authentication and SSO - OpenUnison" class="md-header__button md-logo" aria-label="Kubernetes Authentication and SSO - OpenUnison" data-md-component="logo">
+      
+  <img src="../assets/ts-logo-white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kubernetes Authentication and SSO - OpenUnison
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Namespace as a Service
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Kubernetes Authentication and SSO - OpenUnison" class="md-nav__button md-logo" aria-label="Kubernetes Authentication and SSO - OpenUnison" data-md-component="logo">
+      
+  <img src="../assets/ts-logo-white.png" alt="logo">
+
+    </a>
+    Kubernetes Authentication and SSO - OpenUnison
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Authentication and SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployauth/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deploying The Authentication Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-help/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Help
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing OpenUnison with JavaScript
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kube-sts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Security Token Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectlplugin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubectl Plugin
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi_cluster_sso/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi Cluster SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Namespace as a Service
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Namespace as a Service
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#namespace-creation-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Namespace Creation Process
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-the-naas-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying The NaaS Portal
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploying The NaaS Portal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-you-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before You Deploy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Before You Deploy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-mariadb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing MariaDB
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-smtp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing SMTP Server
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Databases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Databases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    <span class="md-ellipsis">
+      MySQL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mariadb" class="md-nav__link">
+    <span class="md-ellipsis">
+      MariaDB
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      PostgreSQL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQL Server
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naas-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      NaaS Models
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NaaS Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#internal-groups-with-self-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal Groups with Self Service
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      External Groups
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="External Groups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#choosing-okta-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing Okta Groups
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limiting-adldap-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limiting AD/LDAP Groups
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Teams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hybrid Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-ouctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using ouctl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-argocd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using ArgoCD
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#your-first-login" class="md-nav__link">
+    <span class="md-ellipsis">
+      Your First Login
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-activemq" class="md-nav__link">
+    <span class="md-ellipsis">
+      Production ActiveMQ
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gitops" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitOps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitOps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automating-repo-deployment-and-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automating Repo Deployment and Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automating Repo Deployment and Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-github-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a GitHub Repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchonizing-from-git-into-your-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Synchonizing from Git Into Your Cluster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternate-deployment-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternate Deployment Steps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternate Deployment Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual Deployment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../priv_access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privileged Access Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scim-gateway/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SCIM 2.0 Gateway
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading from 1.0.23 and Earlier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Well Known Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/argoworkflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Argo Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/drupal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Drupal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/entraid/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EntraID / AzureAD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/gitlab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitLab
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana Community Edition
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/kiali/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kiali
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/kubeapps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMware Kubeapps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/openshift/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/vault/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hashicorp Vault
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Customization
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Customization
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/custom_jit_workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customized Just-In-Time Login Workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/custom_logos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Logos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/custom_provisioning_targets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Provisioning Targets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/custom_provisioning_tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Provisioning Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/resource_management_sheduling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resource Management and Scheduling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/themes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Themes and Colors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/configuring-openunison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring OpenUnison Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/custom-sso/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/customize-naas-onboarding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing the NaaS Onboarding Workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/kerberos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kerberos Support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/login-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Login Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/naas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Namespace as a Service Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/operational-processes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operational Processes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/ouctl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ouctl
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9" id="__nav_14_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Apis
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9">
+            <span class="md-nav__icon md-icon"></span>
+            Apis
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/apis/apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison's APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/apis/restful/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison RESTful APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_3" id="__nav_14_9_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Callworkflow
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_9_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_3">
+            <span class="md-nav__icon md-icon"></span>
+            Callworkflow
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/apis/callworkflow/callworkflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CallWorkflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_4" id="__nav_14_9_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Scalejs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_9_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_4">
+            <span class="md-nav__icon md-icon"></span>
+            Scalejs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_4_1" id="__nav_14_9_4_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Register
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_9_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            Register
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/apis/scalejs/register/scalejs-register/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ScaleJS Register
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10" id="__nav_14_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Javadocs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10">
+            <span class="md-nav__icon md-icon"></span>
+            Javadocs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaDocs for OpenUnison
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_2" id="__nav_14_10_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.0.42
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_10_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_2">
+            <span class="md-nav__icon md-icon"></span>
+            1.0.42
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_2_1" id="__nav_14_10_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Legal
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_10_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.42/legal/dejavufonts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dejavufonts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.42/legal/jquery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jquery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.42/legal/jqueryUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    jqueryUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_3" id="__nav_14_10_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.0.43.1
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_10_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_3">
+            <span class="md-nav__icon md-icon"></span>
+            1.0.43.1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_3_1" id="__nav_14_10_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Legal
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_10_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.43.1/legal/dejavufonts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dejavufonts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.43.1/legal/jquery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jquery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/javadocs/1.0.43.1/legal/jqueryUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    jqueryUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_11" id="__nav_14_11_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_11">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/authentication-mechanisms/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authentication Mechanisms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/custom-authorizations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Authorizations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/custom-results/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Results
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/custom-tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Custom Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/filters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Application URL Filters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/jobs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled Jobs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/openunison-crds/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison Kubernetes CRD Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/operator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operator Helm Chart Customization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/provisioning-tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/reference/targets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Targets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Identity providers
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Identity providers
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../identity%20providers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Documented Identity Providers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../identity%20providers/azuread/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EntraID / AzureAD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../identity%20providers/keycloak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Keycloak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../identity%20providers/okta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Okta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ingresses
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Ingresses
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Documented Ingress Controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/f5nginx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    F5 NGINX Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/gatewayapi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gateway API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/istio/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Istio Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/nginx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NGINX Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingresses/traefik/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Traefik
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Knowledgebase
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_17">
+            <span class="md-nav__icon md-icon"></span>
+            Knowledgebase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/airgap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Air-Gap Implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/broken_dashboard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Broken Dashboard Login
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Certificate Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/customizingmyvd/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing MyVirtualDirectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/orchestra_deployment_failed/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Failed Orchestra Deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/prometheus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monitoring OpenUnison with Prometheus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knowledgebase/sessions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Session Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#namespace-creation-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Namespace Creation Process
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying-the-naas-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying The NaaS Portal
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploying The NaaS Portal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-you-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before You Deploy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Before You Deploy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-mariadb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing MariaDB
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-smtp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing SMTP Server
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Databases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Databases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    <span class="md-ellipsis">
+      MySQL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mariadb" class="md-nav__link">
+    <span class="md-ellipsis">
+      MariaDB
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      PostgreSQL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      SQL Server
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naas-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      NaaS Models
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NaaS Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#internal-groups-with-self-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal Groups with Self Service
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      External Groups
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="External Groups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#choosing-okta-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing Okta Groups
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limiting-adldap-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limiting AD/LDAP Groups
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-teams" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Teams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hybrid Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-ouctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using ouctl
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-argocd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using ArgoCD
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#your-first-login" class="md-nav__link">
+    <span class="md-ellipsis">
+      Your First Login
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-activemq" class="md-nav__link">
+    <span class="md-ellipsis">
+      Production ActiveMQ
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gitops" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitOps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitOps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automating-repo-deployment-and-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automating Repo Deployment and Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automating Repo Deployment and Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-github-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a GitHub Repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchonizing-from-git-into-your-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Synchonizing from Git Into Your Cluster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternate-deployment-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternate Deployment Steps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternate Deployment Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual Deployment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="namespace-as-a-service">Namespace as a Service</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The OpenUnison Namespace as a Service (NaaS) portal gives your users control of their own corner of their cluster without involving cluster operations in the creation or access management for their <code>Namespace</code>.  What makes OpenUnison unique is that:</p>
+<ol>
+<li>You can write objects either directly to the API server or to a git repository to support a GitOps workflow to <code>Namespace</code> creation</li>
+<li>The NaaS portal can be applied to existing clusters to get immediate self service access</li>
+<li>Collect additional metadata</li>
+<li>Approvals can be customized and automated, for instance instead of always requiring an approval for a new <code>Namespace</code> you can have it automatically approved in certain situations</li>
+<li>Support for "Day 2" operations such a resizing quotas and providing access to namespaces without running the kubectl command</li>
+<li>Provisioning of non-Kubernetes resources, such as pipelines, git repos, etc.</li>
+</ol>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wKjFIs4ny48" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>There are three modes for using the OpenUnison NaaS to authorize access to a cluster:</p>
+<ol>
+<li>OpenUnison Managed Groups - All groups are stored by OpenUnison with access managed internally by OpenUnison.  This gives you the most flexability in how your users access your cluster without any kind of outside dependencies.</li>
+<li>Externally Managed Groups - When a user requests a <code>Namespace</code> be created, they specify groups from their identity provider.  Whenver a user logs in to use the cluster they're able to access namespaces based on their external identity.</li>
+<li>Hybrid - When a <code>Namespace</code> is requested, both internally managed groups and external groups are used.</li>
+</ol>
+<p>Of the three potential approaches, the Hybrid approach is the most popular.  This gives you the ability to use existing groups for majority of access while still letting OpenUnison support exceptions that always seem to be required.  The next section provides the details as to what the <code>Namespace</code> creation process entails and what gets created.</p>
+<h2 id="namespace-creation-process">Namespace Creation Process</h2>
+<p>From a systems' perspective, the default <code>Namespace</code> creation process will create:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Location</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Namespace</code></td>
+<td>Kubernetes or Git</td>
+<td>The requested Namespace</td>
+</tr>
+<tr>
+<td>Admin <code>RoleBinding</code>(s)</td>
+<td>Kubernetes or Git</td>
+<td><code>RoleBinding</code> for the <code>admin</code> <code>ClusterRole</code>.  One <code>RoleBinding</code> is created for each of external and internal groups depending on which authorization model is used.</td>
+</tr>
+<tr>
+<td>View <code>RoleBinding</code>(s)</td>
+<td>Kubernetes or Git</td>
+<td><code>RoleBinding</code> for the <code>view</code> <code>ClusterRole</code>. One <code>RoleBinding</code> is created for each of external and internal groups depending on which authorization model is used.</td>
+</tr>
+<tr>
+<td>Approval Group</td>
+<td>Database</td>
+<td>This group is used to determine who can approve access to the Admin and View roles.  The requester of the <code>Namespace</code> is added as the first user.</td>
+</tr>
+<tr>
+<td>Namespace Admin Group(s)</td>
+<td>Database</td>
+<td>A group for internal and/or internal is created in the database to manage access to the Admin role for the <code>Namespace</code></td>
+</tr>
+<tr>
+<td>Namespace View Group(s)</td>
+<td>Database</td>
+<td>A group for internal and/or internal is created in the database to manage access to the View role for the <code>Namespace</code></td>
+</tr>
+</tbody>
+</table>
+<p>If using git to provision objects, in addition to the above being provisioned into Git, the following objects are created:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Location</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git <code>Secret</code></td>
+<td>Kubernetes</td>
+<td>An SSH private key used by OpenUnison to interact with the git repository that is responsible for supporting the new <code>Namespace</code></td>
+</tr>
+</tbody>
+</table>
+<p>This provides the most basic <code>Namespace</code> capabilities.  You can customize this workflow to add <code>ResourceQuota</code> objects, additional roles, or additional metadata you may use to track charge-back.</p>
+<h2 id="deploying-the-naas-portal">Deploying The NaaS Portal</h2>
+<h3 id="before-you-deploy">Before You Deploy</h3>
+<p>Before moving forward, you will need two additional components are required:</p>
+<ol>
+<li>Relational Database - MySQL, MariaDB, PostgreSQL, and MS SQL Server are all supported</li>
+<li>An SMTP server for notifications</li>
+</ol>
+<h4 id="testing-mariadb">Testing MariaDB</h4>
+<p>If you need a simple database implementation for testing, this <a href="https://raw.githubusercontent.com/OpenUnison/kubeconeu/main/src/main/yaml/mariadb_k8s.yaml">MariaDB deployment can be used</a>.  If you use this database, use the following configuration information:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Option</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host</td>
+<td><code>mariadb.mariadb.svc</code></td>
+</tr>
+<tr>
+<td>Port</td>
+<td><code>3306</code></td>
+</tr>
+<tr>
+<td>User Name</td>
+<td><code>unison</code></td>
+</tr>
+<tr>
+<td>Password</td>
+<td><code>startt123</code></td>
+</tr>
+<tr>
+<td>Database Name</td>
+<td><code>unison</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="testing-smtp-server">Testing SMTP Server</h4>
+<p>If you don't have an SMTP server available, you can use the SMTP Blackhole we created to have a place to send email
+without forwarding it to any recipients:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl create ns blackhole
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>kubectl create deployment blackhole --image=tremolosecurity/smtp-blackhole -n blackhole
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>kubectl expose deployment/blackhole --type=ClusterIP --port 1025 --target-port=1025 -n blackhole
+</code></pre></div>
+<p>If you use the blackhole smtp service, use the following configuration information:</p>
+<table>
+<thead>
+<tr>
+<th>Configuration Option</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host</td>
+<td><code>blackhole.blackhole.svc</code></td>
+</tr>
+<tr>
+<td>Port</td>
+<td><code>1025</code></td>
+</tr>
+<tr>
+<td>Username</td>
+<td>none</td>
+</tr>
+<tr>
+<td>Password</td>
+<td>none</td>
+</tr>
+<tr>
+<td>TLS</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="deployment">Deployment</h3>
+<p>Once you have your <a href="../deployauth/">Authentication Portal</a>, database, and SMTP server deployed the next step is to
+ add your database password and SMTP password to your <code>orchestra-secrets-source</code> <code>Secret</code> in the openunison namespace.  Assuming
+you're using the testing MariaDB and SMTP Blackhole from above:</p>
+<p>Next, update your values.yaml by setting <code>openunison.enable_provisioning: true</code>, <code>openunison.use_standard_jit_workflow: false</code>,  and uncommenting the <code>database</code> and <code>smtp</code> sections of your values.yaml.
+As an example, the below will work with the testing database and SMTP server:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>openunison:
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  non_secret_data:
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    SHOW_PORTAL_ORGS: &quot;true&quot;
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  role_attribute: portalGroups
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  groups:
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    areJson: &quot;true&quot;
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  enable_provisioning: true
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  use_standard_jit_workflow: false
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>database:
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>  hibernate_dialect: org.hibernate.dialect.MariaDBDialect
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>  quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  driver: org.mariadb.jdbc.Driver
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>  url: jdbc:mariadb://mariadb.mariadb.svc.cluster.local:3306/unison
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>  user: unison
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>  validation: SELECT 1
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>  maxcons: 10
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>  maxidlecons: 10
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>smtp:
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>  host: blackhole.blackhole.svc.cluster.local
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>  port: 1025
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>  user: &quot;none&quot;
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>  from: donotreply@domain.com
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>  tls: false
+</code></pre></div>
+<p>The above is for MariaDB.  For other databases:</p>
+<h4 id="databases">Databases</h4>
+<h5 id="mysql">MySQL</h5>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>database:
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  hibernate_dialect: org.hibernate.dialect.MySQLDialect
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  driver: com.mysql.jdbc.Driver
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>  url: jdbc:mysql://mysql.mysql.svc:3306/unison
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  user: unison
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>  validation: SELECT 1
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>  maxcons: 10
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>  maxidlecons: 10
+</code></pre></div>
+<h5 id="mariadb">MariaDB</h5>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>database:
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  hibernate_dialect: org.hibernate.dialect.MariaDBDialect
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  quartz_dialect: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  driver: org.mariadb.jdbc.Driver
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>  url: jdbc:mariadb://mariadb.mariadb.svc.cluster.local:3306/unison
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  user: unison
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  validation: SELECT 1
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  maxcons: 10
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>  maxidlecons: 10
+</code></pre></div>
+<h5 id="postgresql">PostgreSQL</h5>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>database:
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  hibernate_dialect: org.hibernate.dialect.PostgreSQLDialect
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  quartz_dialect: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  driver: org.postgresql.Driver
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  url: jdbc:postgresql://postgresql-db.postgres.svc.cluster.local:5432/unison
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  user: postgres
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  validation: SELECT 1
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  maxcons: 10
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  maxidlecons: 10
+</code></pre></div>
+<h5 id="sql-server">SQL Server</h5>
+<p>You can also <a href="/documentation/kerberos">use kerberos</a> to connect to SQL Server</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>database:
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  hibernate_dialect: org.hibernate.dialect.SQLServerDialect
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  quartz_dialect: org.quartz.impl.jdbcjobstore.MSSQLDelegate
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  url: jdbc:sqlserver://192.168.2.102:1433;databaseName=unison
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  user: unison
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  validation: SELECT 1
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  maxcons: 10
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>  maxidlecons: 10
+</code></pre></div>
+<p>With your configuration updated, the next step is to choose which management model to use.  That is covered in the next section.</p>
+<h3 id="naas-models">NaaS Models</h3>
+<p>OpenUnison provides three models out-of-the-box for managing and provisioning namespaces:</p>
+<ul>
+<li><strong>Internal Groups with Self Service</strong> - This model uses groups managed by OpenUnison to provide access to your namespaces.  Use this model if you want to provide a self service model for accessing namespaces.  Using local management, once a namespace is created a user can "request access" to it and the owner of the namespace can approve the access.  There's no need for your cluster management staff to get involved.  You can also enable existing namespaces to have this functionality by adding an annotation.</li>
+<li><strong>External Groups</strong> - Using external groups, you specify which groups from your identity provider manage access to your namespaces on creation.  This is useful when you want to drive access management from a central location.  This will work with any of the authentication methods supported by OpenUnison.  For Active Directory and Okta, you're able to select which groups to use rather then having to type the names.</li>
+<li><strong>Hybrid Management</strong> - You can enable both internal and external group management at the same time.  This is useful when you want to drive most authorization decisions via centralized groups from your identity provider but want the flexibility to explicitly enable access when needed.</li>
+</ul>
+<p>You don't need to settle on one model initially.  You can start for instance with external groups and later add internal groups with self service.  Next, we'll cover how to deploy each model.</p>
+<h4 id="internal-groups-with-self-service">Internal Groups with Self Service</h4>
+<p>The internal groups with self service model will create a <code>Namespace</code> and groups inside of OpenUnison's database for namespace administrators, namespace viewers, and
+namespace approvers.  There's no connection to your enterprise directory store and everything is self contained.  Users get access to namespace roles by
+requesting access through the portal.  Namespace approvers can approve, or deny, the access.  New namespaces are requested from inside of the portal,
+with openunison administrators being able to approve the namespace's creation.</p>
+<p>To deploy the local management self service model, first enable internal groups by adding the following to your values.yaml:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>openunison:
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  .
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  .
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  .
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>  naas:
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    groups:
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>      internal:
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        enabled: true
+</code></pre></div>
+<p>If you want to enable Hybrid Management, move on to the next section.  Otherwise skip straight to <a href="#deployment">deployment</a>.</p>
+<h4 id="external-groups">External Groups</h4>
+<p>This model lets you use groups from your central authentication store to control who has access to namespaces.  When a namespace is requested and approved, <code>RoleBinding</code> objects are created that map to your central authentication store.  When using LDAP, Active Directory, or Okta you're able to pick groups.  When using OpenID Connect, SAML2, or GitHub you need to type in the names of the groups.  </p>
+<p>Unlike the <strong><em>Internal Groups with Self Service</em></strong> NaaS, this mode does not use workflows to provide access to individual namespaces.  All namespace access is governed by your centralized groups.</p>
+<p>To deploy the authentication groups model, first identify groups in your identity provider that will manage who are OpenUnison administrators (who will be able to approve the creation of new <code>Namespaces</code>) and another group to manage cluster management.  Then add the following to your values.yaml:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>openunison:
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  .
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  .
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  .
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  use_standard_jit_workflow: false
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  naas:
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    groups:
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>      external:
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>        enabled: true
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>        adminGroup: k8s-admins
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>        clusterAdminGroup: k8s-admins
+</code></pre></div>
+<p>If you're using Active Directory, make sure to use the value for the group's <code>distinguishedName</code> attribute. </p>
+<p>As an example for Active Directory:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>openunison:
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  .
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  .
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  .
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  use_standard_jit_workflow: false
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>  naas:
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    groups:
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>      external:
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>        enabled: true
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>        adminGroup: &quot;CN=openunison-admins,CN=Users,DC=ent2k12,DC=domain,DC=com&quot;
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>        clusterAdminGroup: &quot;CN=k8s_login_ckuster_admins,CN=Users,DC=ent2k12,DC=domain,DC=com&quot;
+</code></pre></div>
+<p>Next, determine if you can pre-load groups from an external identity provider, otherwise skip straight to <a href="#deployment">Deployment</a>.</p>
+<h5 id="choosing-okta-groups">Choosing Okta Groups</h5>
+<p>If you're using Okta as your identity provider and using the External Group Management model, you can tell OpenUnison to lookup groups instead of having to type them in when requesting a new <code>Namespace</code>.  To enable this feature, you'll need a token that can read groups from your Okta account.  </p>
+<p>Once you have that token, add it to your <code>orchestra-secrets-source</code> <code>Secret</code> in the <code>openunison</code> <code>Namespace</code> using the 
+key <code>OKTA_TOKEN</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl patch secret orchestra-secrets-source -n openunison --patch &#39;{&quot;data&quot;:{&quot;OKTA_TOKEN&quot;:&quot;c3RhcnR0MTIz&quot;}}&#39;
+</code></pre></div>
+<p>Next, in the <code>oidc</code> section of your values, add <code>type: okta</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>oidc:
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  client_id: XXXX_YYYY
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>  issuer: https://XXXX.okta.com/
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>  user_in_idtoken: false
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>  domain: &quot;&quot;
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>  scopes: openid email profile groups
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>  claims:
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>    sub: sub
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    email: email
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    given_name: given_name
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    family_name: family_name
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>    display_name: name
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>    groups: groups
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>  type: okta
+</code></pre></div>
+<p>When you attempt to create a new <code>Namespace</code> you'll be presented with a list of up to ten groups from your Okta deployment.  As you type the first letters of the group you want the list will update.  You can click the name of the group you want to use.</p>
+<!-- # Choosing EntraID / AzureAD Groups
+
+If you're using EntraID (aka AzureAD) as your identity provider and have integrated groups via the additional helm chart, you can enable a group picker that lets you search for groups instead of typing them in manually.
+
+Next, in the `oidc` section of your values, add `type: okta`:
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>oidc:
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  client_id: XXXX_YYYY
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>  issuer: https://XXXX.okta.com/
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>  user_in_idtoken: false
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>  domain: &quot;&quot;
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>  scopes: openid email profile groups
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>  claims:
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    sub: sub
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    email: email
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>    given_name: given_name
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>    family_name: family_name
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>    display_name: name
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>    groups: groups
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>  type: entraid
+</code></pre></div>
+
+
+When you attempt to create a new `Namespace` you'll be presented with a list of up to ten groups from your EntraID deployment.  As you type the first letters of the group you want the list will update.  You can click the name of the group you want to use. -->
+
+<h5 id="limiting-adldap-groups">Limiting AD/LDAP Groups</h5>
+<p>If you want to limit which groups can be chosen for managing access while using either Active Directory or LDAP, add <code>active_directory.group_search_base</code> to your values.yaml with the distinguished name of where you want groups to be searched for <strong><em>without your value of <code>active_directory.base</code></em></strong>.  For instnace if I want to limit groups to <code>cn=AWS,cn=users,dc=ent2k12,dc=domain,dc=com</code>, and my <code>active_directory.base</code>
+is <code>cn=users,dc=ent2k12,dc=domain,dc=com</code>, the value for <code>active_directory.group_search_base</code> would be <code>cn=AWS</code>.  If you have already deployed 
+<code>orchestra-k8s-cluster-management-by-group</code>, upgrade it with your new values.yaml:</p>
+<p>When you attempt to create a new <code>Namespace</code> you'll be presented with a list of up to ten groups from your Active Directory or LDAP deployment.  As you type the first letters of the group you want the list will update.  You can click the name of the group you want to use.</p>
+<h5 id="github-teams">GitHub Teams</h5>
+<p>If you're using GitHub for authentication, you can leverage Github teams to manage access to your namespaces.  OpenUnison can load your teams directly from GitHub making for a better UX when requesting new namespaces.  The first step is to <a href="../applications/github/#registering-a-github-app">setup a GitHub App and download the private key</a>.  Next create a <code>Secret</code> with that key in the <code>openunison</code> namespace.  Finally, in the <code>github</code> section of your values.yaml, set the orgnaization name, application id, and the name of the <code>Secret</code> with the key that has the private key generated by GitHub:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">github</span><span class="p">:</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">abcdefghij123</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">teams</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TremoloSecurity/</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="nt">naas</span><span class="p">:</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="nt">appid</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;123456&quot;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="nt">org</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;TremoloSecurity&quot;</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span><span class="nt">secret</span><span class="p">:</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">githubapp</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">      </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github.pem</span>
+</code></pre></div>
+<p>Once you deploy OpenUnison, you'll be able to choose teams from a list, and type them in to find a specific one.</p>
+<h4 id="hybrid-management">Hybrid Management</h4>
+<p>You can run both models at the same time.  This is useful when you want to use centralized management for the majority of access, but still use local management and self-service for edge cases.  Simply follow the steps for both models!</p>
+<h3 id="deployment_1">Deployment</h3>
+<h4 id="using-ouctl">Using ouctl</h4>
+<p>The <code>ouctl</code> command you used when deploying the authentication portal will detect the changes to your configuration and update the deployment accordingly.  Once you have your secret files and updated yaml, run:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ouctl install-auth-portal -b /path/to/db/secret -t /path/to/smtp/secret /path/to/openunison-values.yaml
+</code></pre></div>
+<p>This run will take longer then the authentication portal deployment takes because it's also deploying an ActiveMQ service to manage workflow tasks.  Once completed, you can move on to your first login.</p>
+<h4 id="using-argocd">Using ArgoCD</h4>
+<p>Before making any updates to your ArgoCD <code>Application</code>, update your <code>orchestra-secrets-source</code> <code>Secret</code> with your database's password and SMTP server's password:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>kubectl<span class="w"> </span>patch<span class="w"> </span>secret<span class="w"> </span>orchestra-secrets-source<span class="w"> </span>-n<span class="w"> </span>openunison<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{&quot;data&quot;:{&quot;OU_JDBC_PASSWORD&quot;:&quot;c3RhcnR0MTIz&quot;,&quot;SMTP_PASSWORD&quot;:&quot;ZG9lc25vdG1hdHRlcg==&quot;}}&#39;</span>
+</code></pre></div>
+<p>Next, added the cluster-management chart to your <code>Application</code> in <code>spec.sources</code> <strong>BEFORE</strong> the last two entries:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison-k8s-cluster-management</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span><span class="nt">helm</span><span class="p">:</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">      </span><span class="nt">releaseName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-management</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">      </span><span class="nt">valueFiles</span><span class="p">:</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$values/naas/values.yaml</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="nt">repoURL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://nexus.tremolo.io/repository/helm</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">    </span><span class="nt">targetRevision</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0.41</span>
+</code></pre></div>
+<h3 id="your-first-login">Your First Login</h3>
+<p>Next, login to your portal.  You'll see a "badge" to create a new namespace:</p>
+<p><img alt="NaaS Portal Login" src="../assets/images/ou-login-naas.png" /></p>
+<p>You see these badges because the first user to login is provisioned as an administrator.  The dashboard and tokens are not there because you haven't yet been authorized for access to the cluster.  Your second, third, fourth, user, etc that logs in will not see any badges.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>With the Namespace as a Portal deployed, you can go to the <a href="/documentation/naas/">user's manual</a> to see how users can login to begin requesting new namespaces and managing access, or how to <a href="/documentation/customize-naas-onboarding">customize the new namespace workflow</a>  for your needs.</p>
+<h2 id="production-activemq">Production ActiveMQ</h2>
+<p>The ActiveMQ that ships with OpenUnison NaaS is not designed to be HA or to be used in production.  It uses the database as the backend for your message bus, but because of the way that the database locks it can generate extremely large transactions logs that fill up disk space.  If you want to use the embedded ActiveMQ, instead of your own message bus, you will need a <code>StorageClass</code> that supports <code>ReadWriteMany</code> file systems.  Once you have this, you can enable an HA ActiveMQ in your cluster by updating your values.yaml:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">openunison</span><span class="p">:</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">amq</span><span class="p">:</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span><span class="nt">ha</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">    </span><span class="nt">pvc</span><span class="p">:</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">      </span><span class="nt">accessmode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteMany</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">      </span><span class="nt">storageclass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mystorageclass</span>
+</code></pre></div>
+<p>Before redeploying, clear out the AMQ and OpenUnison generated <code>Secret</code> objects to make sure the certificates get rebuilt properly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>secret<span class="w"> </span>amq-secrets-orchestra<span class="w"> </span>-n<span class="w"> </span>openunison
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>secret<span class="w"> </span>amq-env-secrets-orchestra<span class="w"> </span>-n<span class="w"> </span>openunison
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>secret<span class="w"> </span>orchestra-amq-client<span class="w"> </span>-n<span class="w"> </span>openunison
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>secret<span class="w"> </span>orchestra-amq-server<span class="w"> </span>-n<span class="w"> </span>openunison
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>secret<span class="w"> </span>orchestra<span class="w"> </span>-n<span class="w"> </span>openunison
+</code></pre></div>
+<p>Once you re-deploy OpenUnison, you'll have two ActiveMQ <code>Deployments</code>.  Once is called <code>amq-orchestra</code> and another called <code>amq-backup-orchestra</code>.  Only one will receive requests from OpenUnison at a time, and if the currently available <code>Deployment</code> isn't available OpenUnison will switch to the other one.  </p>
+<h2 id="gitops">GitOps</h2>
+<p>When working with GitOps, you may prefer to provision your manifests first to a Git repository instead of directly into the API server.  OpenUnison can be configured to do this transparently.  To enable integration to git, you're going to need:</p>
+<ol>
+<li>A Git repository for cluster level objects</li>
+<li>A writeable deployment key</li>
+</ol>
+<p>Create a <code>Secret</code> for your deployment key called <code>sshkey-cluster-k8s</code> with the ssh private key stored as the key <code>id_rsa</code>.  For instance:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sshkey-cluster-k8s</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">  </span><span class="nt">id_rsa</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LS0tLS1CRUd...</span>
+</code></pre></div>
+<p>Next, add the following configuration options to your values.yaml:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">openunison</span><span class="p">:</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">non_secret_data</span><span class="p">:</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="c1"># Email Address to use for commits</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="nt">GIT_EMAIL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison@nodomain.io</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="c1"># username to use for commits</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">    </span><span class="nt">GIT_USERNAME</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">    </span><span class="c1"># The git repo SSH URL to use for cluster level objects</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">    </span><span class="nt">K8S_GIT_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git@github.com:someorg/cluster.git</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="w">  </span><span class="nt">naas</span><span class="p">:</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="w">    </span><span class="nt">git</span><span class="p">:</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="w">      </span><span class="c1"># path, starting with &quot;/&quot;, where to provision yaml to</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="w">      </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/yaml</span>
+</code></pre></div>
+<p>When you redeploy OpenUnison, click on the <strong>New Kubernetes Namespace</strong> badge, and choosing your cluster there are three new options:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git URL</td>
+<td>The SSH URL for the namespace</td>
+<td>git@github.com:someorg/my-ns.git</td>
+</tr>
+<tr>
+<td>Git Path</td>
+<td>The root to store manifest files in</td>
+<td>/yaml</td>
+</tr>
+<tr>
+<td>Git SSH Private Key</td>
+<td>An SSH private key that is writeable to the SSH</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="New Namespace with Git Enabled" src="/assets/images/gitops-byo-git-new-ns.png" /></p>
+<h3 id="automating-repo-deployment-and-integration">Automating Repo Deployment and Integration</h3>
+<p>If you're integrated with GitHub or GitLab, you can automate the creation of repositories and SSH keys.  This makes it easier for users to onboard a namespace without first having a git repository.  In order to disable the additional form fields, add <code>openunison.naas.git.enable_byo=false</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nt">openunison</span><span class="p">:</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">naas</span><span class="p">:</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="nt">git</span><span class="p">:</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">      </span><span class="c1"># used to disable bring your own git repository</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">      </span><span class="nt">enable_byo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<p>When you disable bring-your-own git repository, your workflow needs to populate the following user attributes:</p>
+<table>
+<thead>
+<tr>
+<th>User Attribute</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gitUrl</td>
+<td>The SSH git URL</td>
+<td>git@github.com:someorg/my-ns.git</td>
+</tr>
+<tr>
+<td>gitPath</td>
+<td>The path, starting with "/", where to provision YAML to</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>In addition to populating these request attributes, a deployment key with write privileges must be added to a <code>Secret</code> with the name <code>sshkey-namespace-k8s-MYNAMESPACE</code> where <strong>MYNAMESPACE</strong> is the name of the <code>Namespace</code> being created.  For instance, if creating the namespace <code>myns</code> we'd create the <code>Secret</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sshkey-namespace-k8s-myns</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">    </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">  </span><span class="nt">id_rsa</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LS0tLS1CRUd...</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+</code></pre></div>
+<h4 id="creating-a-github-repository">Creating a GitHub Repository</h4>
+<p>Assuming you're using GitHub, you can use the <a href="/applications/github">GitHub target and tasks</a> from inside of a <code>Workflow</code> configured to run as the <a href="/documentation/customize-naas-onboarding/#pre-run-workflow">pre-run workflow</a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nn">---</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v1</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Workflow</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pre-namespace</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">creates a ResourceQuota object</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="w">  </span><span class="nt">inList</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="w">  </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Creates a ResourceQuota</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="w">  </span><span class="nt">orgId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">internal-does-not-exist</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="w">      </span><span class="no"># Create a team for writing to the repo</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="w">      </span><span class="no">- taskType: customTask</span>
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="w">        </span><span class="no">className: com.tremolosecurity.provisioning.customTasks.AddGroupToStore</span>
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="w">        </span><span class="no">params:</span>
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a><span class="w">          </span><span class="no">target: github</span>
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a><span class="w">          </span><span class="no">name: proj-$nameSpace$-admin</span>
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a><span class="w">          </span><span class="no">attributes: []</span>
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a><span class="w">      </span><span class="no"># Generate a GitHub repo</span>
+<a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a><span class="w">      </span><span class="no">- taskType: customTask</span>
+<a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a><span class="w">        </span><span class="no">className: com.tremolosecurity.provisioning.customTasks.github.CreateGithubRepo</span>
+<a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a><span class="w">        </span><span class="no">params:</span>
+<a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a><span class="w">            </span><span class="no">targetName: github</span>
+<a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a><span class="w">            </span><span class="no">name: $nameSpace$-infra</span>
+<a id="__codelineno-22-27" name="__codelineno-22-27" href="#__codelineno-22-27"></a><span class="w">            </span><span class="no">description: $nameSpace$ Infrastructure Manifests</span>
+<a id="__codelineno-22-28" name="__codelineno-22-28" href="#__codelineno-22-28"></a><span class="w">            </span><span class="no">team: proj-$nameSpace$-admin</span>
+<a id="__codelineno-22-29" name="__codelineno-22-29" href="#__codelineno-22-29"></a><span class="w">            </span><span class="no"># optional paramters</span>
+<a id="__codelineno-22-30" name="__codelineno-22-30" href="#__codelineno-22-30"></a><span class="w">            </span><span class="no">allowSquashMerge: &quot;true&quot;</span>
+<a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a><span class="w">            </span><span class="no">allowMergeCommit: &quot;true&quot;</span>
+<a id="__codelineno-22-32" name="__codelineno-22-32" href="#__codelineno-22-32"></a><span class="w">            </span><span class="no">allowRebaseMerge: &quot;true&quot;</span>
+<a id="__codelineno-22-33" name="__codelineno-22-33" href="#__codelineno-22-33"></a><span class="w">            </span><span class="no">deleteBranchOnMerge: &quot;false&quot;</span>
+<a id="__codelineno-22-34" name="__codelineno-22-34" href="#__codelineno-22-34"></a><span class="w">            </span><span class="no">defaultBranch: &quot;main&quot;</span>
+<a id="__codelineno-22-35" name="__codelineno-22-35" href="#__codelineno-22-35"></a><span class="w">            </span><span class="no">homePage: &quot;https://www.tremolosecurity.com/&quot;</span>
+<a id="__codelineno-22-36" name="__codelineno-22-36" href="#__codelineno-22-36"></a><span class="w">            </span><span class="no">visibility: &quot;public&quot;</span>
+<a id="__codelineno-22-37" name="__codelineno-22-37" href="#__codelineno-22-37"></a><span class="w">            </span><span class="no">issues: &quot;true&quot;</span>
+<a id="__codelineno-22-38" name="__codelineno-22-38" href="#__codelineno-22-38"></a><span class="w">            </span><span class="no">projects: &quot;true&quot;</span>
+<a id="__codelineno-22-39" name="__codelineno-22-39" href="#__codelineno-22-39"></a><span class="w">            </span><span class="no">wiki: &quot;true&quot;</span>
+<a id="__codelineno-22-40" name="__codelineno-22-40" href="#__codelineno-22-40"></a><span class="w">            </span><span class="no">downloads: &quot;true&quot;</span>
+<a id="__codelineno-22-41" name="__codelineno-22-41" href="#__codelineno-22-41"></a><span class="w">            </span><span class="no">isTemplate: &quot;false&quot;</span>
+<a id="__codelineno-22-42" name="__codelineno-22-42" href="#__codelineno-22-42"></a><span class="w">            </span><span class="no">gitignoreTemplate: &quot;&quot;</span>
+<a id="__codelineno-22-43" name="__codelineno-22-43" href="#__codelineno-22-43"></a><span class="w">            </span><span class="no">licenseTemplate: &quot;&quot;</span>
+<a id="__codelineno-22-44" name="__codelineno-22-44" href="#__codelineno-22-44"></a><span class="w">            </span><span class="no">autoInit: &quot;true&quot;</span>
+<a id="__codelineno-22-45" name="__codelineno-22-45" href="#__codelineno-22-45"></a><span class="w">            </span><span class="no">owner: &quot;&quot;</span>
+<a id="__codelineno-22-46" name="__codelineno-22-46" href="#__codelineno-22-46"></a><span class="w">            </span><span class="no"># deployKeyName: &quot;deployment-key&quot;</span>
+<a id="__codelineno-22-47" name="__codelineno-22-47" href="#__codelineno-22-47"></a><span class="w">            </span><span class="no"># webhookUrl: &quot;&quot;</span>
+<a id="__codelineno-22-48" name="__codelineno-22-48" href="#__codelineno-22-48"></a><span class="w">            </span><span class="no"># webhookEvents: []</span>
+<a id="__codelineno-22-49" name="__codelineno-22-49" href="#__codelineno-22-49"></a>
+<a id="__codelineno-22-50" name="__codelineno-22-50" href="#__codelineno-22-50"></a><span class="w">      </span><span class="no"># Create a writeable deployment key</span>
+<a id="__codelineno-22-51" name="__codelineno-22-51" href="#__codelineno-22-51"></a><span class="w">      </span><span class="no">- taskType: customTask</span>
+<a id="__codelineno-22-52" name="__codelineno-22-52" href="#__codelineno-22-52"></a><span class="w">        </span><span class="no">className: com.tremolosecurity.provisioning.customTasks.github.CreateDeploymentKey</span>
+<a id="__codelineno-22-53" name="__codelineno-22-53" href="#__codelineno-22-53"></a><span class="w">        </span><span class="no">params:</span>
+<a id="__codelineno-22-54" name="__codelineno-22-54" href="#__codelineno-22-54"></a><span class="w">          </span><span class="no">targetName: github</span>
+<a id="__codelineno-22-55" name="__codelineno-22-55" href="#__codelineno-22-55"></a><span class="w">          </span><span class="no">repo: $nameSpace$-infra</span>
+<a id="__codelineno-22-56" name="__codelineno-22-56" href="#__codelineno-22-56"></a><span class="w">          </span><span class="no">keyLabel: openunison</span>
+<a id="__codelineno-22-57" name="__codelineno-22-57" href="#__codelineno-22-57"></a><span class="w">          </span><span class="no">makeWriteable: &quot;true&quot;</span>
+<a id="__codelineno-22-58" name="__codelineno-22-58" href="#__codelineno-22-58"></a><span class="w">          </span><span class="no">privateKeyReuestName: &quot;infraSshKeyB64&quot;</span>
+<a id="__codelineno-22-59" name="__codelineno-22-59" href="#__codelineno-22-59"></a><span class="w">          </span><span class="no">privateKeyReuestNamePT: &quot;infraSshKey&quot;</span>
+<a id="__codelineno-22-60" name="__codelineno-22-60" href="#__codelineno-22-60"></a>
+<a id="__codelineno-22-61" name="__codelineno-22-61" href="#__codelineno-22-61"></a><span class="w">      </span><span class="no"># GitOps - Create SSH Key for Namespace</span>
+<a id="__codelineno-22-62" name="__codelineno-22-62" href="#__codelineno-22-62"></a><span class="w">      </span><span class="no">- taskType: customTask</span>
+<a id="__codelineno-22-63" name="__codelineno-22-63" href="#__codelineno-22-63"></a><span class="w">        </span><span class="no">className: com.tremolosecurity.provisioning.tasks.CreateK8sObject</span>
+<a id="__codelineno-22-64" name="__codelineno-22-64" href="#__codelineno-22-64"></a><span class="w">        </span><span class="no">params:</span>
+<a id="__codelineno-22-65" name="__codelineno-22-65" href="#__codelineno-22-65"></a><span class="w">          </span><span class="no">targetName: k8s</span>
+<a id="__codelineno-22-66" name="__codelineno-22-66" href="#__codelineno-22-66"></a><span class="w">          </span><span class="no">template: |-</span>
+<a id="__codelineno-22-67" name="__codelineno-22-67" href="#__codelineno-22-67"></a><span class="w">            </span><span class="no">kind: Secret</span>
+<a id="__codelineno-22-68" name="__codelineno-22-68" href="#__codelineno-22-68"></a><span class="w">            </span><span class="no">apiVersion: v1</span>
+<a id="__codelineno-22-69" name="__codelineno-22-69" href="#__codelineno-22-69"></a><span class="w">            </span><span class="no">metadata:</span>
+<a id="__codelineno-22-70" name="__codelineno-22-70" href="#__codelineno-22-70"></a><span class="w">              </span><span class="no">name: sshkey-namespace-$cluster$-$nameSpace$</span>
+<a id="__codelineno-22-71" name="__codelineno-22-71" href="#__codelineno-22-71"></a><span class="w">              </span><span class="no">namespace: openunison</span>
+<a id="__codelineno-22-72" name="__codelineno-22-72" href="#__codelineno-22-72"></a><span class="w">              </span><span class="no">labels:</span>
+<a id="__codelineno-22-73" name="__codelineno-22-73" href="#__codelineno-22-73"></a><span class="w">                </span><span class="no">cluster: $cluster$</span>
+<a id="__codelineno-22-74" name="__codelineno-22-74" href="#__codelineno-22-74"></a><span class="w">            </span><span class="no">data:</span>
+<a id="__codelineno-22-75" name="__codelineno-22-75" href="#__codelineno-22-75"></a><span class="w">              </span><span class="no">id_rsa: $infraSshKeyB64$</span>
+<a id="__codelineno-22-76" name="__codelineno-22-76" href="#__codelineno-22-76"></a><span class="w">            </span><span class="no">type: Opaque</span>
+<a id="__codelineno-22-77" name="__codelineno-22-77" href="#__codelineno-22-77"></a><span class="w">          </span><span class="no">srcType: yaml</span>
+<a id="__codelineno-22-78" name="__codelineno-22-78" href="#__codelineno-22-78"></a><span class="w">          </span><span class="no">writeToRequest: &quot;false&quot;</span>
+<a id="__codelineno-22-79" name="__codelineno-22-79" href="#__codelineno-22-79"></a>
+<a id="__codelineno-22-80" name="__codelineno-22-80" href="#__codelineno-22-80"></a>
+<a id="__codelineno-22-81" name="__codelineno-22-81" href="#__codelineno-22-81"></a><span class="w">      </span><span class="no"># Create the </span>
+<a id="__codelineno-22-82" name="__codelineno-22-82" href="#__codelineno-22-82"></a><span class="w">      </span><span class="no">- taskType: customTask</span>
+<a id="__codelineno-22-83" name="__codelineno-22-83" href="#__codelineno-22-83"></a><span class="w">        </span><span class="no">className: com.tremolosecurity.provisioning.customTasks.JavaScriptTask</span>
+<a id="__codelineno-22-84" name="__codelineno-22-84" href="#__codelineno-22-84"></a><span class="w">        </span><span class="no">params:</span>
+<a id="__codelineno-22-85" name="__codelineno-22-85" href="#__codelineno-22-85"></a><span class="w">          </span><span class="no">javaScript: |-</span>
+<a id="__codelineno-22-86" name="__codelineno-22-86" href="#__codelineno-22-86"></a><span class="w">            </span><span class="no">HashMap = Java.type(&quot;java.util.HashMap&quot;);</span>
+<a id="__codelineno-22-87" name="__codelineno-22-87" href="#__codelineno-22-87"></a><span class="w">            </span><span class="no">OpenShiftTarget = Java.type(&quot;com.tremolosecurity.unison.openshiftv3.OpenShiftTarget&quot;);</span>
+<a id="__codelineno-22-88" name="__codelineno-22-88" href="#__codelineno-22-88"></a><span class="w">            </span><span class="no">Attribute = Java.type(&quot;com.tremolosecurity.saml.Attribute&quot;);</span>
+<a id="__codelineno-22-89" name="__codelineno-22-89" href="#__codelineno-22-89"></a><span class="w">            </span><span class="no">K8sUtils = Java.type(&quot;com.tremolosecurity.k8s.util.K8sUtils&quot;);</span>
+<a id="__codelineno-22-90" name="__codelineno-22-90" href="#__codelineno-22-90"></a><span class="w">            </span><span class="no">System = Java.type(&quot;java.lang.System&quot;);</span>
+<a id="__codelineno-22-91" name="__codelineno-22-91" href="#__codelineno-22-91"></a>
+<a id="__codelineno-22-92" name="__codelineno-22-92" href="#__codelineno-22-92"></a><span class="w">            </span><span class="no">function init(task,params) {</span>
+<a id="__codelineno-22-93" name="__codelineno-22-93" href="#__codelineno-22-93"></a><span class="w">            </span><span class="no">// nothing to do</span>
+<a id="__codelineno-22-94" name="__codelineno-22-94" href="#__codelineno-22-94"></a><span class="w">            </span><span class="no">}</span>
+<a id="__codelineno-22-95" name="__codelineno-22-95" href="#__codelineno-22-95"></a>
+<a id="__codelineno-22-96" name="__codelineno-22-96" href="#__codelineno-22-96"></a><span class="w">            </span><span class="no">function reInit(task) {</span>
+<a id="__codelineno-22-97" name="__codelineno-22-97" href="#__codelineno-22-97"></a><span class="w">            </span><span class="no">// do nothing</span>
+<a id="__codelineno-22-98" name="__codelineno-22-98" href="#__codelineno-22-98"></a><span class="w">            </span><span class="no">}</span>
+<a id="__codelineno-22-99" name="__codelineno-22-99" href="#__codelineno-22-99"></a>
+<a id="__codelineno-22-100" name="__codelineno-22-100" href="#__codelineno-22-100"></a><span class="w">            </span><span class="no">function doTask(user,request) {</span>
+<a id="__codelineno-22-101" name="__codelineno-22-101" href="#__codelineno-22-101"></a>
+<a id="__codelineno-22-102" name="__codelineno-22-102" href="#__codelineno-22-102"></a><span class="w">                </span><span class="no">user.getAttribs().put(&quot;gitPath&quot;, new Attribute(&quot;gitPath&quot;,&quot;/yaml&quot;));</span>
+<a id="__codelineno-22-103" name="__codelineno-22-103" href="#__codelineno-22-103"></a><span class="w">                </span><span class="no">request.put(&quot;gitPath&quot;,&quot;/yaml&quot;);</span>
+<a id="__codelineno-22-104" name="__codelineno-22-104" href="#__codelineno-22-104"></a>
+<a id="__codelineno-22-105" name="__codelineno-22-105" href="#__codelineno-22-105"></a><span class="w">                </span><span class="no">user.getAttribs().put(&quot;gitUrl&quot;, new Attribute(&quot;gitUrl&quot;,&quot;git@github.com:my-org/&quot; + request.get(&quot;nameSpace&quot;) + &quot;-infra.git&quot;));</span>
+<a id="__codelineno-22-106" name="__codelineno-22-106" href="#__codelineno-22-106"></a><span class="w">                </span><span class="no">request.put(&quot;gitUrl&quot;,&quot;git@github.com:my-org/&quot; + request.get(&quot;nameSpace&quot;) + &quot;-infra.git&quot;);</span>
+<a id="__codelineno-22-107" name="__codelineno-22-107" href="#__codelineno-22-107"></a>
+<a id="__codelineno-22-108" name="__codelineno-22-108" href="#__codelineno-22-108"></a><span class="w">                </span><span class="no">return true;</span>
+<a id="__codelineno-22-109" name="__codelineno-22-109" href="#__codelineno-22-109"></a><span class="w">            </span><span class="no">}</span>
+</code></pre></div>
+<p>With your git repo created and deployed, you'll next want to provide a way to trigger the synchronization into your cluster.</p>
+<h4 id="synchonizing-from-git-into-your-cluster">Synchonizing from Git Into Your Cluster</h4>
+<p>When bringing your own git repository, you need to configure your repo to be synced from git into your cluster using a GitOps controller.  How you do this will be dependent on your GitOps controller.  If, as an example, you're using Argo CD, you can create an <code>ApplicationSet</code> that will connect to your repository in a <a href="/documentation/customize-naas-onboarding/#post-namespace-create-workflow">post-namespace <code>Workflow</code></a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="nn">---</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison.tremolo.io/v1</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Workflow</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">post-namespace</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openunison</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">creates a ResourceQuota object</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">  </span><span class="nt">inList</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">  </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Creates a ResourceQuota</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">  </span><span class="nt">orgId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">internal-does-not-exist</span>
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="w">      </span><span class="no"># Create a read only deployment key in our GitHub repository for Argo CD</span>
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="w">      </span><span class="no">- taskType: customTask</span>
+<a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="w">        </span><span class="no">className: com.tremolosecurity.provisioning.customTasks.github.CreateDeploymentKey</span>
+<a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="w">        </span><span class="no">params:</span>
+<a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a><span class="w">            </span><span class="no">targetName: github</span>
+<a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="w">            </span><span class="no">repo: $nameSpace$-infra</span>
+<a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a><span class="w">            </span><span class="no">keyLabel: argocd</span>
+<a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a><span class="w">            </span><span class="no">makeWriteable: &quot;false&quot;</span>
+<a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a><span class="w">            </span><span class="no">privateKeyReuestName: &quot;argocdinfrakeyb64&quot;</span>
+<a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a><span class="w">            </span><span class="no">privateKeyReuestNamePT: &quot;argocdinfrakey&quot;</span>
+<a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a>
+<a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a><span class="w">      </span><span class="no"># Create a Secret that will store the deployment key</span>
+<a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a><span class="w">      </span><span class="no">- taskType: customTask</span>
+<a id="__codelineno-23-26" name="__codelineno-23-26" href="#__codelineno-23-26"></a><span class="w">        </span><span class="no">className: com.tremolosecurity.provisioning.tasks.CreateK8sObject</span>
+<a id="__codelineno-23-27" name="__codelineno-23-27" href="#__codelineno-23-27"></a><span class="w">        </span><span class="no">params:</span>
+<a id="__codelineno-23-28" name="__codelineno-23-28" href="#__codelineno-23-28"></a><span class="w">            </span><span class="no"># the name of the cluster to provision to, must by the name of a `Target` object</span>
+<a id="__codelineno-23-29" name="__codelineno-23-29" href="#__codelineno-23-29"></a><span class="w">            </span><span class="no">targetName: k8s</span>
+<a id="__codelineno-23-30" name="__codelineno-23-30" href="#__codelineno-23-30"></a><span class="w">            </span><span class="no"># The YAML or JSON to generate</span>
+<a id="__codelineno-23-31" name="__codelineno-23-31" href="#__codelineno-23-31"></a><span class="w">            </span><span class="no">template: |-</span>
+<a id="__codelineno-23-32" name="__codelineno-23-32" href="#__codelineno-23-32"></a><span class="w">                </span><span class="no">kind: Secret</span>
+<a id="__codelineno-23-33" name="__codelineno-23-33" href="#__codelineno-23-33"></a><span class="w">                </span><span class="no">apiVersion: v1</span>
+<a id="__codelineno-23-34" name="__codelineno-23-34" href="#__codelineno-23-34"></a><span class="w">                </span><span class="no">metadata:</span>
+<a id="__codelineno-23-35" name="__codelineno-23-35" href="#__codelineno-23-35"></a><span class="w">                  </span><span class="no">name: &quot;github-$nameSpace$-infa&quot;</span>
+<a id="__codelineno-23-36" name="__codelineno-23-36" href="#__codelineno-23-36"></a><span class="w">                  </span><span class="no">namespace: argocd</span>
+<a id="__codelineno-23-37" name="__codelineno-23-37" href="#__codelineno-23-37"></a><span class="w">                  </span><span class="no">labels:</span>
+<a id="__codelineno-23-38" name="__codelineno-23-38" href="#__codelineno-23-38"></a><span class="w">                    </span><span class="no">argocd.argoproj.io/secret-type: repo-creds</span>
+<a id="__codelineno-23-39" name="__codelineno-23-39" href="#__codelineno-23-39"></a><span class="w">                </span><span class="no">data:</span>
+<a id="__codelineno-23-40" name="__codelineno-23-40" href="#__codelineno-23-40"></a><span class="w">                  </span><span class="no">sshPrivateKey: $argocdinfrakeyb64$</span>
+<a id="__codelineno-23-41" name="__codelineno-23-41" href="#__codelineno-23-41"></a><span class="w">                </span><span class="no">stringData:</span>
+<a id="__codelineno-23-42" name="__codelineno-23-42" href="#__codelineno-23-42"></a><span class="w">                  </span><span class="no">type: git</span>
+<a id="__codelineno-23-43" name="__codelineno-23-43" href="#__codelineno-23-43"></a><span class="w">                  </span><span class="no">url: git@github.com:my-org/$nameSpace$-infra.git</span>
+<a id="__codelineno-23-44" name="__codelineno-23-44" href="#__codelineno-23-44"></a><span class="w">            </span><span class="no">srcType: yaml</span>
+<a id="__codelineno-23-45" name="__codelineno-23-45" href="#__codelineno-23-45"></a>
+<a id="__codelineno-23-46" name="__codelineno-23-46" href="#__codelineno-23-46"></a><span class="w">      </span><span class="no"># Create an ApplicationSet that will generate an Application for synchronizing from our repo</span>
+<a id="__codelineno-23-47" name="__codelineno-23-47" href="#__codelineno-23-47"></a><span class="w">      </span><span class="no">- taskType: customTask</span>
+<a id="__codelineno-23-48" name="__codelineno-23-48" href="#__codelineno-23-48"></a><span class="w">        </span><span class="no">className: com.tremolosecurity.provisioning.tasks.CreateK8sObject</span>
+<a id="__codelineno-23-49" name="__codelineno-23-49" href="#__codelineno-23-49"></a><span class="w">        </span><span class="no">params:</span>
+<a id="__codelineno-23-50" name="__codelineno-23-50" href="#__codelineno-23-50"></a><span class="w">            </span><span class="no"># the name of the cluster to provision to, must by the name of a `Target` object</span>
+<a id="__codelineno-23-51" name="__codelineno-23-51" href="#__codelineno-23-51"></a><span class="w">            </span><span class="no">targetName: k8s</span>
+<a id="__codelineno-23-52" name="__codelineno-23-52" href="#__codelineno-23-52"></a><span class="w">            </span><span class="no"># The YAML or JSON to generate</span>
+<a id="__codelineno-23-53" name="__codelineno-23-53" href="#__codelineno-23-53"></a><span class="w">            </span><span class="no">template: |-</span>
+<a id="__codelineno-23-54" name="__codelineno-23-54" href="#__codelineno-23-54"></a><span class="w">                </span><span class="no">apiVersion: argoproj.io/v1alpha1</span>
+<a id="__codelineno-23-55" name="__codelineno-23-55" href="#__codelineno-23-55"></a><span class="w">                </span><span class="no">kind: ApplicationSet</span>
+<a id="__codelineno-23-56" name="__codelineno-23-56" href="#__codelineno-23-56"></a><span class="w">                </span><span class="no">metadata:</span>
+<a id="__codelineno-23-57" name="__codelineno-23-57" href="#__codelineno-23-57"></a><span class="w">                  </span><span class="no">name: github-$nameSpace$-infra</span>
+<a id="__codelineno-23-58" name="__codelineno-23-58" href="#__codelineno-23-58"></a><span class="w">                  </span><span class="no">namespace: argocd</span>
+<a id="__codelineno-23-59" name="__codelineno-23-59" href="#__codelineno-23-59"></a><span class="w">                </span><span class="no">spec:</span>
+<a id="__codelineno-23-60" name="__codelineno-23-60" href="#__codelineno-23-60"></a><span class="w">                  </span><span class="no">generators:</span>
+<a id="__codelineno-23-61" name="__codelineno-23-61" href="#__codelineno-23-61"></a><span class="w">                    </span><span class="no">- git:</span>
+<a id="__codelineno-23-62" name="__codelineno-23-62" href="#__codelineno-23-62"></a><span class="w">                        </span><span class="no">repoURL: git@github.com:my-org/$nameSpace$-infra.git</span>
+<a id="__codelineno-23-63" name="__codelineno-23-63" href="#__codelineno-23-63"></a><span class="w">                        </span><span class="no">revision: main</span>
+<a id="__codelineno-23-64" name="__codelineno-23-64" href="#__codelineno-23-64"></a><span class="w">                        </span><span class="no">directories:</span>
+<a id="__codelineno-23-65" name="__codelineno-23-65" href="#__codelineno-23-65"></a><span class="w">                            </span><span class="no">- path: yaml</span>
+<a id="__codelineno-23-66" name="__codelineno-23-66" href="#__codelineno-23-66"></a><span class="w">                        </span><span class="no">interval: 1m</span>
+<a id="__codelineno-23-67" name="__codelineno-23-67" href="#__codelineno-23-67"></a><span class="w">                  </span><span class="no">template:</span>
+<a id="__codelineno-23-68" name="__codelineno-23-68" href="#__codelineno-23-68"></a><span class="w">                    </span><span class="no">metadata:</span>
+<a id="__codelineno-23-69" name="__codelineno-23-69" href="#__codelineno-23-69"></a><span class="w">                      </span><span class="no">name: &#39;$nameSpace$-infra&#39;</span>
+<a id="__codelineno-23-70" name="__codelineno-23-70" href="#__codelineno-23-70"></a><span class="w">                    </span><span class="no">spec:</span>
+<a id="__codelineno-23-71" name="__codelineno-23-71" href="#__codelineno-23-71"></a><span class="w">                      </span><span class="no">project: default</span>
+<a id="__codelineno-23-72" name="__codelineno-23-72" href="#__codelineno-23-72"></a><span class="w">                      </span><span class="no">source:</span>
+<a id="__codelineno-23-73" name="__codelineno-23-73" href="#__codelineno-23-73"></a><span class="w">                        </span><span class="no">repoURL: git@github.com:my-org/$nameSpace$-infra.git</span>
+<a id="__codelineno-23-74" name="__codelineno-23-74" href="#__codelineno-23-74"></a><span class="w">                        </span><span class="no">targetRevision: main</span>
+<a id="__codelineno-23-75" name="__codelineno-23-75" href="#__codelineno-23-75"></a><span class="w">                        </span><span class="no">path: yaml</span>
+<a id="__codelineno-23-76" name="__codelineno-23-76" href="#__codelineno-23-76"></a><span class="w">                        </span><span class="no">directory:</span>
+<a id="__codelineno-23-77" name="__codelineno-23-77" href="#__codelineno-23-77"></a><span class="w">                            </span><span class="no">recurse: true</span>
+<a id="__codelineno-23-78" name="__codelineno-23-78" href="#__codelineno-23-78"></a><span class="w">                      </span><span class="no">destination:</span>
+<a id="__codelineno-23-79" name="__codelineno-23-79" href="#__codelineno-23-79"></a><span class="w">                        </span><span class="no">server: https://kubernetes.default.svc</span>
+<a id="__codelineno-23-80" name="__codelineno-23-80" href="#__codelineno-23-80"></a><span class="w">                      </span><span class="no">syncPolicy:</span>
+<a id="__codelineno-23-81" name="__codelineno-23-81" href="#__codelineno-23-81"></a><span class="w">                        </span><span class="no">automated:</span>
+<a id="__codelineno-23-82" name="__codelineno-23-82" href="#__codelineno-23-82"></a><span class="w">                          </span><span class="no">prune: false</span>
+<a id="__codelineno-23-83" name="__codelineno-23-83" href="#__codelineno-23-83"></a><span class="w">                          </span><span class="no">selfHeal: true</span>
+<a id="__codelineno-23-84" name="__codelineno-23-84" href="#__codelineno-23-84"></a>
+<a id="__codelineno-23-85" name="__codelineno-23-85" href="#__codelineno-23-85"></a><span class="w">            </span><span class="no">srcType: yaml</span>
+<a id="__codelineno-23-86" name="__codelineno-23-86" href="#__codelineno-23-86"></a><span class="w">            </span><span class="no">writeToRequest: &quot;true&quot;</span>
+<a id="__codelineno-23-87" name="__codelineno-23-87" href="#__codelineno-23-87"></a><span class="w">            </span><span class="no">requestAttribute: &quot;git-cluster&quot;</span>
+<a id="__codelineno-23-88" name="__codelineno-23-88" href="#__codelineno-23-88"></a><span class="w">            </span><span class="no">path: /yaml/cluster/namespaced/argocd/applicationsets/github-$nameSpace$-infra.yaml</span>
+<a id="__codelineno-23-89" name="__codelineno-23-89" href="#__codelineno-23-89"></a>
+<a id="__codelineno-23-90" name="__codelineno-23-90" href="#__codelineno-23-90"></a><span class="w">      </span><span class="no"># push the ApplicationSet into our cluster repo</span>
+<a id="__codelineno-23-91" name="__codelineno-23-91" href="#__codelineno-23-91"></a><span class="w">      </span><span class="no">- taskType: customTask</span>
+<a id="__codelineno-23-92" name="__codelineno-23-92" href="#__codelineno-23-92"></a><span class="w">        </span><span class="no">className: com.tremolosecurity.provisioning.tasks.PushToGit</span>
+<a id="__codelineno-23-93" name="__codelineno-23-93" href="#__codelineno-23-93"></a><span class="w">        </span><span class="no">params:</span>
+<a id="__codelineno-23-94" name="__codelineno-23-94" href="#__codelineno-23-94"></a><span class="w">            </span><span class="no">secretName: sshkey-cluster-k8s</span>
+<a id="__codelineno-23-95" name="__codelineno-23-95" href="#__codelineno-23-95"></a><span class="w">            </span><span class="no">nameSpace: openunison</span>
+<a id="__codelineno-23-96" name="__codelineno-23-96" href="#__codelineno-23-96"></a><span class="w">            </span><span class="no">target: k8s</span>
+<a id="__codelineno-23-97" name="__codelineno-23-97" href="#__codelineno-23-97"></a><span class="w">            </span><span class="no">keyName: id_rsa</span>
+<a id="__codelineno-23-98" name="__codelineno-23-98" href="#__codelineno-23-98"></a><span class="w">            </span><span class="no">gitRepo: git@github.com:my-org/cluster.git</span>
+<a id="__codelineno-23-99" name="__codelineno-23-99" href="#__codelineno-23-99"></a><span class="w">            </span><span class="no">requestObject: git-cluster</span>
+<a id="__codelineno-23-100" name="__codelineno-23-100" href="#__codelineno-23-100"></a><span class="w">            </span><span class="no">commitMsg: $nameSpace$ setup $WORKFLOW.id$</span>
+</code></pre></div>
+<p>In addition to provisioning an <code>ApplicationSet</code>, you can also provision a <code>AppProject</code> to contain the <code>Application</code> and manage access.</p>
+<h2 id="alternate-deployment-steps">Alternate Deployment Steps</h2>
+<h3 id="manual-deployment">Manual Deployment</h3>
+<p>First, update the <code>orchestra-secrets-source</code> <code>Secret</code> with the passwords for your database and SMTP service:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>kubectl patch secret orchestra-secrets-source -n openunison --patch &#39;{&quot;data&quot;:{&quot;OU_JDBC_PASSWORD&quot;:&quot;c3RhcnR0MTIz&quot;,&quot;SMTP_PASSWORD&quot;:&quot;ZG9lc25vdG1hdHRlcg==&quot;}}&#39;
+</code></pre></div>
+<p>Next, update the orcehstra chart:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>helm upgrade orchestra tremolo/orchestra --namespace openunison -f /path/to/values.yaml
+</code></pre></div>
+<p>Wait for openunison-orchestra to finish creating and for your old container deployment.</p>
+<p><strong><em>This will take much longer then the orchestra login portal alone.  The orchestra portal needs to wait for ActiveMQ to be available.</em></strong></p>
+<p>Once done, update the <code>orchestra-login-portal</code> chart:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>helm upgrade orchestra-login-portal tremolo/orchestra-login-portal --namespace openunison -f /path/to/values.yaml
+</code></pre></div>
+<p>Finally, install the <code>cluster-management</code> chart:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>helm install cluster-management tremolo/openunison-k8s-cluster-management -n openunison -f /path/to/values.yaml
+</code></pre></div>
+<p>Once the <code>cluster-management</code> chart is deplotyed, you can continue to <strong>Your First Login</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>

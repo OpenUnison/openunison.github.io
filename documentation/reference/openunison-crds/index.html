@@ -1,0 +1,6168 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../jobs/">
+      
+      
+        <link rel="next" href="../operator/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>OpenUnison Kubernetes CRD Documentation - Kubernetes Authentication and SSO - OpenUnison</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.bcfcd587.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#openunison-kubernetes-crd-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Kubernetes Authentication and SSO - OpenUnison" class="md-header__button md-logo" aria-label="Kubernetes Authentication and SSO - OpenUnison" data-md-component="logo">
+      
+  <img src="../../../assets/ts-logo-white.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kubernetes Authentication and SSO - OpenUnison
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              OpenUnison Kubernetes CRD Documentation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Kubernetes Authentication and SSO - OpenUnison" class="md-nav__button md-logo" aria-label="Kubernetes Authentication and SSO - OpenUnison" data-md-component="logo">
+      
+  <img src="../../../assets/ts-logo-white.png" alt="logo">
+
+    </a>
+    Kubernetes Authentication and SSO - OpenUnison
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Authentication and SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../deployauth/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deploying The Authentication Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-help/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Help
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../javascript/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing OpenUnison with JavaScript
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kube-sts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Security Token Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kubectlplugin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubectl Plugin
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../multi_cluster_sso/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi Cluster SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../namespace_as_a_service/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Namespace as a Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../priv_access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privileged Access Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../scim-gateway/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SCIM 2.0 Gateway
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../upgrading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading from 1.0.23 and Earlier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Well Known Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/argoworkflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Argo Workflows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/drupal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Drupal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/entraid/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EntraID / AzureAD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/gitlab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitLab
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/grafana/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grafana Community Edition
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/kiali/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kiali
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/kubeapps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMware Kubeapps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/openshift/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenShift
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applications/vault/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hashicorp Vault
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Customization
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Customization
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../customization/custom_jit_workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customized Just-In-Time Login Workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../customization/custom_logos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Logos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../customization/custom_provisioning_targets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Provisioning Targets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../customization/custom_provisioning_tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Provisioning Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../customization/resource_management_sheduling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resource Management and Scheduling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../customization/themes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Themes and Colors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuring-openunison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring OpenUnison Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../custom-sso/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../customize-naas-onboarding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing the NaaS Onboarding Workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kerberos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kerberos Support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../login-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Login Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../naas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Namespace as a Service Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operational-processes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operational Processes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ouctl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ouctl
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9" id="__nav_14_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Apis
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9">
+            <span class="md-nav__icon md-icon"></span>
+            Apis
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apis/apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison's APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apis/restful/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison RESTful APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_3" id="__nav_14_9_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Callworkflow
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_9_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_3">
+            <span class="md-nav__icon md-icon"></span>
+            Callworkflow
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apis/callworkflow/callworkflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CallWorkflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_4" id="__nav_14_9_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Scalejs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_9_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_4">
+            <span class="md-nav__icon md-icon"></span>
+            Scalejs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9_4_1" id="__nav_14_9_4_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Register
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_9_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            Register
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apis/scalejs/register/scalejs-register/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ScaleJS Register
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10" id="__nav_14_10_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Javadocs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10">
+            <span class="md-nav__icon md-icon"></span>
+            Javadocs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javadocs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaDocs for OpenUnison
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_2" id="__nav_14_10_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.0.42
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_10_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_2">
+            <span class="md-nav__icon md-icon"></span>
+            1.0.42
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_2_1" id="__nav_14_10_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Legal
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_10_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javadocs/1.0.42/legal/dejavufonts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dejavufonts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javadocs/1.0.42/legal/jquery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jquery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javadocs/1.0.42/legal/jqueryUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    jqueryUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_3" id="__nav_14_10_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.0.43.1
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_14_10_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_3">
+            <span class="md-nav__icon md-icon"></span>
+            1.0.43.1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_10_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_10_3_1" id="__nav_14_10_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Legal
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_14_10_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_10_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javadocs/1.0.43.1/legal/dejavufonts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dejavufonts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javadocs/1.0.43.1/legal/jquery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jquery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javadocs/1.0.43.1/legal/jqueryUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    jqueryUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_11" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_14_11" id="__nav_14_11_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_14_11">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication-mechanisms/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authentication Mechanisms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-authorizations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Authorizations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-results/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Results
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Custom Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../filters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Application URL Filters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jobs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled Jobs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    OpenUnison Kubernetes CRD Documentation
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    OpenUnison Kubernetes CRD Documentation
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trust
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clientsecret" class="md-nav__link">
+    <span class="md-ellipsis">
+      clientSecret
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#portalurl" class="md-nav__link">
+    <span class="md-ellipsis">
+      PortalUrl
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PortalUrl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azrules" class="md-nav__link">
+    <span class="md-ellipsis">
+      azRules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#org" class="md-nav__link">
+    <span class="md-ellipsis">
+      Org
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Org">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azrules_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      azRules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#target" class="md-nav__link">
+    <span class="md-ellipsis">
+      Target
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Target">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#params" class="md-nav__link">
+    <span class="md-ellipsis">
+      params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secretparams" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#targetattributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      targetAttributes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamicconfiguration" class="md-nav__link">
+    <span class="md-ellipsis">
+      dynamicConfiguration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="dynamicConfiguration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#params_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filterannotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      filterAnnotations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Report
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      parameters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oujob" class="md-nav__link">
+    <span class="md-ellipsis">
+      OUJob
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OUJob">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cronschedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      cronSchedule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#params_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#messagelistener" class="md-nav__link">
+    <span class="md-ellipsis">
+      MessageListener
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MessageListener">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#params_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resultgroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      ResultGroup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ResultGroup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customauthorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      CustomAuthorization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CustomAuthorization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticationmechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      AuthenticationMechanism
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AuthenticationMechanism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticationchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      AuthenticationChain
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AuthenticationChain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      compliance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authmechs" class="md-nav__link">
+    <span class="md-ellipsis">
+      authMechs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="authMechs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urls" class="md-nav__link">
+    <span class="md-ellipsis">
+      urls
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="urls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filterchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      filterChain
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="filterChain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proxyconfiguration" class="md-nav__link">
+    <span class="md-ellipsis">
+      proxyConfiguration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      results
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azrules_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      azRules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idp" class="md-nav__link">
+    <span class="md-ellipsis">
+      idp
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="idp">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mappings" class="md-nav__link">
+    <span class="md-ellipsis">
+      mappings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mappings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#map" class="md-nav__link">
+    <span class="md-ellipsis">
+      map
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trusts" class="md-nav__link">
+    <span class="md-ellipsis">
+      trusts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="trusts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cookieconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      cookieConfig
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groupmetadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      GroupMetaData
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GroupMetaData">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#javascriptmapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      JavaScriptMapping
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JavaScriptMapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#waitforstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      WaitForState
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WaitForState">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Notifier
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Notifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#params_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operator Helm Chart Customization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../provisioning-tasks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Tasks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../targets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Provisioning Targets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Identity providers
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Identity providers
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../identity%20providers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Documented Identity Providers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../identity%20providers/azuread/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EntraID / AzureAD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../identity%20providers/keycloak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Keycloak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../identity%20providers/okta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Okta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ingresses
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Ingresses
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingresses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Documented Ingress Controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingresses/f5nginx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    F5 NGINX Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingresses/gatewayapi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gateway API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingresses/istio/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Istio Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingresses/nginx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NGINX Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ingresses/traefik/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Traefik
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Knowledgebase
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_17">
+            <span class="md-nav__icon md-icon"></span>
+            Knowledgebase
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledgebase/airgap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Air-Gap Implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledgebase/broken_dashboard/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Broken Dashboard Login
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledgebase/certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Certificate Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledgebase/customizingmyvd/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customizing MyVirtualDirectory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledgebase/orchestra_deployment_failed/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Failed Orchestra Deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledgebase/prometheus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monitoring OpenUnison with Prometheus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledgebase/sessions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Session Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trust
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clientsecret" class="md-nav__link">
+    <span class="md-ellipsis">
+      clientSecret
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#portalurl" class="md-nav__link">
+    <span class="md-ellipsis">
+      PortalUrl
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PortalUrl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azrules" class="md-nav__link">
+    <span class="md-ellipsis">
+      azRules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#org" class="md-nav__link">
+    <span class="md-ellipsis">
+      Org
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Org">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azrules_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      azRules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#target" class="md-nav__link">
+    <span class="md-ellipsis">
+      Target
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Target">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#params" class="md-nav__link">
+    <span class="md-ellipsis">
+      params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secretparams" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#targetattributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      targetAttributes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamicconfiguration" class="md-nav__link">
+    <span class="md-ellipsis">
+      dynamicConfiguration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="dynamicConfiguration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#params_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filterannotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      filterAnnotations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Report
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Report">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      parameters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oujob" class="md-nav__link">
+    <span class="md-ellipsis">
+      OUJob
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OUJob">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cronschedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      cronSchedule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#params_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#messagelistener" class="md-nav__link">
+    <span class="md-ellipsis">
+      MessageListener
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MessageListener">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#params_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resultgroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      ResultGroup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ResultGroup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customauthorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      CustomAuthorization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CustomAuthorization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticationmechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      AuthenticationMechanism
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AuthenticationMechanism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticationchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      AuthenticationChain
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AuthenticationChain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      compliance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authmechs" class="md-nav__link">
+    <span class="md-ellipsis">
+      authMechs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="authMechs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#urls" class="md-nav__link">
+    <span class="md-ellipsis">
+      urls
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="urls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filterchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      filterChain
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="filterChain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proxyconfiguration" class="md-nav__link">
+    <span class="md-ellipsis">
+      proxyConfiguration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      results
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azrules_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      azRules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idp" class="md-nav__link">
+    <span class="md-ellipsis">
+      idp
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="idp">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mappings" class="md-nav__link">
+    <span class="md-ellipsis">
+      mappings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="mappings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#map" class="md-nav__link">
+    <span class="md-ellipsis">
+      map
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trusts" class="md-nav__link">
+    <span class="md-ellipsis">
+      trusts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="trusts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cookieconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      cookieConfig
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#groupmetadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      GroupMetaData
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GroupMetaData">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#javascriptmapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      JavaScriptMapping
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JavaScriptMapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#waitforstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      WaitForState
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WaitForState">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Notifier
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Notifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-v1_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version: v1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#params_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secretparams_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      secretParams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="openunison-kubernetes-crd-documentation">OpenUnison Kubernetes CRD Documentation</h1>
+<h2 id="trust">Trust</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>trust</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>trusts</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1">Version: v1</h3>
+<p>Represents a dynamic trust for an identity provider</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>label</td>
+<td>string</td>
+<td>A descriptive label for the trust</td>
+</tr>
+<tr>
+<td>clientId</td>
+<td>string</td>
+<td>A unique id for the trust shared with the trusted client</td>
+</tr>
+<tr>
+<td>clientSecret</td>
+<td>object</td>
+<td>A reference to the <code>Secret</code> used to store the secret shared between the identity provider and the client <a href="#root-clientsecret">Details</a></td>
+</tr>
+<tr>
+<td>publicEndpoint</td>
+<td>boolean</td>
+<td>If true, <code>clientSecret</code> is ignored</td>
+</tr>
+<tr>
+<td>redirectURI</td>
+<td>array</td>
+<td>List of allowed URLs that should be trusted to redirect to after successful authentication</td>
+</tr>
+<tr>
+<td>codeLastMileKeyName</td>
+<td>string</td>
+<td>The name of the key in the OpenUnison keystore that is used to encryp the code portion of a transaction</td>
+</tr>
+<tr>
+<td>authChainName</td>
+<td>string</td>
+<td>The name of an <code>AuthenticationChain</code> that is used to authenticate this trust</td>
+</tr>
+<tr>
+<td>codeTokenSkewMilis</td>
+<td>integer</td>
+<td>The time, in milliseconds, to allow for clock skew when checking if a token has expired</td>
+</tr>
+<tr>
+<td>accessTokenTimeToLive</td>
+<td>integer</td>
+<td>The time, in miliseconds, that a trust's token should be valid</td>
+</tr>
+<tr>
+<td>accessTokenSkewMillis</td>
+<td>integer</td>
+<td>The time, in milliseconds, to allow for clock skew when checking if a token has expired</td>
+</tr>
+<tr>
+<td>signedUserInfo</td>
+<td>boolean</td>
+<td>If true, the <code>user_info</code> endpoint's response is a JWT, not simple JSON</td>
+</tr>
+<tr>
+<td>verifyRedirect</td>
+<td>boolean</td>
+<td>If true, verifies if the redirect is accurate.  Should only be false in development environments.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="clientsecret"><a name="root-clientsecret"></a> clientSecret</h3>
+<p>A reference to the <code>Secret</code> used to store the secret shared between the identity provider and the client</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>secretName</td>
+<td>string</td>
+<td>The name of the <code>Secret</code></td>
+</tr>
+<tr>
+<td>keyName</td>
+<td>string</td>
+<td>The key storing the data in the <code>Secret</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="portalurl">PortalUrl</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>portalurl</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>portalurls</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_1">Version: v1</h3>
+<p>A PortalURL represents a "badge" in the OpenUnison portal</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>label</td>
+<td>string</td>
+<td>A descriptive label for the badge</td>
+</tr>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>The URL for the application a user will be sent to when clicking on the badge</td>
+</tr>
+<tr>
+<td>org</td>
+<td>string</td>
+<td>The <code>Orginaization.uuid</code> the url is a part of</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>string</td>
+<td>A base64 encoded PNG that is 240px high x 210px wide</td>
+</tr>
+<tr>
+<td>azRules</td>
+<td>array</td>
+<td>List of rules used to authorize access.  Authorization succeeds if <strong>ANY</strong> of these rules pass <a href="#root-azrules">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="azrules"><a name="root-azrules"></a> azRules</h3>
+<p>List of rules used to authorize access.  Authorization succeeds if <strong>ANY</strong> of these rules pass</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scope</td>
+<td>string</td>
+<td>One of:<br>- <code>group</code> - The DN of a group the suer must be a member of in OpenUnison's virtual directory<br>- <code>dynamicGroup</code> - The DN of an LDAP dynamic group the suer must be a member of in OpenUnison's virtual directory<br>- <code>dn</code> - The DN of an area of the virtual directory where all users under that DN are authorized<br>- <code>custom</code> - The name of a <code>CustomAuthorization</code>.  Can be followed by a <code>!</code> with parameters.  For instance <code>SomeCustomAZ!param1!param2</code> will call the custom authorization <code>SomeCustomAZ</code> with the parameters <code>param1</code> and <code>param2</code><br>- <code>filter</code> - An LDAP filter that will be applied to a logged in user</td>
+</tr>
+<tr>
+<td>constraint</td>
+<td>string</td>
+<td>How to enforce this rule based on the <code>scope</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="org">Org</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>org</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>orgs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_2">Version: v1</h3>
+<p>{}</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>label</td>
+<td>string</td>
+<td>What people will see in the OpenUnison portal</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>Descriptive text</td>
+</tr>
+<tr>
+<td>uuid</td>
+<td>string</td>
+<td>A unique identifier used to associate resources with this <code>Organization</code></td>
+</tr>
+<tr>
+<td>parent</td>
+<td>string</td>
+<td>The parent <code>Organization</code>'s uuid in the tree</td>
+</tr>
+<tr>
+<td>showInPortal</td>
+<td>boolean</td>
+<td>If true, shows this orgnaization on the portal screen in OpenUnison</td>
+</tr>
+<tr>
+<td>showInRequestAccess</td>
+<td>boolean</td>
+<td>If true, shows the <code>Orgianization</code> in the <code>Request Access</code> screen of OpenUnison</td>
+</tr>
+<tr>
+<td>showInReports</td>
+<td>boolean</td>
+<td>If true, show in the  <code>Reports</code> section in OpenUnison.</td>
+</tr>
+<tr>
+<td>azRules</td>
+<td>array</td>
+<td>List of rules used to authorize access.  Authorization succeeds if <strong>ANY</strong> of these rules pass <a href="#root-azrules">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="azrules_1"><a name="root-azrules"></a> azRules</h3>
+<p>List of rules used to authorize access.  Authorization succeeds if <strong>ANY</strong> of these rules pass</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scope</td>
+<td>string</td>
+<td>One of:<br>- <code>group</code> - The DN of a group the suer must be a member of in OpenUnison's virtual directory<br>- <code>dynamicGroup</code> - The DN of an LDAP dynamic group the suer must be a member of in OpenUnison's virtual directory<br>- <code>dn</code> - The DN of an area of the virtual directory where all users under that DN are authorized<br>- <code>custom</code> - The name of a <code>CustomAuthorization</code>.  Can be followed by a <code>!</code> with parameters.  For instance <code>SomeCustomAZ!param1!param2</code> will call the custom authorization <code>SomeCustomAZ</code> with the parameters <code>param1</code> and <code>param2</code><br>- <code>filter</code> - An LDAP filter that will be applied to a logged in user</td>
+</tr>
+<tr>
+<td>constraint</td>
+<td>string</td>
+<td>How to enforce this rule based on the <code>scope</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="target">Target</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>target</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>targets</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_3">Version: v1</h3>
+<p>{}</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>className</td>
+<td>string</td>
+<td>Implementation of <code>com.tremolosecurity.provisioning.core.UserStoreProvider</code></td>
+</tr>
+<tr>
+<td>params</td>
+<td>array</td>
+<td>Set of configuration parameters <a href="#root-params">Details</a></td>
+</tr>
+<tr>
+<td>secretParams</td>
+<td>array</td>
+<td><a href="#root-secretparams">Details</a></td>
+</tr>
+<tr>
+<td>targetAttributes</td>
+<td>array</td>
+<td>Attributes that are managed by this target <a href="#root-targetattributes">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="params"><a name="root-params"></a> params</h3>
+<p>Set of configuration parameters</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Configuration parameter name, may be listed multiple times</td>
+</tr>
+<tr>
+<td>value</td>
+<td>string</td>
+<td>Value</td>
+</tr>
+</tbody>
+</table>
+<h3 id="secretparams"><a name="root-secretparams"></a> secretParams</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the configuration parameter</td>
+</tr>
+<tr>
+<td>secretName</td>
+<td>string</td>
+<td>The name of the Kubernetes <code>Secret</code></td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>string</td>
+<td>The name of the key in the <code>Secret</code> to pull the data from</td>
+</tr>
+</tbody>
+</table>
+<h3 id="targetattributes"><a name="root-targetattributes"></a> targetAttributes</h3>
+<p>Attributes that are managed by this target</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the attribute in the target</td>
+</tr>
+<tr>
+<td>source</td>
+<td>string</td>
+<td>Depends on <code>sourceType</code>:<br> - <code>static</code> - The specific value of the attribute<br> - <code>user</code> - The name of the attribute from the user to use<br> - <code>custom</code> - Implementation of <code>com.tremolosecurity.provisioning.mapping.CustomMapping</code>, parameters can be supplied after a <code>|</code> that's comma delimited.  For instance, <code>com.tremolosecurity.mapping.JavaScriptMapping|k8s,openunison,argocd-groups</code> Uses the <code>JavaScriptMapping</code>, passing the parameters <code>k8s</code>, <code>openunison</code>, and <code>argocd-groups</code> as parameters</td>
+</tr>
+<tr>
+<td>sourceType</td>
+<td>string</td>
+<td>Where the attribute data will come from</td>
+</tr>
+<tr>
+<td>targetType</td>
+<td>string</td>
+<td>The data type for the target attribute</td>
+</tr>
+</tbody>
+</table>
+<h2 id="workflow">Workflow</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>workflow</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>workflows</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v2">Version: v2</h3>
+<p>Holder for a workflow object</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>label</td>
+<td>string</td>
+<td>Descriptive name</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>Descriptive text</td>
+</tr>
+<tr>
+<td>inList</td>
+<td>boolean</td>
+<td>If true, includes this workflow as requestable on the <code>Request Access</code> screen</td>
+</tr>
+<tr>
+<td>orgId</td>
+<td>string</td>
+<td>The value of an <code>Organization.uuid</code> that contains this workflow</td>
+</tr>
+<tr>
+<td>dynamicConfiguration</td>
+<td>object</td>
+<td>Used to apply a workflow to several potential objects.  Will instanciate one instance of this workflow for each object.  For instance creating one instance of a workflow for each namespace in a cluster. <a href="#root-dynamicconfiguration">Details</a></td>
+</tr>
+<tr>
+<td>tasks</td>
+<td>string</td>
+<td>See https://openunison.github.io/UPDATEME</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dynamicconfiguration"><a name="root-dynamicconfiguration"></a> dynamicConfiguration</h3>
+<p>Used to apply a workflow to several potential objects.  Will instanciate one instance of this workflow for each object.  For instance creating one instance of a workflow for each namespace in a cluster.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dynamic</td>
+<td>boolean</td>
+<td>Determines if the workflow should be loaded based on a dynamic configuration</td>
+</tr>
+<tr>
+<td>className</td>
+<td>string</td>
+<td>Implementation of <code>com.tremolosecurity.provisioning.util.DynamicWorkflow</code></td>
+</tr>
+<tr>
+<td>params</td>
+<td>array</td>
+<td>List of parameters to pass to the <code>DynamicWorkflow</code> implementation. <a href="#root-dynamicconfiguration--params">Details</a></td>
+</tr>
+<tr>
+<td>filterAnnotations</td>
+<td>array</td>
+<td>List of parameters to pass to the <code>DynamicWorkflow</code> implementation. <a href="#root-dynamicconfiguration--filterannotations">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="params_1"><a name="root-dynamicconfiguration--params"></a> params</h4>
+<p>List of parameters to pass to the <code>DynamicWorkflow</code> implementation.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Can be repeated</td>
+</tr>
+<tr>
+<td>value</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="filterannotations"><a name="root-dynamicconfiguration--filterannotations"></a> filterAnnotations</h4>
+<p>List of parameters to pass to the <code>DynamicWorkflow</code> implementation.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>name of the annotation filter</td>
+</tr>
+<tr>
+<td>requestObjectName</td>
+<td>string</td>
+<td>name of the request object to get the annotation value from</td>
+</tr>
+</tbody>
+</table>
+<h2 id="report">Report</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>report</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>reports</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_4">Version: v1</h3>
+<p>{}</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the report</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>Descriptive text for the report</td>
+</tr>
+<tr>
+<td>groupBy</td>
+<td>string</td>
+<td>Report field that data should be grouped by</td>
+</tr>
+<tr>
+<td>groupings</td>
+<td>boolean</td>
+<td>If true, the report is broken into sections based on the field identified by <code>groupBy</code></td>
+</tr>
+<tr>
+<td>orgId</td>
+<td>string</td>
+<td>The <code>Orgnanization.id</code> that this report belongs in</td>
+</tr>
+<tr>
+<td>parameters</td>
+<td>object</td>
+<td>Determines which parameters should be included <a href="#root-parameters">Details</a></td>
+</tr>
+<tr>
+<td>sql</td>
+<td>string</td>
+<td>The SQL used to generate the report.</td>
+</tr>
+<tr>
+<td>headerFields</td>
+<td>array</td>
+<td>Data to be displayed as a header</td>
+</tr>
+<tr>
+<td>dataFields</td>
+<td>array</td>
+<td>List of fields to show in the report</td>
+</tr>
+</tbody>
+</table>
+<h3 id="parameters"><a name="root-parameters"></a> parameters</h3>
+<p>Determines which parameters should be included</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>beginDate</td>
+<td>boolean</td>
+<td></td>
+</tr>
+<tr>
+<td>endDate</td>
+<td>boolean</td>
+<td></td>
+</tr>
+<tr>
+<td>userKey</td>
+<td>boolean</td>
+<td></td>
+</tr>
+<tr>
+<td>currentUser</td>
+<td>boolean</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="oujob">OUJob</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>oujob</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>oujobs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_5">Version: v1</h3>
+<p>{}</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cronSchedule</td>
+<td>object</td>
+<td>The cron configuration, using standard cron rules. <a href="#root-cronschedule">Details</a></td>
+</tr>
+<tr>
+<td>className</td>
+<td>string</td>
+<td>Implementaiton of <code>com.tremolosecurity.provisioning.scheduler.UnisonJob</code></td>
+</tr>
+<tr>
+<td>group</td>
+<td>string</td>
+<td>A key to group jobs by, arbitrary</td>
+</tr>
+<tr>
+<td>params</td>
+<td>array</td>
+<td>List of configuration options.  individual options may be listed multiple times <a href="#root-params">Details</a></td>
+</tr>
+<tr>
+<td>secretParams</td>
+<td>array</td>
+<td>Secret data that should be loaded directly from Kubernetes Secrets <a href="#root-secretparams">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="cronschedule"><a name="root-cronschedule"></a> cronSchedule</h3>
+<p>The cron configuration, using standard cron rules.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>seconds</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>minutes</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>hours</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>dayOfMonth</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>month</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>dayOfWeek</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>year</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="params_2"><a name="root-params"></a> params</h3>
+<p>List of configuration options.  individual options may be listed multiple times</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>value</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="secretparams_1"><a name="root-secretparams"></a> secretParams</h3>
+<p>Secret data that should be loaded directly from Kubernetes Secrets</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the configuration option for the job</td>
+</tr>
+<tr>
+<td>secretName</td>
+<td>string</td>
+<td>The name of the <code>Secret</code> to get the value from</td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>string</td>
+<td>The key in the <code>data</code> section of the <code>Secret</code> to get the data from</td>
+</tr>
+</tbody>
+</table>
+<h2 id="messagelistener">MessageListener</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>messagelistener</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>messagelisteners</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_6">Version: v1</h3>
+<p>Reveives inbound messages for asynchronous processing</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>className</td>
+<td>string</td>
+<td>Implementation of <code>com.tremolosecurity.provisioning.core.UnisonMessageListener</code></td>
+</tr>
+<tr>
+<td>params</td>
+<td>array</td>
+<td>List of configuration options, each option can be listed multiple times <a href="#root-params">Details</a></td>
+</tr>
+<tr>
+<td>secretParams</td>
+<td>array</td>
+<td>Secret data to be loaded directly from Kubernetes <code>Secret</code> objects <a href="#root-secretparams">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="params_3"><a name="root-params"></a> params</h3>
+<p>List of configuration options, each option can be listed multiple times</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>value</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="secretparams_2"><a name="root-secretparams"></a> secretParams</h3>
+<p>Secret data to be loaded directly from Kubernetes <code>Secret</code> objects</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The configuration option to set</td>
+</tr>
+<tr>
+<td>secretName</td>
+<td>string</td>
+<td>The <code>Secret</code> to pull data from</td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>string</td>
+<td>The key in the <code>data</code> section of the <code>Secret</code> to pull the value from</td>
+</tr>
+</tbody>
+</table>
+<h2 id="resultgroup">ResultGroup</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>resultgroup</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>resultgroups</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_7">Version: v1</h3>
+<p>A group of actions to take as a result of an authentication or authorization event</p>
+<p><strong><em>The spec is an array with each item below being a property of each array item</em></strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>resultType</td>
+<td>string</td>
+<td>A result of an authenticaiton or authorization event:<br>- <code>header</code> - A request header injected into an HTTP request, result of an authoriztion event<br>- <code>cookie</code> - A Cookie being added to the response, result of an authentication event<br>- <code>redirect</code> - A 302 sent back to the client, can be the result of either</td>
+</tr>
+<tr>
+<td>source</td>
+<td>string</td>
+<td>The source of the value of a result</td>
+</tr>
+<tr>
+<td>value</td>
+<td>string</td>
+<td>Depends on <code>source</code>:<br>- <code>static</code> - The value to set<br>- <code>user</code> - The name of the attribute from the logged in user to user<br>- <code>custom</code> - Implementation of <code>com.tremolosecurity.proxy.results.CustomResult</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="customauthorization">CustomAuthorization</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>customaz</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>customazs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_8">Version: v1</h3>
+<p>A custom authorization is an implementation of <code>com.tremolosecurity.proxy.az.CustomAuthorization</code></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>className</td>
+<td>string</td>
+<td>Implementation of <code>com.tremolosecurity.proxy.az.CustomAuthorization</code></td>
+</tr>
+<tr>
+<td>params</td>
+<td>object</td>
+<td>List of configuration options.  Properties can have the value of a <code>string</code> or array of <code>string</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="authenticationmechanism">AuthenticationMechanism</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>authmech</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>authmechs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_9">Version: v1</h3>
+<p>Defines a way to authenticate users</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uri</td>
+<td>string</td>
+<td>The path of a URL that triggers this method, <strong>MUST</strong> start with <code>/auth/</code></td>
+</tr>
+<tr>
+<td>className</td>
+<td>string</td>
+<td>Implementation of <code>com.tremolosecurity.proxy.auth.AuthMechanism</code></td>
+</tr>
+<tr>
+<td>init</td>
+<td>object</td>
+<td>Initialization parameters for when this mechanism is created.  These parameters are global for all chains.  Each parameter can have a value of a single <code>string</code> or an array of <code>string</code></td>
+</tr>
+<tr>
+<td>secretParams</td>
+<td>array</td>
+<td>Pull secret data directly from a Kubernetes <code>Secret</code> <a href="#root-secretparams">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="secretparams_3"><a name="root-secretparams"></a> secretParams</h3>
+<p>Pull secret data directly from a Kubernetes <code>Secret</code></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the configuration option</td>
+</tr>
+<tr>
+<td>secretName</td>
+<td>string</td>
+<td>The name of the Kubernetes <code>Secret</code></td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>string</td>
+<td>The name of the key in the <code>data</code> section of the Kubernetes <code>Secret</code> to pull the value from</td>
+</tr>
+</tbody>
+</table>
+<h2 id="authenticationchain">AuthenticationChain</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>authchain</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>authchains</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_10">Version: v1</h3>
+<p>An authentication chain links together multiple mechanisms to authenticate a user</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>level</td>
+<td>integer</td>
+<td>The strength of the chain.  If a user is already authenticated using a chain of equal or higher strength then authenticaiton is not re-run.</td>
+</tr>
+<tr>
+<td>finishOnRequiredSucess</td>
+<td>boolean</td>
+<td>If <code>true</code>, fill short-circuit a chain that has mechanisms which aren't required once the required ones finish.  Generally left to <code>false</code></td>
+</tr>
+<tr>
+<td>root</td>
+<td>string</td>
+<td>Where in the OpenUnison virtual directory to pull users from.  Usually <code>o=Tremolo</code></td>
+</tr>
+<tr>
+<td>compliance</td>
+<td>object</td>
+<td>Configures protection against brute-force attacks.  See https://openunison.github.io/UPDATE for detailed configuration instructions <a href="#root-compliance">Details</a></td>
+</tr>
+<tr>
+<td>authMechs</td>
+<td>array</td>
+<td>List of mechanisms in this chain <a href="#root-authmechs">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="compliance"><a name="root-compliance"></a> compliance</h3>
+<p>Configures protection against brute-force attacks.  See https://openunison.github.io/UPDATE for detailed configuration instructions</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enabled</td>
+<td>boolean</td>
+<td></td>
+</tr>
+<tr>
+<td>maxFailedAttempts</td>
+<td>integer</td>
+<td></td>
+</tr>
+<tr>
+<td>maxLockoutTime</td>
+<td>integer</td>
+<td></td>
+</tr>
+<tr>
+<td>numFailedAttribute</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>lastFailedAttribute</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>lastSucceedAttribute</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>updateAttributesWorkflow</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td>uidAttributeName</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="authmechs"><a name="root-authmechs"></a> authMechs</h3>
+<p>List of mechanisms in this chain</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of an <code>AuthenticationMechanism</code></td>
+</tr>
+<tr>
+<td>required</td>
+<td>string</td>
+<td>Determines if a mechanism satisfies a chain.  Mostly should be <code>required</code></td>
+</tr>
+<tr>
+<td>params</td>
+<td>object</td>
+<td>Configuration parameters.  Values can be a <code>string</code> or array of <code>string</code></td>
+</tr>
+<tr>
+<td>secretParams</td>
+<td>array</td>
+<td>Configuraiton options that come directly from Kubernetes <code>Secret</code> objects <a href="#root-authmechs--secretparams">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="secretparams_4"><a name="root-authmechs--secretparams"></a> secretParams</h4>
+<p>Configuraiton options that come directly from Kubernetes <code>Secret</code> objects</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the configuration option</td>
+</tr>
+<tr>
+<td>secretName</td>
+<td>string</td>
+<td>The Kubernetes <code>Secret</code> to pull the value from</td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>string</td>
+<td>The name of the key in the <code>data</code> section of the source <code>Secret</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="application">Application</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>application</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>applications</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v2_1">Version: v2</h3>
+<p>Contains the configuration for a web application, identity provider, or API</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>azTimeoutMillis</td>
+<td>integer</td>
+<td>Number of milliseconds authorization decisions should be cached for</td>
+</tr>
+<tr>
+<td>isApp</td>
+<td>boolean</td>
+<td>If true, the application is assumed to be a reverse proxy or local API.  If false, the application is an identity provider</td>
+</tr>
+<tr>
+<td>urls</td>
+<td>array</td>
+<td>List of URLs that make up an application <a href="#root-urls">Details</a></td>
+</tr>
+<tr>
+<td>cookieConfig</td>
+<td>object</td>
+<td>Determines how an <code>Application</code> manages its session via cookies <a href="#root-cookieconfig">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="urls"><a name="root-urls"></a> urls</h3>
+<p>List of URLs that make up an application</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hosts</td>
+<td>array</td>
+<td>List of host names that this URL is valid for.  May be <code>*</code> for all hosts</td>
+</tr>
+<tr>
+<td>filterChain</td>
+<td>array</td>
+<td>List of filters that can manipulate request and response headers <a href="#root-urls--filterchain">Details</a></td>
+</tr>
+<tr>
+<td>proxyTo</td>
+<td>string</td>
+<td><strong>Optional</strong> If isApp is true, determines the URL to forward the request to.  typically uses the form <code>https://host:port${fullURI}</code> where <code>${fullURI}</code> is replaced with the path section of the requested URL</td>
+</tr>
+<tr>
+<td>proxyConfiguration</td>
+<td>object</td>
+<td>Provides timeout configurations for proxying to the <code>proxyTo</code> URL.  If omited, there are no timeouts <a href="#root-urls--proxyconfiguration">Details</a></td>
+</tr>
+<tr>
+<td>uri</td>
+<td>string</td>
+<td>The path of the URL, the portian after the host that this URL will match on</td>
+</tr>
+<tr>
+<td>regex</td>
+<td>boolean</td>
+<td>if true, the <code>uri</code> is interpreted as a regular expression</td>
+</tr>
+<tr>
+<td>authChain</td>
+<td>string</td>
+<td>The name of an <code>AuthenticationChain</code> that will be used to authenticate access to this URL</td>
+</tr>
+<tr>
+<td>overrideHost</td>
+<td>boolean</td>
+<td>If true, the the proxied request will include the original request's <code>HOST</code> header</td>
+</tr>
+<tr>
+<td>overrideReferer</td>
+<td>boolean</td>
+<td>If true, and referals' hosts are overriden with the orginal request's <code>HOST</code> header</td>
+</tr>
+<tr>
+<td>results</td>
+<td>object</td>
+<td>Actions that will triger as the result to an authentication or authorization event <a href="#root-urls--results">Details</a></td>
+</tr>
+<tr>
+<td>azRules</td>
+<td>array</td>
+<td>List of rules used to authorize access.  Authorization succeeds if <strong>ANY</strong> of these rules pass <a href="#root-urls--azrules">Details</a></td>
+</tr>
+<tr>
+<td>idp</td>
+<td>object</td>
+<td>Configuration for an <code>Application</code> that acts as an identity provider <a href="#root-urls--idp">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="filterchain"><a name="root-urls--filterchain"></a> filterChain</h4>
+<p>List of filters that can manipulate request and response headers</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>className</td>
+<td>string</td>
+<td>Implementation of <code>com.tremolosecurity.proxy.filter.HttpFilter</code></td>
+</tr>
+<tr>
+<td>params</td>
+<td>object</td>
+<td>List of configuration parameters.  Parameters may be a <code>string</code> or an <code>array</code> of <code>string</code></td>
+</tr>
+<tr>
+<td>secretParams</td>
+<td>array</td>
+<td>Load parameters directly from Kubernetes <code>Secret</code> objects <a href="#root-urls--filterchain--secretparams">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h5 id="secretparams_5"><a name="root-urls--filterchain--secretparams"></a> secretParams</h5>
+<p>Load parameters directly from Kubernetes <code>Secret</code> objects</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the filter parameter</td>
+</tr>
+<tr>
+<td>secretName</td>
+<td>string</td>
+<td>The name of the Kubernetes <code>Secret</code></td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>string</td>
+<td>The name of the key in the <code>data</code> section of the <code>Secret</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="proxyconfiguration"><a name="root-urls--proxyconfiguration"></a> proxyConfiguration</h4>
+<p>Provides timeout configurations for proxying to the <code>proxyTo</code> URL.  If omited, there are no timeouts</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>connectionTimeoutMillis</td>
+<td>integer</td>
+<td>The number of milliseconds an attempted connection will wait until timing out.  Defaults to <code>0</code>, which is no timeout</td>
+</tr>
+<tr>
+<td>requestTimeoutMillis</td>
+<td>integer</td>
+<td>The number of milliseconds in an individual request will wait until timing out.  Defaults to <code>0</code>, which is no timeout</td>
+</tr>
+<tr>
+<td>socketTimeoutMillis</td>
+<td>integer</td>
+<td>The number of milliseconds a socket can remain open without receiving any data.  Defaults to <code>0</code>, which is no timeout</td>
+</tr>
+</tbody>
+</table>
+<h4 id="results"><a name="root-urls--results"></a> results</h4>
+<p>Actions that will triger as the result to an authentication or authorization event</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>auSuccess</td>
+<td>string</td>
+<td>The name of a <code>ResultGroup</code> that will be executed when a user successfully authenticates to this URL</td>
+</tr>
+<tr>
+<td>auFail</td>
+<td>string</td>
+<td>The name of a <code>ResultGroup</code> that will be executed when a user fails to authenticate to this URL</td>
+</tr>
+<tr>
+<td>azSuccess</td>
+<td>string</td>
+<td>The name of a <code>ResultGroup</code> that will be executed when a user is successfully authorized for this URL</td>
+</tr>
+<tr>
+<td>azFail</td>
+<td>string</td>
+<td>The name of a <code>ResultGroup</code> that will be executed when a user is failed to be authorized for this URL</td>
+</tr>
+</tbody>
+</table>
+<h4 id="azrules_2"><a name="root-urls--azrules"></a> azRules</h4>
+<p>List of rules used to authorize access.  Authorization succeeds if <strong>ANY</strong> of these rules pass</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scope</td>
+<td>string</td>
+<td>One of:<br>- <code>group</code> - The DN of a group the suer must be a member of in OpenUnison's virtual directory<br>- <code>dynamicGroup</code> - The DN of an LDAP dynamic group the suer must be a member of in OpenUnison's virtual directory<br>- <code>dn</code> - The DN of an area of the virtual directory where all users under that DN are authorized<br>- <code>custom</code> - The name of a <code>CustomAuthorization</code>.  Can be followed by a <code>!</code> with parameters.  For instance <code>SomeCustomAZ!param1!param2</code> will call the custom authorization <code>SomeCustomAZ</code> with the parameters <code>param1</code> and <code>param2</code><br>- <code>filter</code> - An LDAP filter that will be applied to a logged in user</td>
+</tr>
+<tr>
+<td>constraint</td>
+<td>string</td>
+<td>How to enforce this rule based on the <code>scope</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="idp"><a name="root-urls--idp"></a> idp</h4>
+<p>Configuration for an <code>Application</code> that acts as an identity provider</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>className</td>
+<td>string</td>
+<td>Implementation of <code>com.tremolosecurity.idp.server.IdentityProvider</code></td>
+</tr>
+<tr>
+<td>params</td>
+<td>object</td>
+<td>properties to be passed to the identity provider.  Values can be either a <code>string</code> or an array of <code>string</code></td>
+</tr>
+<tr>
+<td>secretParams</td>
+<td>array</td>
+<td>Load parameters directly from Kubernetes <code>Secret</code> objects <a href="#root-urls--idp--secretparams">Details</a></td>
+</tr>
+<tr>
+<td>mappings</td>
+<td>object</td>
+<td>Provides mappings from a user's attributes into an identity provider's assertions <a href="#root-urls--idp--mappings">Details</a></td>
+</tr>
+<tr>
+<td>trusts</td>
+<td>array</td>
+<td>List of trusted clients <a href="#root-urls--idp--trusts">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h5 id="secretparams_6"><a name="root-urls--idp--secretparams"></a> secretParams</h5>
+<p>Load parameters directly from Kubernetes <code>Secret</code> objects</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the identity provider parameter</td>
+</tr>
+<tr>
+<td>secretName</td>
+<td>string</td>
+<td>The name of the Kubernetes <code>Secret</code></td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>string</td>
+<td>The name of the key in the <code>data</code> section of the <code>Secret</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="mappings"><a name="root-urls--idp--mappings"></a> mappings</h5>
+<p>Provides mappings from a user's attributes into an identity provider's assertions</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>strict</td>
+<td>boolean</td>
+<td>If true, only mapped attributes will be included in the assertion.  If false, all attributes and mapped attributes are included.</td>
+</tr>
+<tr>
+<td>map</td>
+<td>array</td>
+<td>list of mappings <a href="#root-urls--idp--mappings--map">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h6 id="map"><a name="root-urls--idp--mappings--map"></a> map</h6>
+<p>list of mappings</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>targetAttributeName</td>
+<td>string</td>
+<td>The name of the attribute as it will appear in the assertion</td>
+</tr>
+<tr>
+<td>targetAttributeSource</td>
+<td>string</td>
+<td>Depends on <code>sourceType</code>:<br>- <code>static</code> - The specific value of the attribute<br>- <code>user</code> - The name of the attribute from the user to use<br>- <code>composite</code> - Assemble an attribute from the first values of other attributes and static content.  For instance <code>${givenName} ${sn}</code> where <code>givenName</code> is <code>First</code> and <code>sn</code> is <code>Last</code> will create the value <code>First Last</code><br>- <code>custom</code> - Implementation of <code>com.tremolosecurity.provisioning.mapping.CustomMapping</code>, parameters can be supplied after a <code>|</code> that's comma delimited.  For instance, <code>com.tremolosecurity.mapping.JavaScriptMapping|k8s,openunison,argocd-groups</code> Uses the <code>JavaScriptMapping</code>, passing the parameters <code>k8s</code>, <code>openunison</code>, and <code>argocd-groups</code> as parameters</td>
+</tr>
+<tr>
+<td>sourceType</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h5 id="trusts"><a name="root-urls--idp--trusts"></a> trusts</h5>
+<p>List of trusted clients</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the trust</td>
+</tr>
+<tr>
+<td>params</td>
+<td>object</td>
+<td>The parameters to pass the to trust configuration.  Values may be a <code>string</code> or an array of <code>string</code></td>
+</tr>
+<tr>
+<td>secretParams</td>
+<td>array</td>
+<td>Load parameters directly from Kubernetes <code>Secret</code> objects <a href="#root-urls--idp--trusts--secretparams">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h6 id="secretparams_7"><a name="root-urls--idp--trusts--secretparams"></a> secretParams</h6>
+<p>Load parameters directly from Kubernetes <code>Secret</code> objects</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the trust parameter</td>
+</tr>
+<tr>
+<td>secretName</td>
+<td>string</td>
+<td>The name of the Kubernetes <code>Secret</code></td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>string</td>
+<td>The name of the key in the <code>data</code> section of the <code>Secret</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="cookieconfig"><a name="root-cookieconfig"></a> cookieConfig</h3>
+<p>Determines how an <code>Application</code> manages its session via cookies</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sessionCookieName</td>
+<td>string</td>
+<td>Name of the cookie</td>
+</tr>
+<tr>
+<td>domain</td>
+<td>string</td>
+<td>The domain the cookie applies to.  Can be <code>*</code> to apply to any domain the URLs of the application accept</td>
+</tr>
+<tr>
+<td>scope</td>
+<td>integer</td>
+<td>ignore</td>
+</tr>
+<tr>
+<td>logoutURI</td>
+<td>string</td>
+<td>The URI, or path in the URL, that triggers the ending of the session</td>
+</tr>
+<tr>
+<td>keyAlias</td>
+<td>string</td>
+<td>The name of the key in OpenUnison's keystore used to encrypt the session cookie</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>integer</td>
+<td>The time, in seconds, that an idle session should be discarded</td>
+</tr>
+<tr>
+<td>secure</td>
+<td>boolean</td>
+<td>If true, cookies require an HTTPS connection</td>
+</tr>
+<tr>
+<td>httpOnly</td>
+<td>boolean</td>
+<td>If true, cookies are not accessible from javascript</td>
+</tr>
+<tr>
+<td>sameSite</td>
+<td>string</td>
+<td>Used to set the <code>SameSite</code> option in a cookie.  One of <code>None</code>, <code>Lax</code>, <code>Strict</code>, <code>Ignore</code></td>
+</tr>
+<tr>
+<td>cookiesEnabled</td>
+<td>boolean</td>
+<td>If true, sessions are enabled.  If false (such as for an API), no session is generated or tracked</td>
+</tr>
+</tbody>
+</table>
+<h2 id="groupmetadata">GroupMetaData</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>groupmetadata</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>groupmetadatas</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_11">Version: v1</h3>
+<p>Stores mapping from an external group to an internal group.  Can also be used to create a group in the database without executing SQL</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>groupName</td>
+<td>string</td>
+<td>The name of the group to create</td>
+</tr>
+<tr>
+<td>externalName</td>
+<td>string</td>
+<td><strong>Optional</strong> - the name of the external group to map to</td>
+</tr>
+</tbody>
+</table>
+<h2 id="javascriptmapping">JavaScriptMapping</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>javascriptmapping</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>javascriptmappings</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_12">Version: v1</h3>
+<p>Stores the javascript for a custom mapping</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>javascript</td>
+<td>string</td>
+<td>JavaScript function for the mapping.  Must contain at least one funciton named <code>doMapping</code> with two arguments: <code>user</code> and <code>attributeName</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="waitforstate">WaitForState</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>waitforstate</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>waitforstates</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_13">Version: v1</h3>
+<p>Stores the state of a workflow waiting for an object to reach a certain status</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>state</td>
+<td>string</td>
+<td>The encrypted state of the workflow waiting for the expected status before continuing</td>
+</tr>
+</tbody>
+</table>
+<h2 id="notifier">Notifier</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Group</strong></td>
+<td>openunison.tremolo.io</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Namespaced</td>
+</tr>
+<tr>
+<td><strong>Singular</strong></td>
+<td>notifier</td>
+</tr>
+<tr>
+<td><strong>Plural</strong></td>
+<td>notifiers</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-v1_14">Version: v1</h3>
+<p>Configures a custom notification mechanism for OpenUnison</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>className</td>
+<td>string</td>
+<td>Implementation of <code>com.tremolosecurity.openunison.notifications.NotificationSystem</code></td>
+</tr>
+<tr>
+<td>params</td>
+<td>array</td>
+<td>Set of configuration parameters <a href="#root-params">Details</a></td>
+</tr>
+<tr>
+<td>secretParams</td>
+<td>array</td>
+<td><a href="#root-secretparams">Details</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="params_4"><a name="root-params"></a> params</h3>
+<p>Set of configuration parameters</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Configuration parameter name, may be listed multiple times</td>
+</tr>
+<tr>
+<td>value</td>
+<td>string</td>
+<td>Value</td>
+</tr>
+</tbody>
+</table>
+<h3 id="secretparams_8"><a name="root-secretparams"></a> secretParams</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the configuration parameter</td>
+</tr>
+<tr>
+<td>secretName</td>
+<td>string</td>
+<td>The name of the Kubernetes <code>Secret</code></td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>string</td>
+<td>The name of the key in the <code>Secret</code> to pull the data from</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>
