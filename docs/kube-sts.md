@@ -14,7 +14,18 @@ This lets you use your `Pod`'s identity to access external services.  There's a 
 
 OpenUnison provides a Security Token Service that allows you to easily provide your `Pod`s with tokens ready to use with external services.  OpenUnison does the work of keeping this token updated with a lightweight sidecar.  You can connect to as many endpoints with your STS as you want, and you can also have separate keys for each one.  For instance, if you need to provide access to multiple AWS accounts, you can separate your STS' by keys, so that they can't be abused to access accounts they shouldn't be able to.
 
-(need picture of an STS)
+![STS Flow](../docs/assets/images/sts.png)
+
+When using an STS with your external services, the following steps occur:
+
+1. Your `Pod` makes a request to your STS with your `Pod`'s bound `ServiceAccount` token.  This token is bound to your specific workload.
+2. The STS validates your token and authorizes access to the remote service, issuing a new token for that service.
+3. Your `Pod` uses the STS' issued token when communicating with the remote service.
+4. The remote service validates tokens from your STS by polling the STS for its OpenID Connect Discovery document, which contains the keys and information needed to validate the token.
+
+Using an STS, your cluster is able to call remote services, both on prem and in the cloud, using short lived tokens that are narrowly scoped and based on validated workloads.  The OpenID Connect discovery documents don't need to be hosted in OpenUnison, they can be hosted anywhere, making it possible to connect to cloud resources that don't have access to your clusters.
+
+This document will provide specific integration instructions for cloud based resources.
 
 ## Amazon Web Services
 
