@@ -14,7 +14,7 @@ This lets you use your `Pod`'s identity to access external services.  There's a 
 
 OpenUnison provides a Security Token Service that allows you to easily provide your `Pod`s with tokens ready to use with external services.  OpenUnison does the work of keeping this token updated with a lightweight sidecar.  You can connect to as many endpoints with your STS as you want, and you can also have separate keys for each one.  For instance, if you need to provide access to multiple AWS accounts, you can separate your STS' by keys, so that they can't be abused to access accounts they shouldn't be able to.
 
-![STS Flow](../docs/assets/images/sts.png)
+![STS Flow](assets/images/sts.png)
 
 When using an STS with your external services, the following steps occur:
 
@@ -33,7 +33,7 @@ The AWS client SDks all know how to use JWT tokens that are scoped for AWS.  Whe
 
 ### Create an Issuer on AWS CloudFront with S3
 
-AWS' CloudFront is a content delivery service that provides an entry point to other services, such as web sites and applications, but gives you some added benefits like denial of service (DoS) protection and cacheing.  In our example, we're going to use it as a front-end for an S3 bucket we're going to use to store our oidc discovery documents in.  CloudFront will provide you with a default URL that doesn't have any identifiable information in it.  I like using the default because it's not identifiable!  Your security team will love it.
+AWS' CloudFront is a content delivery service that provides an entry point to other services, such as web sites and applications, but gives you some added benefits like denial of service (DoS) protection and caching.  In our example, we're going to use it as a front-end for an S3 bucket we're going to use to store our oidc discovery documents in.  CloudFront will provide you with a default URL that doesn't have any identifiable information in it.  I like using the default because it's not identifiable!  Your security team will love it.
 
 That said, you don't have to use CloudFront+S3.  If you have another way to publish the documents, that'll work too!
 
