@@ -27,6 +27,41 @@ Using an STS, your cluster is able to call remote services, both on prem and in 
 
 This document will provide specific integration instructions for cloud based resources.
 
+## Headless Deployment
+
+When deploying OpenUnison as an STS, you may want to deploy OpenUnison without a portal or user authentication.  You may also want to separate your user authentication from your STS to make them easier to manage.  Finally, you may not want to use OpenUnison to authenticate users accessing your cluster.  Whatever your reason for not deploying a portal, there are some additional options to your values.yaml to add:
+
+```yaml
+# Changes probes to not look for the kubernetes identity provider
+services:
+  liveness_probe:
+  - /usr/local/openunison/bin/check_alive.sh
+  - "https://127.0.0.1:8443/check_alive"
+  - "issuer"
+  - "https://127.0.0.1:8443/check_alive"
+  - "alive"
+  readiness_probe:
+  - /usr/local/openunison/bin/check_alive.sh
+  - "https://127.0.0.1:8443/check_alive"
+  - "issuer"
+  - "https://127.0.0.1:8443/check_alive"
+  - "alive"
+
+# OpenUnison won't deploy the login portal or the supporting container.  also won't make sure
+# that one of the authentication blocks have been configured
+openunison:
+  enable_portal: false
+  enable_pre_check: false
+
+# optional: if you have another OpenUnison deployed this will keep the CRDs from
+# overlapping
+# crd:
+#  deploy: false
+```
+
+These changes are in addition to any configurations needed for your STS, covered in the rest of this page.
+
+
 ## Amazon Web Services
 
 The AWS client SDks all know how to use JWT tokens that are scoped for AWS.  When the token expires, the client SDKs know to reload them.  Creating an STS for AWS requires a place to host your OIDC discovery documents that's accessible from the public internet.  Our example will use AWS CloudFront with an S3 bucket.  This gives us our issuer with a commercially signed certificate authority (CA).  Once we have our issuer created, we'll deploy our STS, copy our oidc discovery data into our S3 bucket, then create a trust with AWS via IAM.  Once that's all done, we can launch a `Pod` that will have access to AWS' services using our short lived tokens instead of a static identity!
