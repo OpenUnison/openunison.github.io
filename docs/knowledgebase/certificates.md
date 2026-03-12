@@ -135,3 +135,38 @@ openunison:
 ```
 
 Whenever cert-manager regenerates the `Secret` `idp-cert`, it will get loaded directly into OpenUnison.
+
+#### Kubernetes Identity Provider Short Lived Keys
+
+OpenUnison automatically replaces the key used by the Kubernetes identity provider once a year.  If you want to have keys that rotate more often, you may use a tool like cert-manager to automate the regeneration more quickly and allow OpenUnison to reload the key.  First, generate a key using cert-manager using a `Certificate`:
+
+```yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: unison-saml2-rp-sig
+  namespace: openunison
+spec:
+  commonName: unison-saml2-rp-sig
+  duration: 2h
+  isCA: false
+  issuerRef:
+    kind: ClusterIssuer
+    name: internal-ca-issuer
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  renewBefore: 1h
+  secretName: unison-saml2-rp-sig
+```
+
+It's important that the `Secret` name is `unison-saml2-rp-sig`.  Once `Secret` has been created, update your values.yaml with 
+
+```yaml
+openunison:
+  generate_idp_key_secret: false
+```
+
+This will configure the operator to leave an existing `Secret` alone.  Once OpenUnison is redeployed the key will be reloaded whenever the `Secret` is updated.
+
+***NOTE:*** When the keys rotate, existing sessions will be invalidated and will need to re-login.
