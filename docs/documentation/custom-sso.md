@@ -405,6 +405,41 @@ spec:
     uri: /auth/idp/app
 ```
 
+### Dynamic Trust Loading
+
+***1.0.45+***
+
+OpenID Connect Identity Providers (IdP) can dynamically load `Trust` objects the same way the built in Kubernetes Idp can.  When configuring your OpenID Connect IdP, specify support for dynamically loaded trusts with these additional `param` options:
+
+```yaml
+.
+.
+.
+    idp:
+      className: com.tremolosecurity.idp.providers.OpenIDConnectIdP
+      params:
+        jwtSigningKey: "unison-saml2-rp-sig"
+        sessionStoreClassName: "com.tremolosecurity.oidc.k8s.K8sSessionStore"
+        k8sTarget: "k8s"
+        k8sNameSpace: "#[K8S_OPENUNISON_NS:openunison]"
+        
+        # specificy the trust loader, from Kubernetes Trust objects
+        trustConfigurationClassName: "com.tremolosecurity.oidc.k8s.K8sLoadTrusts"
+        # any parameters that start with "trusts." will be passed to the trust configuration
+        # the target used to communicate with Kubernetes
+        trusts.k8starget: "k8s"
+        # the namespace where to load Trust objects from
+        trusts.namespace: "#[K8S_OPENUNISON_NS:openunison]"
+        # Trust objects must have the label with the name tremolo.io/trust-app with this value to be
+        # loaded by the identity provider.  
+        labelValue: myapp
+.
+.
+.
+```
+
+If a `Trust` object has the `tremolo.io/trust-app` label, it will NOT be loaded by the main Kubernetes IdP.  Changing the `tremolo.io/trust-app` label via a patch will assign it to the correct IdP as well.
+
 ### CORS Headers
 
 ***1.0.44+***

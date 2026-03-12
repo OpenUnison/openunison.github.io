@@ -569,3 +569,22 @@ Injects impersonation headers into each request designed to be used by the Kuber
     groupAttribute: groups
   secretParams: []
 ```
+
+## SetupSyncTLSKeys
+
+Synchronizes keypairs from Kubernetes secrets as defined in the `OpenUnison` object.  
+
+```yaml
+- className: com.tremolosecurity.proxy.filters.SetupSyncTLSKeys
+  params:
+    # OpenShift target to use to find the OpenUnison object and read the secrets
+    target: k8s
+    # The namespace the OpenUnison object is in
+    ns: openunison
+    # The version of the OpenUnison CRD
+    version: v6
+    # The name of the OpenUnison object
+    name: openunison
+    # the number of seconds between checks for updated Secrets
+    secondsBetweenRuns: "30"
+```
