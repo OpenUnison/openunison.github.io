@@ -377,6 +377,20 @@ The secret file used with the `ouctl` command will contain the client secret.  I
 
 ***If using `echo DATA | base64` to encode your `Secret`, make sure to use `-n` to remove the excess carriage return, ie `echo -n DATA | base64`.  Your authentication will fail otherwise.***
 
+##### Forward Proxies
+
+If using a cloud based identity provider like Entra ID or Okta, you may need to configure a forward proxy to access these services.  OpenUnison will honor configured proxy settings.  Adding the following to your values.yaml will configure OpenUnison to use a forward proxy for connections:
+
+```yaml
+openunison:
+  non_secret_data:
+    http.proxyHost: your.proxy.host
+    http.proxyPort: 80
+    https.proxyHost: your.proxy.host
+    https.proxyPort: 80
+    http.nonProxyHosts: localhost|127.*|*.svc|*.svc.cluster.local
+```
+
 #### RBAC Bindings
 
 The `groups` claim will be passed to Kubernetes to support RBAC bindings.  You can create `RoleBinding` and `ClusterRoleBinding` objects based on this attributes.  For
