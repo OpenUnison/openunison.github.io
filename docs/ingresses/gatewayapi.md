@@ -20,4 +20,68 @@ network:
   .
 ```
 
+## Bring Your Own Gateway
+
+By default, the Helm chart creates a simple `Gateway` that will provide a listener that will decrypt traffic for web components, and TLS passthrough for the kube-oidc-proxy if you're using impersonation.  Here's what that typical `Gateway` will look like:
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: enterprise-ca
+    meta.helm.sh/release-name: orchestra
+    meta.helm.sh/release-namespace: openunison
+  name: openunison-orchestra
+  namespace: openunison
+spec:
+  gatewayClassName: cilium
+  listeners:
+  - allowedRoutes:
+      namespaces:
+        from: Same
+    hostname: k8sou.192-168-2-13.nip.io
+    name: openunison
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: ou-tls-certificate
+      mode: Terminate
+  - allowedRoutes:
+      namespaces:
+        from: Same
+    hostname: k8sapi.192-168-2-13.nip.io
+    name: kube-oidc-proxy
+    port: 443
+    protocol: TLS
+    tls:
+      mode: Passthrough
+```
+
+To disable the creation of this `Gateway` and provide your own, in your values.yaml:
+
+```yaml
+network:
+  gatewayapi:
+    class: cilium
+    gateway:
+      # disable the creation of the Gateway object
+      create: false
+      # specify the parent_refs for the web components of OpenUnison
+      parent_refs:
+      - name: openunison-orchestra-manual
+        namespace: openunison
+        sectionName: openunison
+      # specify the parent_refs for the kube-oidc-proxy
+      kube_oidcproxy_parent_refs:
+      - name: openunison-orchestra-manual
+        namespace: openunison
+        sectionName: kube-oidc-proxy
+```
+
+With these updates, the `HTTPRoute` objects will reference the specified `Gateway` instead of creating one.
+
 [Return to deployment](../../deployauth#pre-requisites)
