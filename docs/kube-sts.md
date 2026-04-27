@@ -413,6 +413,36 @@ When the `Pod` is launched, you'll see that there are two containers.  In additi
 
 Now that we're working with short lived tokens for our interactions with AWS, next we'll make sure we know how to rotate our private key.
 
+#### Running the Sidecar as a Specific User
+
+If your container is not running as root, you will need the sidecar to also run as the same user as the container.  You can specify the user and group as annotations on your workload:
+
+```yaml
+piVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    # tells OpenUnison to inject the token
+    tremolo.io/aws-role: arn:aws:iam::252245117542:role/openunison-sts-autorefresh
+    # add the runAsNonRoot flag if needed
+    tremolo.io/non-root: "true"
+    # specify the user id the container should run as
+    tremolo.io/user: "65532" 
+    # specify the group id the container should run as
+    tremolo.io/group: "65532"
+```
+
+In the above example, the sidecar will run as the uid 65532 and the gid 65532.  
+
+***NOTE***: If your manifest doesn't include the exact user id and you don't have access to a Dockerfile you can use to determine the user, you can use the following docker command to get the uid:
+
+```sh
+docker image inspect quay.io/jetstack/cert-manager-controller:v1.20.2 --format '{{.Config.User}}' 
+65532
+```
+If there is a group id you'll see it after the user id.
+
+
 ### Rotating Signature Keys
 
 It's good security practice to rotate your signature keys on a regular basis.  The easiest way to do this is to delete the `Secret` that stores the key and redeploy OpenUnison.  This will trigger the operator to generate a new key.  Next, you'll need to upload the newly generated OIDC discovery documents:
