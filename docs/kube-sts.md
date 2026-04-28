@@ -418,12 +418,12 @@ Now that we're working with short lived tokens for our interactions with AWS, ne
 If your container is not running as root, you will need the sidecar to also run as the same user as the container.  You can specify the user and group as annotations on your workload:
 
 ```yaml
-piVersion: v1
+apiVersion: v1
 kind: Pod
 metadata:
   annotations:
     # tells OpenUnison to inject the token
-    tremolo.io/aws-role: arn:aws:iam::252245117542:role/openunison-sts-autorefresh
+    tremolo.io/aws-role: arn:aws:iam::XXXXX:role/openunison-sts-autorefresh
     # add the runAsNonRoot flag if needed
     tremolo.io/non-root: "true"
     # specify the user id the container should run as
