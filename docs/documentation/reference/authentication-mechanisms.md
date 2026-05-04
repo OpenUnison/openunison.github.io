@@ -978,7 +978,19 @@ spec:
 
 #### OAuth2K8sServiceAccount
 
-This mechanism will validate a Kubernetes service account token against the cluster it was issued from.  Once validated, the token is either mapped to a user or an ephemeral user is created for the session. 
+This mechanism will validate a Kubernetes service account token against the cluster it was issued from.  Once validated, the token is either mapped to a user or an ephemeral user is created for the session. This mechanism will create the following attributes:
+
+| Attribute | Description | Example |
+| --------- | ----------- | ------- |
+| `sub`     | The `sub` from the `ServiceAccount` | `system:serviceaccount:openunison:openunison-orchestra` |
+| `credential-id` | the unique id of the credential | `jti=891ce0f0-5a7d-4ac1-891e-6b1cf807eca4` |
+| `node-name` | The name of the node the `Pod` is running on | `k8s-cilium-node` |
+| `node-id` | The id of the node the `Pod` is running on | `c1434843-aad2-409a-a899-22df88c92056` |
+| `pod-name` | The name of the `Pod` | `openunison-orchestra-54c94d69d8-wb7tf` |
+| `pod-id` | The id of the `Pod` | `a5b21f3c-2c85-4b4e-a7b9-68ccce64571d` |
+
+You can test for a token is from a `Pod`, you can test for `(pod-id=*)`
+
 
 ##### Mechanism
 

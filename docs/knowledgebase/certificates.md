@@ -136,6 +136,124 @@ openunison:
 
 Whenever cert-manager regenerates the `Secret` `idp-cert`, it will get loaded directly into OpenUnison.
 
+##### Acting on New Keys
+
+If you want to trigger a process when a new key is created, annotate the `Secret` that stores the key data with the `tremolo.io/update-webhook` annotation where the value of the annotation is a URL to post the update information to.  This URL can be authenticated by the operator's `ServiceAccount` and does NOT validate TLS.  Here's an example in OpenUnison of how to handle this webhook:
+
+```yaml
+---
+apiVersion: openunison.tremolo.io/v1
+kind: Application
+metadata:
+  name: sts-update-aws
+  namespace: openunison
+  annotations:
+    argocd.argoproj.io/sync-wave: "40"
+spec:
+  azTimeoutMillis: 3000
+  isApp: true
+  azTimeoutMillis: 3000
+  cookieConfig:
+    cookiesEnabled: false
+    domain: "k8s-sts.domain.com"
+    httpOnly: true
+    keyAlias: session-unison
+    logoutURI: /logout
+    scope: -1
+    secure: true
+    sessionCookieName: tremolosession
+    timeout: 900
+  urls:
+  - authChain: anon
+    azRules:
+    - constraint: (&(sub=system:serviceaccount:openunison-operator:openunison-orchestra)(pod-name=*))
+      scope: filter
+    filterChain:
+    - className: com.tremolosecurity.proxy.filters.JavaScriptFilter
+      params:
+        javaScript: |-
+          GlobalEntries = Java.type("com.tremolosecurity.server.GlobalEntries");
+          ProxyConstants = Java.type("com.tremolosecurity.proxy.util.ProxyConstants");
+          System = Java.type("java.lang.System");
+          JwtClaims = Java.type("org.jose4j.jwt.JwtClaims");
+          JsonWebSignature = Java.type("org.jose4j.jws.JsonWebSignature");
+          AlgorithmIdentifiers = Java.type("org.jose4j.jws.AlgorithmIdentifiers");
+          IdpMappingType = Java.type("com.tremolosecurity.config.xml.IdpMappingType");
+          ProvisionMappingType = Java.type("com.tremolosecurity.config.xml.ProvisionMappingType");
+          MapIdentity = Java.type("com.tremolosecurity.provisioning.mapping.MapIdentity");
+          HttpServletRequestWrapper = Java.type("jakarta.servlet.http.HttpServletRequestWrapper");
+          OpenIDConnectConfig = Java.type("com.tremolosecurity.idp.providers.oidc.model.OpenIDConnectConfig");
+          GsonBuilder = Java.type("com.google.gson.GsonBuilder");
+          JsonWebKey = Java.type("org.jose4j.jwk.JsonWebKey");
+          JsonWebKeySet = Java.type("org.jose4j.jwk.JsonWebKeySet");
+          StringBuffer = Java.type("java.lang.StringBuffer");
+          MessageDigest = Java.type("java.security.MessageDigest");
+          HexFormat = Java.type("java.util.HexFormat");
+          HashMap = Java.type("java.util.HashMap");
+          Thread = Java.type("java.lang.Thread");
+          JSUtils = Java.type("com.tremolosecurity.util.JSUtils");
+          ProxySys = Java.type("com.tremolosecurity.proxy.ProxySys");
+
+          function initFilter(config) {
+
+          }
+
+
+
+          function doFilter(request,response,chain) {
+            
+            var payload = JSON.parse(JSUtils.bytes2string(request.getAttribute(ProxySys.MSG_BODY)));
+            // get the key pair and the latest version
+            const keypair = "keypairname";
+            const version = payload.version;
+
+            
+
+            const userData = request.getSession().getAttribute(ProxyConstants.AUTH_CTL).getAuthInfo();
+            holder = request.getAttribute(ProxyConstants.AUTOIDM_CFG);
+
+            wfrequest = new HashMap();
+            wfrequest.put("certname",keypair);
+            wfrequest.put("version",version);
+
+            // wait until the latest version has been loaded
+            var versionMatches = false;
+            for (var i=0;i<10;i++) {
+                var certVersion = holder.getConfig().getKeyVersion(keypair);
+                if (certVersion != version) {
+                    System.out.println("openunison not yet updated to version " + version + " for " + keypair + ", currently " + certVersion);
+                    Thread.sleep(1000);
+                } else {
+                    versionMatches = true;
+                    break;
+                }
+            }
+
+            // if the latest version hasn't loaded, timeout
+            if (! versionMatches) {
+                response.getWriter().println(JSON.stringify({"success":false}));    
+                return;
+            }
+
+            // call workflow to push a new version of the oidc discovery data
+            try {
+                holder.getConfig().getProvisioningEngine().getWorkFlow("sts-update-aws").executeWorkflow(userData, "uid",wfrequest);
+            } catch (e) {
+                e.printStackTrace();
+            }
+
+
+            response.getWriter().println(JSON.stringify({"doesthis":"work"}));
+            
+
+          }
+    hosts:
+    - "k8s-sts.domain.com"
+    - '#[OU_HOST]'
+    results: {}
+    uri: /sts-update/aws
+```
+
 #### Kubernetes Identity Provider Short Lived Keys
 
 OpenUnison automatically replaces the key used by the Kubernetes identity provider once a year.  If you want to have keys that rotate more often, you may use a tool like cert-manager to automate the regeneration more quickly and allow OpenUnison to reload the key.  First, generate a key using cert-manager using a `Certificate`:
