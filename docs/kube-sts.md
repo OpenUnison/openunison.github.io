@@ -464,6 +464,10 @@ aws cloudfront create-invalidation --distribution-id EXXXXXXXXXXXX --paths "/cer
 
 The last command is important because it tells CloudFront to stop caching our signing verification certificate.  This way when AWS checks if there's a new signing certificate, it will get the new one and your workloads can continue to run.
 
+## Automating Issuer Updates
+
+If using cert-manager, or another certificate automation tool, you can use a [webhook called by the operator](/knowledgebase/certificates/#acting-on-new-keys) to update S3 and invalidate the CloudFront cache.  Here's an [example helm chart to push the issuer to S3 and invalidate the CloudFront cache](https://github.com/OpenUnison/openunison-sts-aws-update/tree/main) to build off of.
+
 ## Claude Workload Identity Federation (WIF)
 
 ***Requires OpenUnison 1.0.49***
