@@ -476,8 +476,6 @@ Claude requires that an issuer be hosted on the public internet with a commercia
 
 ### Deploying the STS
 
-### Deploying the STS
-
 First, deploy OpenUnison into your cluster.  If you aren't planning on using OpenUnison for user authentication, you can make updates to deploy just the base system and use the STS charts.  Next, add the below yaml to your openunison's values.yaml for your STS:
 
 ```yaml
