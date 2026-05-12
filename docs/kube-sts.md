@@ -463,3 +463,180 @@ aws cloudfront create-invalidation --distribution-id EXXXXXXXXXXXX --paths "/cer
 ```
 
 The last command is important because it tells CloudFront to stop caching our signing verification certificate.  This way when AWS checks if there's a new signing certificate, it will get the new one and your workloads can continue to run.
+
+## Claude Workload Identity Federation (WIF)
+
+***Requires OpenUnison 1.0.49***
+
+Claude now supports self generated tokens.  Similar to AWS and other providers, when using one of the pre-built SDKs, a client will exchange your token for a shorter lived Claude API token.  Also, as with other cloud hosted providers the issuer needs to be hosted on a publicly accessible URL with a commercially signed certificate.
+
+### Create an Issuer
+
+Claude requires that an issuer be hosted on the public internet with a commercially signed certificate.  You can follow the instructions to for [AWS S3 with CloudFront](#create-an-issuer-on-aws-cloudfront-with-s3), or similar with other cloud providers.
+
+### Deploying the STS
+
+### Deploying the STS
+
+First, deploy OpenUnison into your cluster.  If you aren't planning on using OpenUnison for user authentication, you can make updates to deploy just the base system and use the STS charts.  Next, add the below yaml to your openunison's values.yaml for your STS:
+
+```yaml
+sts:
+  endpoints:
+  - name: calude
+    audience: https://api.anthropic.com
+    # if you want to have multiple STS in a single OpenUnison
+    # change this to a different path
+    path: /claude
+    # authorize service accounts to access the STS
+    # Available attributes:
+    # namespace - the name of the ServiceAccount namespace
+    # saname - The name of the ServiceAccount
+    # cluster - The name of your cluster
+    azRules:
+    - scope: filter
+      constraint: "(namespace=myns)"
+    issuer:
+      # this is the domain where your issuer is hosted
+      host: "d1dexjaad4ian0.cloudfront.net"
+      # The keypair to use for your STS
+      # See https://openunison.github.io/knowledgebase/certificates/#how-do-i-include-additional-keys-and-certificates for how to generate a distinct
+      # keypair
+      keypair: "unison-saml2-rp-sig"
+    injector:
+      # the label and annotation to use to identify if the Pod
+      # should use the admission controller
+      label: claude
+      # The environment variable that will point to our JWT
+      token_environment_variable_name: "ANTHROPIC_IDENTITY_TOKEN_FILE"
+      # Not used by claude
+      label_value_environment_variable_name: "CLAUDE_ROLE"
+      # if your OpenUnison uses locally signed cert, uncomment and
+      # create a ConfigMap in the openunison namespace called ouca with the
+      # a key called ca.crt with OpenUnison's certificate chain
+      # explicit_certificate_trust: true
+```
+
+Once you've updated your values.yaml, deploy the sts chart:
+
+```sh
+helm install openunison-sts tremolo/openunison-kube-sts -n openunison -f /path/to/values.yaml
+```
+
+After the chart is deployed, push the discovery documents to your host by retrieving the issuer json and pushing to the issuer:
+
+```sh
+export ISSDIR=$(mktemp -d)
+mkdir $ISSDIR/.well-known
+curl https://k8sou.awsstsnew.tremolo.dev/claude/issuer-docs | jq -r '.discovery' > $ISSDIR/.well-known/openid-configuration
+curl https://k8sou.awsstsnew.tremolo.dev/claude/issuer-docs | jq -r '.keys' | jq -r > $ISSDIR/certs
+```
+
+After pushing the issuer documents, you can configure WIF per [Claude's WIF Configuration](https://platform.claude.com/docs/en/manage-claude/workload-identity-federation). 
+
+### Injecting Tokens into Your Workloads
+
+With the prep work of deploying our STS and configuring AWS, the last step is to deploy the STS' admission controller configuration and annotate our workloads.  In your values.yaml, you'll need to update the OpenUnison operator to tell it to keep our mutating webhook admission controller configuration's certificate up to date.  This is done by adding the following to your values.yaml:
+
+```yaml
+operator:
+  mutators:
+   - injector-ENDPOINT_NAME
+```
+
+In our case, `ENDPOINT_NAME` is `claude`, from `sts.endpoints[0].name` in our values.yaml.
+
+Assuming you're using the [ouctl](/documentation/ouctl), add two options to your command:
+
+```sh
+ouctl install-auth-portal  -u openunison-sts-webhooks=tremolo/openunison-kube-sts-pre -r openunison-sts=tremolo/openunison-kube-sts  ~/values.yaml
+```
+
+The `-u` will deploy the configuration for our webhook before the operator, while the `-r` will deploy our sts.  Once `ouctl` is done running, you'll be able to deploy a workload.  The injector works on all `Pod` objects with the label `tremolo.io/LABEL` where `LABEL` is the value from `sts.endpoints[*].injector.label`.  In our case that's `claude`.  In addition to the `ANTHROPIC_IDENTITY_TOKEN_FILE`, which will be injected by the mutating webhook, your `Pod` will require three additional environment variables:
+
+* `ANTHROPIC_FEDERATION_RULE_ID`
+* `ANTHROPIC_ORGANIZATION_ID`
+* `ANTHROPIC_SERVICE_ACCOUNT_ID`
+* `ANTHROPIC_WORKSPACE_ID`
+
+ We created a simple `Deployment` with a `Pod` that includes these labels and annotations:
+
+```yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatbot-backend
+  namespace: chatbot
+  labels:
+    app: chatbot-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatbot-backend
+  template:
+    metadata:
+      labels:
+        app: chatbot-backend
+        tremolo.io/claude: "enabled"
+      annotations:
+        tremolo.io/claude: "enabled"
+    spec:
+      containers:
+        - name: backend
+          image: harbor.qalab.tremolo.dev/lab/claude-chat  
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: ANTHROPIC_FEDERATION_RULE_ID
+              value: "fdrl_..."
+            - name: ANTHROPIC_ORGANIZATION_ID
+              value: "f4..."
+            - name: ANTHROPIC_SERVICE_ACCOUNT_ID
+              value: "svac_..."
+            - name: ANTHROPIC_WORKSPACE_ID
+              value: "wrkspc_..."
+.
+.
+.
+```
+
+When the `Pod` is launched, you'll see that there are two containers.  In addition to the workload container, there's a side car that is deployed to generate and maintain your token.  You'll also see that your container has additional environment variables to support the Claude integration.
+
+Now that we're working with short lived tokens for our interactions with Claude, next we'll make sure we know how to rotate our private key.
+
+#### Running the Sidecar as a Specific User
+
+If your container is not running as root, you will need the sidecar to also run as the same user as the container.  You can specify the user and group as annotations on your workload:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    # tells OpenUnison to inject the token
+    tremolo.io/claude: "enabled"
+    # add the runAsNonRoot flag if needed
+    tremolo.io/non-root: "true"
+    # specify the user id the container should run as
+    tremolo.io/user: "65532" 
+    # specify the group id the container should run as
+    tremolo.io/group: "65532"
+```
+
+In the above example, the sidecar will run as the uid 65532 and the gid 65532.  
+
+***NOTE***: If your manifest doesn't include the exact user id and you don't have access to a Dockerfile you can use to determine the user, you can use the following docker command to get the uid:
+
+```sh
+docker image inspect quay.io/jetstack/cert-manager-controller:v1.20.2 --format '{{.Config.User}}' 
+65532
+```
+If there is a group id you'll see it after the user id.
+
+
+### Rotating Signature Keys
+
+When rotating signature keys, there's an issue with Claude where the first request after rotating the keys and pushing the updated issuers documents to your issuer host will fail.  After that first request however, Claude will reload the issuer documents and continue processing JWTs. 

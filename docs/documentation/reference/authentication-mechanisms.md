@@ -913,6 +913,38 @@ spec:
 
 This mechanism will allow a JWT to be used as an OAuth2 Bearer Token.  The token's signature is validated along with the issuer and timestamps.  The mechanism can look the user up or create an object based on the claims in the token.
 
+
+##### Using the Kubernetes Issuer
+
+***Requires 1.0.49+***
+
+When exposing APIs when needing static credentials, a `ServiceAccount` is a convenient approach.  Most API servers do not expose their issuer URL anonymously.  To access a protected API Server's URL configure the chain with the issuer `https://kubernetes.default.svc.cluster.local` (or your API server's issuer if it's different) and uncomment the `webfingerCredentialLoader` and `target` chain configuration options.  Finally add a `ClusterRoleBinding` for the OpenUnison `ServiceAccount`:
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: openunison-issuer-access
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:service-account-issuer-discovery
+subjects:
+- kind: ServiceAccount
+  name: openunison-orchestra
+  namespace: openunison
+```
+***NOTE:*** It's important that your `audience` ***NOT*** be the cluster's `audience`, it can be any other value you want.  This will ensure that tokens generated for chain can not be used for Kubernetes API calls and so will not pose a risk to your cluster.
+
+Once deployed, generate a `ServiceAccount` token with an audience that matches your audience:
+
+```
+$ kubectl create sa remote-from-cluster -n myns
+$ kubectl create token remote-from-cluster -n myns --audience=myaudience
+```
+***NOTE***: This token can ***NOT*** be revoked.  You would need to re-key your API server.  Use a token duration that you are comfortable with.
+
+
 ##### Mechanism
 
 ```yaml
@@ -948,6 +980,7 @@ spec:
       # The audience required in the JWT
       audience: "https://myou.domain.com/"
       # If true, OpenUnison will pull URLs and public keys from the well-known URL
+      # NOTE: If an issuer's public key gets updated, it will be reloaded on the failure of a signature check
       fromWellKnown: "true"
       # Certificate entry to use to validate the JWT's signature ONLY NEEDED if fromWellKnown is false
       validationKey: "jwt-sig"
@@ -971,6 +1004,19 @@ spec:
       - Access-Control-Allow-Origin=*
       - Access-Control-Allow-Methods=*
       - Access-Control-Allow-Headers=*
+      # 1.0.49+
+      # if using an issuer that requires authentication, such as an API server's from inside
+      # the cluster when not anonymous.  Will use OpenUnison's ServiceAccount, which must still
+      # be authorized
+      # webfingerCredentialLoader: com.tremolosecurity.proxy.auth.K8sWebFingerCredentialLoader
+      # required when using webfingerCredentialLoader: com.tremolosecurity.proxy.auth.K8sWebFingerCredentialLoader,
+      # the name of the target to load the ServiceAccount token from
+      # target: k8s
+      # If a JWT doesn't include a nmf claim, the number of minutes to assume it would be, defaults to 5
+      # defaultNotBeforeMinutes: "5"
+      # If the nbf claim is not present in a JWT, an iat is needed to calculate.  If this is set to "false" (default),
+      # then the JWT will be rejected.
+      # allowNoIat "false"
     secretParams: []
   level: 20
   root: o=Tremolo
