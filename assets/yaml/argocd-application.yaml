@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openunison-login
+  namespace: argocd
+spec:
+  destination:
+    namespace: openunison
+    server: 'https://kubernetes.default.svc'
+  project: default
+  sources:
+  - chart: openunison-operator
+    helm:
+      releaseName: openunison
+      valueFiles:
+      - $values/userauth/values.yaml
+    repoURL: https://nexus.tremolo.io/repository/helm
+    targetRevision: 3.0.30
+
+  - chart: orchestra
+    helm:
+      releaseName: orchestra
+      valueFiles:
+      - $values/userauth/values.yaml
+    repoURL: https://nexus.tremolo.io/repository/helm
+    targetRevision: 3.1.52
+
+  - chart: orchestra-login-portal
+    helm:
+      releaseName: orchestra-login-portal
+      valueFiles:
+      - $values/userauth/values.yaml
+    repoURL: https://nexus.tremolo.io/repository/helm
+    targetRevision: 2.3.94
+
+  - repoURL: https://github.com/TremoloSecurityDemos/openunison-argocd.git
+    path: userauth
+  - ref: values
+    repoURL: https://github.com/TremoloSecurityDemos/openunison-argocd.git
+  syncPolicy:
+    syncOptions:
+    - RespectIgnoreDifferences=true
