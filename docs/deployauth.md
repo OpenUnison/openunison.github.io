@@ -113,9 +113,9 @@ ouctl install-auth-portal -s /path/to/secret/file /path/to/yaml
 Assuming there are no issues, OpenUnison will be deployed and ready for access.  The `ouctl` command is safe to re-run.  If you want to update the secret, you can provide the `-s` again.  If you just want to upgrade the charts, you can run `ouctl` without `-s` and it will just update the charts.
 
 
-#### Deploying with ArgoCD
+#### Deploying with Argo CD
 
-The OpenUnison charts include the `argocd.argoproj.io/sync-wave` annotation on all manifests to deploy them in the correct sequence.  To simplify deployment, ArgoCD supports multiple repos in a single `Application`, allowing for each helm chart to be deployed.  This allows you to easily add additional charts too, such as the [EntraID](/identity%20providers/azuread/) chart or the cluster management chart for [Namespace as a Service](/namespace_as_a_service).  Additionally, the [default ArgoCD Application](/assets/yaml/argocd-application.yaml) configuration tells ArgoCD not to overwrite the validating webhooks that the operator configures with certificates.  This let's us continue to update OpenUnison directly from ArgoCD instead of using the ouctl command without having to first generate YAML manifests.
+The OpenUnison charts include the `argocd.argoproj.io/sync-wave` annotation on all manifests to deploy them in the correct sequence.  To simplify deployment, ArgoCD supports multiple repos in a single `Application`, allowing for each helm chart to be deployed.  This allows you to easily add additional charts too, such as the [EntraID](/identity%20providers/azuread/) chart or the cluster management chart for [Namespace as a Service](/namespace_as_a_service).  
 
 When configuring your values.yaml, add the following:
 

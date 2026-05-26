@@ -1,5 +1,6 @@
 # JavaDocs for OpenUnison
 
+<a href="1.0.50/" target="javadocs-1.0.48">1.0.50</a><br />
 <a href="1.0.48/" target="javadocs-1.0.48">1.0.48</a><br />
 <a href="1.0.47/" target="javadocs-1.0.47">1.0.47</a><br />
 <a href="1.0.46/" target="javadocs-1.0.46">1.0.46</a><br />

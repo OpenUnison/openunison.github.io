@@ -62,6 +62,32 @@ openunison:
 These changes are in addition to any configurations needed for your STS, covered in the rest of this page.
 
 
+## Adding Additional Claims to JWTs
+
+If the standard claims aren't enough data, you can add additional claims by adding the `addtionalAttributes` configuration to an STS which is a list of attribute mappings.  For instance:
+
+```yaml
+sts:
+  endpoints:
+  - name: myendpoint
+  .
+  .
+  .
+  additionalAttributes:
+    - target: annotation
+      type: custom
+      source: com.tremolosecurity.mapping.JavaScriptMapping|k8s,openunison,load-namespace-annotation
+```
+
+Will add the claim `annotation` based on the results of calling a custom [JavaScript mapping](/javascript/#attribute-mappers) `load-namespace-annotations`.  The full configuration reference:
+
+| type | Description                                                                                          | source                                | Example                                |
+|-------------|------------------------------------------------------------------------------------------------------|---------------------------------------|----------------------------------------|
+| user        | Map an attribute from the user’s directory object                                                   | Name of an attribute                  | givenName                              |
+| static      | A static value that doesn’t change                                                                  | The static value                      | Myvalue                                |
+| custom      | A class that is used to determine the mapping                                                       | Class name, see the SDK for details on how to implement | com.mycompany.mapper.Mapper |
+| composite   | A composite of attributes and static values. Attributes are defined with `${attributename}`. Only attributes that exist before the mappings are run are available | Static and attribute data             | `${givenName}.${sn}@mydomain.com`      |
+
 ## Amazon Web Services
 
 The AWS client SDks all know how to use JWT tokens that are scoped for AWS.  When the token expires, the client SDKs know to reload them.  Creating an STS for AWS requires a place to host your OIDC discovery documents that's accessible from the public internet.  Our example will use AWS CloudFront with an S3 bucket.  This gives us our issuer with a commercially signed certificate authority (CA).  Once we have our issuer created, we'll deploy our STS, copy our oidc discovery data into our S3 bucket, then create a trust with AWS via IAM.  Once that's all done, we can launch a `Pod` that will have access to AWS' services using our short lived tokens instead of a static identity!
@@ -355,13 +381,13 @@ operator:
 
 In our case, `ENDPOINT_NAME` is `aws`, from `sts.endpoints[0].name` in our values.yaml.
 
-Assuming you're using the [ouctl](/documentation/ouctl), add two options to your command:
+Assuming you're using the [ouctl](/documentation/ouctl), add one option to your command:
 
 ```sh
-ouctl install-auth-portal  -u openunison-sts-webhooks=tremolo/openunison-kube-sts-pre -r openunison-sts=tremolo/openunison-kube-sts  ~/values.yaml
+ouctl install-auth-portal  -r openunison-sts=tremolo/openunison-kube-sts  ~/values.yaml
 ```
 
-The `-u` will deploy the configuration for our webhook before the operator, while the `-r` will deploy our sts.  Once `ouctl` is done running, you'll be able to deploy a workload.  The injector works on all `Pod` objects with the label `tremolo.io/LABEL` where `LABEL` is the value from `sts.endpoints[*].injector.label`.  In our case that's `aws-role`.  We created a simple `Deployment` with a `Pod` that includes this label:
+The `-r` will deploy our sts.  Once `ouctl` is done running, you'll be able to deploy a workload.  The injector works on all `Pod` objects with the label `tremolo.io/LABEL` where `LABEL` is the value from `sts.endpoints[*].injector.label`.  In our case that's `aws-role`.  We created a simple `Deployment` with a `Pod` that includes this label:
 
 ```yaml
 apiVersion: apps/v1
@@ -548,13 +574,13 @@ operator:
 
 In our case, `ENDPOINT_NAME` is `claude`, from `sts.endpoints[0].name` in our values.yaml.
 
-Assuming you're using the [ouctl](/documentation/ouctl), add two options to your command:
+Assuming you're using the [ouctl](/documentation/ouctl), add one option to your command:
 
 ```sh
-ouctl install-auth-portal  -u openunison-sts-webhooks=tremolo/openunison-kube-sts-pre -r openunison-sts=tremolo/openunison-kube-sts  ~/values.yaml
+ouctl install-auth-portal   -r openunison-sts=tremolo/openunison-kube-sts  ~/values.yaml
 ```
 
-The `-u` will deploy the configuration for our webhook before the operator, while the `-r` will deploy our sts.  Once `ouctl` is done running, you'll be able to deploy a workload.  The injector works on all `Pod` objects with the label `tremolo.io/LABEL` where `LABEL` is the value from `sts.endpoints[*].injector.label`.  In our case that's `claude`.  In addition to the `ANTHROPIC_IDENTITY_TOKEN_FILE`, which will be injected by the mutating webhook, your `Pod` will require three additional environment variables:
+The `-r` will deploy our sts.  Once `ouctl` is done running, you'll be able to deploy a workload.  The injector works on all `Pod` objects with the label `tremolo.io/LABEL` where `LABEL` is the value from `sts.endpoints[*].injector.label`.  In our case that's `claude`.  In addition to the `ANTHROPIC_IDENTITY_TOKEN_FILE`, which will be injected by the mutating webhook, your `Pod` will require three additional environment variables:
 
 * `ANTHROPIC_FEDERATION_RULE_ID`
 * `ANTHROPIC_ORGANIZATION_ID`
