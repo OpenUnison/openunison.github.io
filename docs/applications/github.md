@@ -2,7 +2,7 @@
 
 OpenUnison can be used to with GitHub in three important ways:
 
-1. Use GitHub as an authentication source for developers interacting with your clusters and cluster manatement applications
+1. Use GitHub as an authentication source for developers interacting with your clusters and cluster management applications
 2. Use GitHub teams to manage access to your namespaces when using Namespace as a Service
 3. Provision access to your GitHub organization, as well as repositories, secrets, and keys
 
