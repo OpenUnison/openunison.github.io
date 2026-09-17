@@ -9,7 +9,7 @@ OpenUnison's helm charts can generate the correct `Service` and `Ingress` object
 Once you decide how you want Traefik to trust or verify OpenUnison's internal certificate, configure your values.yaml to use Traefik by setting `network.ingress_type` to `traefik`.  The helm charts will create all of the appropriate `Service` annotations and `Ingress` configurations for you.  The charts assume that you have an insecure entrypoint called `web` and a secure entrypoint called `websecure`.  You can configure these defaults by adding a `traefik` section to the `network` block in your values.yaml:
 
 ```yaml
-netowork:
+network:
   traefik:
     secure: true
     entrypoints:
