@@ -735,6 +735,92 @@ spec:
       secretKey: authToken
 ```
 
+#### SmtpOtp
+
+This mechanism allows for single use password to be used and sent over SMTP to a user's email address.
+
+##### Mechanism
+
+```yaml
+---
+apiVersion: openunison.tremolo.io/v1
+kind: AuthenticationMechanism
+metadata:
+  name: smtpauth
+  namespace: openunison
+spec:
+  className: com.tremolosecurity.proxy.auth.SmtpOtp
+  uri: "/auth/smtpauth"
+  init: {}
+  secretParams: []
+```
+
+##### Chain
+
+```yaml
+---
+apiVersion: openunison.tremolo.io/v1
+kind: AuthenticationChain
+metadata:
+  name: 2fasms
+  namespace: openunison
+spec:
+  authMechs:
+  - name: login-form
+    required: required
+    params:
+      FORMLOGIN_JSP: "/auth/forms/default-form.jsp"
+    secretParams: []
+  - name: smtpauth
+    required: required
+    params:
+      # From Email address
+      fromNumber: "matt.mosley@unittests.tremolo.dev"
+      # The attribute that stores the user's email address
+      toAttrName: "mail"
+      # URI for the form to collect the login key
+      redirectForm: "/auth/forms/smsKey.jsp"
+      # The message to be sent to the user. '${key}' is used to represent the single-use password.
+      message: "${key}"
+      # The length of the single-use password
+      keyLength: "10"
+      # include lower case letters
+      useLowerCase: "false"
+      # use upper case letters
+      useUpperCase: "true"
+      # include numbers
+      useNumbers: "true"
+
+      # SMTP information
+      # SMTP Host
+      host: "mail.host.io"
+      # SMTP port
+      port: "25"
+      # if true, use starttls
+      tls: "false"
+      # optional user to use to connect to the SMTP server
+      user: "matt.mosley@unittests.tremolo.dev"
+      
+      # Email customization
+      # Subject of the email
+      subject: "One time password"
+      # timestamp format for email subjects:
+      subjectTimeStampFormat: "MMMM d, yyyy 'at' h:mm:ss a"
+      # locale for timestamps
+      subjectTimeStampLocale: "US"
+      # time zone for timestamps
+      subjectTimeStampTimezone: "America/New_York"
+
+      # optional implementation of com.tremolosecurity.proxy.auth.LogSmsSend to log when tokens are sent and to who
+      # logSendClass: com.tremolosecurity.test.proxy.LogSmsSend
+    secretParams:
+    # optional user password for sending SMTP messages
+    - name: password
+      secretName: orchestra-secrets-source
+      secretKey: smtp-password
+    
+```
+
 #### SecretQuestionAuth
 
 This mechanism allows for secret or ?golden? to be used as a password. The answers are stored in JSON as an attribute on the user?s object and are hashed. All questions and answers are encrypted.  NOTE: this mechanism is designed to be used with the com.tremolosecurity.proxy.auth.secret.CreateSecretQuestionsTask provisioning task.
