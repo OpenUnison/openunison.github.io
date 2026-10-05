@@ -577,7 +577,7 @@ spec:
 
 #### UserOnlyAuthMech
 
-An HTML login form that ONLY collects a username. This mechanism is convinient when using a custom authentication scheme or authentication system that doesn't have a password (like SMS). All login forms must be stored in the auth/forms directory. Forms can be static HTML or JSP pages. See auth/forms/userOnlyLogin.jsp.
+An HTML login form that ONLY collects a username. This mechanism is convenient when using a custom authentication scheme or authentication system that doesn't have a password (like SMS). All login forms must be stored in the auth/forms directory. Forms can be static HTML or JSP pages. See auth/forms/userOnlyLogin.jsp. This mechanism also supports Google reCaptcha v2.
 
 ##### Mechanism
 
@@ -621,7 +621,17 @@ spec:
         # The URI for the JSP page used when a user can't be found
         noUserJSP: "/auth/forms/noUser.jsp"
 
+        # if integrating google reCaptcha v2, the sitekey (this is NOT secret)
+        # recaptchaSiteKey: XXXXXXX
+
+        # optionally implement com.tremolosecurity.proxy.auth.UserNameLookupLogger to track which users are submitted.  useful for logging users that don't exist for support.
+        # postLookupLogger: com.tremolosecurity.test.proxy.UserLookupLogger
+
     secretParams: []
+    # optional for recaptcha v2
+    # - name: recaptchaSecret
+    #   secretName: orchestra-secrets-source
+    #   secretKey: recaptchaSecret
   level: 20
   root: o=Tremolo
 ```
