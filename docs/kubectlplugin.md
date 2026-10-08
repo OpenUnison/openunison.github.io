@@ -20,20 +20,23 @@ Or directly from our krew configuration:
 kubectl krew install --manifest-url=https://nexus.tremolo.io/repository/openunison-cli/openunison-cli.yaml
 ```
 
+***NOTE:*** macOS arm64 is only provided starting with 1.4.0, which has not yet been accepted by krew.  Until that happen, you can use either the manual install or install the krew plugin directly from the manifest.
+
 ## Manual Installation
 You can also manually download and install the plugins by adding them to your path and prefixing them with the name "kubectl-".  For instance, for MacOS:
 
 ```sh
-wget https://nexus.tremolo.io/repository/openunison-cli/openunison-cli-v1.0.0-macos.zip
-unzip openunison-cli-v1.0.0-macos.zip
+wget https://nexus.tremolo.io/repository/openunison-cli/openunison-cli-v1.4.0-macos.zip
+unzip openunison-cli-v1.4.0-macos.zip
 mv openunison-cli kubectl-openunison-cli
 ```
 
 Downloads are available for:
 
-* [macOS](https://nexus.tremolo.io/repository/openunison-cli/openunison-cli-v1.0.0-macos.zip)
-* [Linux](https://nexus.tremolo.io/repository/openunison-cli/openunison-cli-v1.0.0-linux.zip)
-* [Windows](https://nexus.tremolo.io/repository/openunison-cli/openunison-cli-v1.0.0-win.zip)
+* [macOS - amd64](https://nexus.tremolo.io/repository/openunison-cli/openunison-cli-v1.4.0-macos.zip)
+* [macOS - arm64](https://nexus.tremolo.io/repository/openunison-cli/openunison-cli-v1.4.0-macos-arm64.zip)
+* [Linux](https://nexus.tremolo.io/repository/openunison-cli/openunison-cli-v1.4.0-linux.zip)
+* [Windows](https://nexus.tremolo.io/repository/openunison-cli/openunison-cli-v1.4.0-win.zip)
 
 ## Usage
 
@@ -69,50 +72,3 @@ Yes.  If you run `kubectl openunison-cli login cluster1` it will set your cluste
 
 
 
-## Legacy Kubectl Plugin
-
-***The legacy oulogin plugin is deprecated.  We will no longer be publishing new releases and will remove the downloads and documentation on September 1, 2026***
-
-This plugin will launch a browser to log you into your Kubernetes cluster from the command line.  This plugin requires OpenUnison to be integrated with Kubernetes.  One of the Orchestra portals will likely fit your use case (https://github.com/openunison/).  This plugin:
-
-1. Launches a browser to authenticate you to OpenUnison (and your identity provider)
-2. Creates a context and user in your kubectl configuration
-3. Sets the new configuration as your default context
-
-![Video of CLI Login](assets/images/ou-login-oulogin.gif)
-
-There is no pre-configuration that needs to happen.  OpenUnison provides all the configuration for your cluster, just as if logging into OpenUnison and getting the configuration from the token screen and pasting it into your cli window.
-
-### Installation
-
-The simplest way to install this plugin is via the krew plugin manager:
-
-```
-$ kubectl krew install oulogin
-```
-
-### Running
-
-The plugin takes one parameter, `host`, the host of your OpenUnison.  There is no need to have an existing kubectl configuration file.  If one exists, the cluster configuration will be added to it.
-
-```
-$ kubectl oulogin --host=k8sou.apps.domain.com
-```
-
-### FAQ
-
-#### What is the difference between this plugin and the oidc-login plugin?
-
-The `oidc-login` plugin is a generic plugin that will work with any OpenID Connect identity provider.  It requires that you pre-configure kubectl for use with the OpenID Connect identity provider.  The `oulogin` plugin is designed to work with OpenUnison and creates your kubectl configuration for you.  There's nothing to pre-configure on the client.
-
-#### The login process complains about not trusting a certificate, can I use an untrusted cert?
-
-The OpenUnison certificate **MUST** be trusted by your client.  The OpenUnison certificate can be obtained by logging into OpenUnison and clicking on the token screen.
-
-#### Can I Use oulogin With Multiple Clusters?
-
-Yes.  If you run `kubectl oulogin --host=cluster1` it will set your cluster configuration for cluster1.  If you then run `kubectl oulogin --host=cluster2` if will set your configuration for cluster2.  Running `kubectl oulogin --host=cluster1` again will just switch your context.
-
-#### Will The Plugin Prompt Me To Login, Even With a Valid Session?
-
-No, if your `id_token` is still OK and your still able to interact with the API server then you aren't prompted to login again.
