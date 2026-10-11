@@ -88,6 +88,37 @@ Will add the claim `annotation` based on the results of calling a custom [JavaSc
 | custom      | A class that is used to determine the mapping                                                       | Class name, see the SDK for details on how to implement | com.mycompany.mapper.Mapper |
 | composite   | A composite of attributes and static values. Attributes are defined with `${attributename}`. Only attributes that exist before the mappings are run are available | Static and attribute data             | `${givenName}.${sn}@mydomain.com`      |
 
+## Sidecar Resources
+
+The sts sidecar runs with the default resource configuration:
+
+```yaml
+resources:
+  requests:
+    cpu: "10m"
+    memory: "32Mi"
+  limits:
+    cpu: "10m"
+    memory: "32Mi"
+```
+
+These are sane defaults, but your mileage may vary.  You can customize these defaults in your helm chart under the `sts` section:
+
+```yaml
+sts:
+  resources:
+    requests:
+      cpu: "10m"
+      memory: "32Mi"
+    limits:
+      cpu: "10m"
+      memory: "32Mi"
+```
+
+## Running as an init-container
+
+If you don't need the sidecar to be running for the entire life of the `Pod`, you can add the annotation `tremolo.io/run-once` as "true".  This will only run a single token exchange and allow the sidecar to shutdown after getting an initial token.  
+
 ## Amazon Web Services
 
 The AWS client SDks all know how to use JWT tokens that are scoped for AWS.  When the token expires, the client SDKs know to reload them.  Creating an STS for AWS requires a place to host your OIDC discovery documents that's accessible from the public internet.  Our example will use AWS CloudFront with an S3 bucket.  This gives us our issuer with a commercially signed certificate authority (CA).  Once we have our issuer created, we'll deploy our STS, copy our oidc discovery data into our S3 bucket, then create a trust with AWS via IAM.  Once that's all done, we can launch a `Pod` that will have access to AWS' services using our short lived tokens instead of a static identity!
