@@ -5,7 +5,7 @@ network:
   k8s_url: https://192.168.2.130:6443
   force_redirect_to_tls: false
   createIngressCertificate: true
-  ingress_type: nginx
+  ingress_type: traefik
   ingress_annotations: {}
 
 cert_template:
@@ -13,7 +13,7 @@ cert_template:
   o: "MyOrg"
   l: "My Cluster"
   st: "State of Cluster"
-  c: "MyCountry"
+  c: "US"
 
 
 
