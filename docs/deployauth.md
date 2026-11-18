@@ -1047,3 +1047,13 @@ dashboard:
 to your values.yaml.
 
 Having deployed the dashboard, next we'll deploy the base configuration for OpenUnison.
+
+## Adding Additional Java Options
+
+Starting with the chart tremolo/openunison-operator 3.0.36 and tremolo/orchestra 3.1.60 you can add additional `JAVA_OPTS` arguments by configuring the `openunison.extrajavaopts` option in values.yaml.  For instance, to disable native Base64 decoding:
+
+```yaml
+openunison:
+  extrajavaopts: "-XX:-UseBASE64Intrinsics"
+```
+
